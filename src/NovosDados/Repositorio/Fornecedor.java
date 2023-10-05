@@ -1,6 +1,6 @@
 package NovosDados.Repositorio;
 
-import Utils.Metodos.MetodosUtils;
+import Utils.MetodosUtils;
 
 public class Fornecedor extends MetodosUtils {
 

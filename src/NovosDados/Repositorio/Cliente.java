@@ -1,6 +1,6 @@
 package NovosDados.Repositorio;
 
-import Utils.Metodos.MetodosUtils;
+import Utils.MetodosUtils;
 import Utils.Objetos.ValidCEP;
 
 public class Cliente extends MetodosUtils {

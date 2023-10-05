@@ -1,8 +1,7 @@
 package InterfaceInical;
 
 import Database.Metodos.*;
-import Database.noDB;
-import Utils.Metodos.MetodosUtils;
+import Utils.MetodosUtils;
 
 public class Cadastro{
 
@@ -22,9 +21,9 @@ public class Cadastro{
             novoCli.setIdade(idade);
             novoCli.setEmail(email);
             novoCli.setTelefone(telefone);
-            novoCli.setInfoCEP(MetodosUtils.ResponseCEP(CEP, numCasa));
+            novoCli.setInfoCEP(MetodosUtils.CEP.ResponseCEP(CEP, numCasa));
 
-            novoCli.novoCliente(novoCli.setId(novoCli.nextId()), novoCli);
+            novoCli.novoCliente(novoCli.nextId(), novoCli);
         }
 
         public void alterarCliente(Integer id, String campo, String update) {

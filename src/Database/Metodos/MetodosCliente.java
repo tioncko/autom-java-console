@@ -19,12 +19,13 @@ public class MetodosCliente extends Cliente {
      * Inserir novo cliente
      */
     public void novoCliente(Integer id, Cliente cli) {
-        tabCliente.put(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCpf(), cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()));
+        tabCliente.put(cli.setId(id), new Cliente(cli.getNome(), cli.getIdade(), cli.getCpf(), cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()));
     }
 
     /**
      * Alterar um cliente
      */
+    // PENDENTE ALTERAÇÃO DE CEP OU NUMERO DA CASA
     public void alterCliente(Integer id, String Campo, String update) {
         if (!tabCliente.isEmpty()) {
             Set<Map.Entry<Integer, Cliente>>
@@ -152,11 +153,13 @@ public class MetodosCliente extends Cliente {
     }
 
 //#region notes
-    /*
+/*
     public static void main(String[] args) {
 
         //Cliente cli = new Cliente();
         MetodosCliente mcli = new MetodosCliente();
+        MetodosUtils Utils = new MetodosUtils();
+        MetodosUtils.CEP CEP = Utils.new CEP();
 
         System.out.println("# Lista de clientes #");
         mcli.setNome("Jorge");
@@ -164,8 +167,8 @@ public class MetodosCliente extends Cliente {
         mcli.setIdade(00);
         mcli.setEmail("teste@gmail.com");
         mcli.setTelefone("00000000000");
-        //mcli.setInfoCEP(ResponseCEP("04472205", 47));
-        mcli.novoCliente(mcli.setId(1), mcli);
+        mcli.setInfoCEP(CEP.ResponseCEP("04472205", 47));
+        mcli.novoCliente(1, mcli);
         //System.out.println(MetodosUtils.ResponseCEP("04472205", 47).toString());
 
         mcli.setNome("Pedro");
@@ -173,8 +176,8 @@ public class MetodosCliente extends Cliente {
         mcli.setIdade(00);
         mcli.setEmail("teste@gmail.com");
         mcli.setTelefone("00000000000");
-        //mcli.setInfoCEP(ResponseCEP("04915020", 47));
-        mcli.novoCliente(mcli.setId(2), mcli);
+        mcli.setInfoCEP(CEP.ResponseCEP("04915020", 47));
+        mcli.novoCliente(2, mcli);
         //System.out.println(MetodosUtils.ResponseCEP("04915020", 47).toString());
 
         mcli.setNome("Deise");
@@ -182,8 +185,8 @@ public class MetodosCliente extends Cliente {
         mcli.setIdade(00);
         mcli.setEmail("teste@gmail.com");
         mcli.setTelefone("00000000000");
-        //mcli.setInfoCEP(ResponseCEP("09910060", 47));
-        mcli.novoCliente(mcli.setId(3), mcli);
+        mcli.setInfoCEP(CEP.ResponseCEP("09910060", 47));
+        mcli.novoCliente(3, mcli);
         //System.out.println(MetodosUtils.ResponseCEP("09910060", 47).toString());
 
         mcli.setNome("Carla");
@@ -191,8 +194,8 @@ public class MetodosCliente extends Cliente {
         mcli.setIdade(00);
         mcli.setEmail("teste@gmail.com");
         mcli.setTelefone("00000000000");
-        //mcli.setInfoCEP(ResponseCEP("04472205", 47));
-        mcli.novoCliente(mcli.setId(4), mcli);
+        mcli.setInfoCEP(CEP.ResponseCEP("04472205", 47));
+        mcli.novoCliente(4, mcli);
         //System.out.println(MetodosUtils.ResponseCEP("09910060", 47).toString());
 
         mcli.setNome("Keyla");
@@ -200,8 +203,8 @@ public class MetodosCliente extends Cliente {
         mcli.setIdade(00);
         mcli.setEmail("teste@gmail.com");
         mcli.setTelefone("00000000000");
-        //mcli.setInfoCEP(ResponseCEP("09910250", 47));
-        mcli.novoCliente(mcli.setId(5), mcli);
+        mcli.setInfoCEP(CEP.ResponseCEP("09910250", 47));
+        mcli.novoCliente(5, mcli);
         //System.out.println(MetodosUtils.ResponseCEP("09910060", 47).toString());
 
         mcli.PrintMapWithSet();
@@ -236,7 +239,7 @@ public class MetodosCliente extends Cliente {
         System.out.println(mcli.nextId());
     }
 
- */
+*/
     //#endregion
 
 }

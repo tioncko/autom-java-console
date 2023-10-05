@@ -1,5 +1,9 @@
 package Database;
 
-public abstract class noDB {
+import NovosDados.Repositorio.Usuario;
+
+import java.util.Optional;
+
+public class noDB {
 
 }

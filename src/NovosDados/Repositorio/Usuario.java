@@ -1,12 +1,22 @@
 package NovosDados.Repositorio;
 
-public class Usuario {
+import Utils.MetodosUtils;
+import Utils.Objetos.Criptografia;
+
+public class Usuario extends MetodosUtils {
 
     private int id;
     private String login;
-    private String password;
+    private Criptografia password;
     private String nome;
     private String depto;
+
+    public Usuario(String login, Criptografia password, String nome, String depto) {
+        this.login = login;
+        this.password = password;
+        this.nome = nome;
+        this.depto = depto;
+    }
 
     public Usuario() {
     }
@@ -15,8 +25,8 @@ public class Usuario {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Integer setId(int id) {
+        return this.id = id;
     }
 
     public String getLogin() {
@@ -27,11 +37,11 @@ public class Usuario {
         this.login = login;
     }
 
-    public String getPassword() {
+    public Criptografia getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(Criptografia password) {
         this.password = password;
     }
 
