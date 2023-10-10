@@ -138,6 +138,9 @@ public class MetodosCliente extends Cliente {
         }
     }
 
+    /**
+     * Retorna um novo id unico
+     */
     public Integer nextId() {
 
         Integer maxnum = null;
@@ -146,6 +149,7 @@ public class MetodosCliente extends Cliente {
                     getCli = tabCliente.entrySet();
 
             maxnum = getCli.stream().mapToInt(Map.Entry::getKey).max().getAsInt();
+            //ou maxnum = getCli.stream().mapToInt(x -> x.getKey()).max().getAsInt();
         } else {
             maxnum = 0;
         }

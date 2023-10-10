@@ -64,8 +64,7 @@ public class Usuario extends MetodosUtils {
     @Override
     public String toString() {
         return "Usuario{" +
-                "id=" + id +
-                ", login='" + login + '\'' +
+                "login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", nome='" + nome + '\'' +
                 ", depto='" + depto + '\'' +

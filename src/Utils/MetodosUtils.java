@@ -20,14 +20,14 @@ import org.xml.sax.InputSource;
 public class MetodosUtils {
 
     public static Criptografia Encrypt(String password) throws Exception {
-        Criptografia hashcode = new Criptografia();
+
         Base64.Encoder MD5enc64 = Base64.getEncoder();
-        Base64.Encoder SHA_256enc64 = Base64.getEncoder();
+        //Base64.Encoder SHA_256enc64 = Base64.getEncoder();
 
         MessageDigest MD5 = MessageDigest.getInstance("MD5");
         byte[] MD5_byte = MD5.digest((password.strip()).getBytes(StandardCharsets.UTF_8));
         String first_hash = MD5enc64.encodeToString(MD5_byte);
-        System.out.println(first_hash);
+        //System.out.println(first_hash);
 
         String Char_byte = "";
         for (int i = 0; i < first_hash.length(); i++)
@@ -35,8 +35,15 @@ public class MetodosUtils {
 
         MessageDigest SHA_256 = MessageDigest.getInstance("SHA-256");
         byte[] SHA_256_byte = SHA_256.digest(Char_byte.getBytes(StandardCharsets.UTF_8));
-        hashcode.setEncrypting(SHA_256enc64.encodeToString(SHA_256_byte));
+        //hashcode.setEncrypting(SHA_256enc64.encodeToString(SHA_256_byte));
 
+        StringBuilder HEX = new StringBuilder();
+        for (byte b : SHA_256_byte){
+            HEX.append(String.format("%02X", 0xFF & b));
+        }
+
+        Criptografia hashcode = new Criptografia();
+        hashcode.setEncrypting(HEX.toString());
         return hashcode;
     }
 
