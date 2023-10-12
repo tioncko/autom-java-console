@@ -1,4 +1,4 @@
-package NovosDados.Areas;
+package NovosDados.AreasMenu;
 
 public class AreaCadastroFornecedor {
 }

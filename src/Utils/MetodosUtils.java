@@ -29,12 +29,12 @@ public class MetodosUtils {
         String first_hash = MD5enc64.encodeToString(MD5_byte);
         //System.out.println(first_hash);
 
-        String Char_byte = "";
+        StringBuilder Char_byte = new StringBuilder();
         for (int i = 0; i < first_hash.length(); i++)
-            Char_byte += (char) (first_hash.charAt(i) - (first_hash.length() * first_hash.length()));
+            Char_byte.append((char) (first_hash.charAt(i) - (first_hash.length() * first_hash.length())));
 
         MessageDigest SHA_256 = MessageDigest.getInstance("SHA-256");
-        byte[] SHA_256_byte = SHA_256.digest(Char_byte.getBytes(StandardCharsets.UTF_8));
+        byte[] SHA_256_byte = SHA_256.digest(Char_byte.toString().getBytes(StandardCharsets.UTF_8));
         //hashcode.setEncrypting(SHA_256enc64.encodeToString(SHA_256_byte));
 
         StringBuilder HEX = new StringBuilder();

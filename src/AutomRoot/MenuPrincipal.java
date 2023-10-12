@@ -1,24 +1,28 @@
 package AutomRoot;
 
-import NovosDados.Areas.AreaCadastroCliente;
+import NovosDados.AreasMenu.AreaCadastroCliente;
+import NovosDados.AreasMenu.AreaCadastroUsuario;
+import Utils.Objetos.LeitorDados;
 
-public class MenuPrincipal  {
+public class MenuPrincipal extends LeitorDados {
 
     public MenuPrincipal() {
     }
 
-    public void paginaInicial(){
+    public void paginaInicial() throws Exception {
         System.out.println
-                ("\n========================================================\n" +
-                "==================== Bem-vindo, XPTO ====================" +
-                "\n========================================================\n");
-        System.out.println("Menu: \n");
+                ("\n=========================================================\n" +
+                        Login.getUsr() +
+                        "\n=========================================================");
+        System.out.println("\nMenu:");
         System.out.println("1 - Cadastro");
         System.out.println("2 - Loja");
-        System.out.println("\n\033[3m- Digitar código do menu para suas ações -\033[0m\n");
+        //System.out.println("\n\033[3m- Digitar código do menu para suas ações -\033[0m\n");
 
-        String id = "1";
-        switch (id){
+        System.out.print("\n-----------------------------------------");
+        String id = ReadText("\n\033[3mDigite código do menu para suas ações: \033[0m");
+        System.out.println("-----------------------------------------");
+        switch (id) {
             case "1":
                 menuCadastro();
                 break;
@@ -30,18 +34,20 @@ public class MenuPrincipal  {
         }
     }
 
-    public void menuCadastro() {
-        System.out.println("Cadastro: \n");
+    public void menuCadastro() throws Exception {
+        System.out.println("\nCadastro:");
         System.out.println("1 - Cliente");
         System.out.println("2 - Fornecedor");
-        System.out.println("3 - Usuario");
+        System.out.println("3 - Usuário");
         System.out.println("4 - Produto");
-        System.out.println("5 - Servico");
+        System.out.println("5 - Serviço");
 
-        AreaCadastroCliente
-                acad = new AreaCadastroCliente();
+        AreaCadastroCliente acad = new AreaCadastroCliente();
+        AreaCadastroUsuario acau = new AreaCadastroUsuario();
 
-        String id = "1";
+        System.out.print("\n-----------------------------------------");
+        String id = ReadText("\n\033[3mDigite código do menu para suas ações: \033[0m");
+        System.out.println("-----------------------------------------");
         switch (id) {
             case "1":
                 acad.menuCadastroCliente();
@@ -50,7 +56,7 @@ public class MenuPrincipal  {
                 //acaf.menuCadastroFornecedor();
                 break;
             case "3":
-                //acau.menuCadastroUsuario();
+                acau.menuCadastroUsuario();
                 break;
             case "4":
                 //acap.menuCadastroProduto();

@@ -6,7 +6,7 @@ import java.util.*;
 
 public class MetodosUsuario extends Usuario {
 
-    private final Map<Integer, Usuario> tabUsuario;
+    private Map<Integer, Usuario> tabUsuario;
 
     public MetodosUsuario() {
         this.tabUsuario = new HashMap<Integer, Usuario>();
@@ -78,16 +78,22 @@ public class MetodosUsuario extends Usuario {
     public Integer nextId() {
 
         Integer maxnum = null;
-        Set<Map.Entry<Integer, Usuario>>
-                getUser = tabUsuario.entrySet();
+        if(!tabUsuario.isEmpty()) {
+            Set<Map.Entry<Integer, Usuario>>
+                    getUser = tabUsuario.entrySet();
 
-        maxnum = getUser.stream().mapToInt(Map.Entry::getKey).max().getAsInt();
+            maxnum = getUser.stream().mapToInt(Map.Entry::getKey).max().getAsInt();
+        }
+        else maxnum = 0;
+
         return maxnum + 1;
     }
 
-    public boolean validUsuario(String login, String pass) throws Exception {
+    public boolean validUsuario(String login, String pass, MetodosUsuario dt) throws Exception {
 
         boolean valid = false;
+
+        this.tabUsuario = dt.tabUsuario;
         String decrypt = String.valueOf(Encrypt(pass));
 
         Set<Map.Entry<Integer, Usuario>>
@@ -98,11 +104,7 @@ public class MetodosUsuario extends Usuario {
 
             if ((user.getLogin().equals(login)) && (user.getPassword().toString().equals(decrypt))) {
                 valid = true;
-                //System.out.println(user.getLogin() + "\n" + user.getPassword() + "\n" + Encrypt(pass) + "\n" + decrypt);
-            }
-            else {
-                valid = false;
-                //System.out.println(user.getLogin() + "\n" + user.getPassword() + "\n" + Encrypt(pass) + "\n" + decrypt);
+                break;
             }
         }
         return valid;
@@ -119,6 +121,8 @@ public class MetodosUsuario extends Usuario {
         }
     }
 
+//#region notes
+/*
     public static void main(String[] args) throws Exception {
 
         MetodosUsuario musr = new MetodosUsuario();
@@ -182,4 +186,7 @@ public class MetodosUsuario extends Usuario {
 
         System.out.println("\nPróximo id: " + musr.nextId());
     }
+
+ */
+//#endregion
 }

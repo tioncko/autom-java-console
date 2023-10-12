@@ -1,0 +1,1 @@
+Verificar a possibilidade de enviar o objeto criado na hora de inicializar o programa (parte de Usuários) para replicar aos outros processos - o DT.DTUsers em especifico
