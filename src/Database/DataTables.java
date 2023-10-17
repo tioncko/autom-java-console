@@ -13,13 +13,13 @@ public class DataTables {
     }
 
     public MetodosUsuario DTUsers() throws Exception {
-        musr.setLogin("supervisor");
+        musr.setLogin("supervisor".toLowerCase());
         musr.setPassword(Encrypt("@autom123"));
         musr.setNome("Supervisor");
         musr.setDepto("Juridico");
         musr.novoUsuario(musr.nextId(), musr);
 
-        musr.setLogin("user");
+        musr.setLogin("user".toLowerCase());
         musr.setPassword(Encrypt("@user123"));
         musr.setNome("Paula Matos");
         musr.setDepto("TI");

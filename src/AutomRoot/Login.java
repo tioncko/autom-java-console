@@ -37,7 +37,7 @@ public class Login extends MetodosUsuario {
 
         int x = 0;
         do{
-            String login = mp.ReadText("Login: ");
+            String login = mp.ReadText("Login: ").toLowerCase();
             String pass = mp.ReadText("Senha: ");
 
             if (validUsuario(login, pass, DT.DTUsers())) {

@@ -23,7 +23,7 @@ public class MetodosUsuario extends Usuario {
      * Inserir novo usuário
      */
     public void novoUsuario(Integer id, Usuario user) {
-        tabUsuario.put(user.setId(id), new Usuario(user.getLogin(), user.getPassword(), user.getNome(), user.getDepto()));
+        tabUsuario.put(user.setId(id), new Usuario(user.getLogin().toLowerCase(), user.getPassword(), user.getNome(), user.getDepto()));
     }
 
     /**
@@ -42,7 +42,7 @@ public class MetodosUsuario extends Usuario {
 
                     switch (getCampo) {
                         case LOGIN:
-                            tabUsuario.put(id, new Usuario(update, user.getPassword(), user.getNome(), user.getDepto()));
+                            tabUsuario.put(id, new Usuario(update.toLowerCase(), user.getPassword(), user.getNome(), user.getDepto()));
                             break;
                         case SENHA:
                             tabUsuario.put(id, new Usuario(user.getLogin(), Encrypt(update), user.getNome(), user.getDepto()));
@@ -135,9 +135,10 @@ public class MetodosUsuario extends Usuario {
      */
     public boolean validUsuario(String login, String pass, MetodosUsuario dt) throws Exception {
         boolean valid = false;
+        this.tabUsuario = dt.tabUsuario;
+
         if (!tabUsuario.isEmpty()) {
 
-            this.tabUsuario = dt.tabUsuario;
             String decrypt = String.valueOf(Encrypt(pass));
 
             Set<Map.Entry<Integer, Usuario>> getUser = tabUsuario.entrySet();

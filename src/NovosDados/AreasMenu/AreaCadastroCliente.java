@@ -45,7 +45,7 @@ public class AreaCadastroCliente extends LeitorDados {
                             ReadText("CPF: "),
                             ReadText("E-mail: "),
                             ReadText("Telefone: "),
-                            ReadText("CEP: "),
+                            ReadText("CEP: ").replace("-",""),
                             ReadInt("Nùmero da residência: ")
                     );
                     System.out.println("\nCadastro concluído!");
@@ -73,12 +73,17 @@ public class AreaCadastroCliente extends LeitorDados {
                 case "2":
                     System.out.println("\n# Alterar um cliente #\n");
                     ac.listarClientes();
+                    System.out.println();
+
+                    int alterId = ReadInt("Id: ");
+                    String field = ReadText("Campo: ");
                     ac.alterarCliente(
-                            ReadInt("Id: "),
-                            ReadText("Campo: "),
-                            ReadText("Alteração: ")
+                            alterId,
+                            field,
+                            ReadText("Alteração (" + field.toUpperCase() + "): ")
                     );
                     System.out.println("\nAlteração concluída!");
+                    ac.localizarCliente(alterId);
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoAltCli = ReadInt("\n\033[3mO que deseja?" +

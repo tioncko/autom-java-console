@@ -1,6 +1,7 @@
 package Database.Metodos;
 
 import NovosDados.Repositorio.Cliente;
+import Utils.MetodosUtils;
 
 import java.util.*;
 
@@ -25,7 +26,6 @@ public class MetodosCliente extends Cliente {
     /**
      * Alterar um cliente
      */
-    // PENDENTE ALTERAÇÃO DE CEP OU NUMERO DA CASA
     public void alterCliente(Integer id, String Campo, String update) {
         if (!tabCliente.isEmpty()) {
             fieldCli getCampo = fieldCli.valueOf(Campo.toUpperCase());
@@ -52,6 +52,14 @@ public class MetodosCliente extends Cliente {
                             break;
                         case TELEFONE:
                             tabCliente.put(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCpf(), cli.getEmail(), update, cli.getInfoCEP()));
+                            break;
+                        case CEP:
+                            tabCliente.put(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCpf(), cli.getEmail(), cli.getTelefone(),
+                                    MetodosUtils.CEP.ResponseCEP(update, cli.getInfoCEP().getNum())));
+                            break;
+                        case NUMCASA:
+                            tabCliente.put(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCpf(), cli.getEmail(), cli.getTelefone(),
+                                    MetodosUtils.CEP.ResponseCEP(cli.getInfoCEP().getCEP().replace("-",""), Integer.parseInt(update))));
                             break;
                         default:
                             break;
@@ -159,7 +167,7 @@ public class MetodosCliente extends Cliente {
     }
 
     private enum fieldCli {
-        NOME, IDADE, CPF, EMAIL, TELEFONE;
+        NOME, IDADE, CPF, EMAIL, TELEFONE, CEP, NUMCASA;
     }
 //#region notes
 /*
@@ -167,8 +175,7 @@ public class MetodosCliente extends Cliente {
 
         //Cliente cli = new Cliente();
         MetodosCliente mcli = new MetodosCliente();
-        MetodosUtils Utils = new MetodosUtils();
-        MetodosUtils.CEP CEP = Utils.new CEP();
+        MetodosUtils.CEP CEP = new CEP();
 
         System.out.println("# Lista de clientes #");
         mcli.setNome("Jorge");
@@ -220,11 +227,13 @@ public class MetodosCliente extends Cliente {
         System.out.println();
 
         System.out.println("# Alteração na lista de clientes #");
-        mcli.alterCliente(4, "Nome", "Nayara");
-        mcli.alterCliente(2, "E-mail", "trycatch@gmail.com");
-        mcli.alterCliente(5, "CPF", "81628784598");
-        mcli.alterCliente(3, "Telefone", "15945482154");
-        mcli.alterCliente(1, "Idade", "57");
+        //mcli.alterCliente(4, "Nome", "Nayara");
+        //mcli.alterCliente(2, "Email", "trycatch@gmail.com");
+        //mcli.alterCliente(5, "CPF", "81628784598");
+        //mcli.alterCliente(3, "Telefone", "15945482154");
+        //mcli.alterCliente(1, "Idade", "57");
+        mcli.alterCliente(4, "Numcasa", "1533");
+        mcli.alterCliente(1, "CEP", "05001903");
         mcli.PrintMapWithSet();
         System.out.println();
 
@@ -247,8 +256,8 @@ public class MetodosCliente extends Cliente {
 
         System.out.println(mcli.nextId());
     }
-
 */
+
     //#endregion
 
 }
