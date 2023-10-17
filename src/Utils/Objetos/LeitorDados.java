@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public abstract class LeitorDados implements InterfaceCRUD.IReader {
 
-    private static Scanner txt;
+    private static final Scanner txt;
 
     static {
         txt = new Scanner(System.in);

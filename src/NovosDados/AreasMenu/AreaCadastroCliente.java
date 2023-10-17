@@ -10,7 +10,7 @@ public class AreaCadastroCliente extends LeitorDados {
     Cadastro cad;
     Cadastro.AcoesCliente ac;
 
-    public AreaCadastroCliente() {
+    public AreaCadastroCliente() throws Exception {
         this.mp = new MenuPrincipal();
         this.cad = new Cadastro();
         this.ac = cad.new AcoesCliente();

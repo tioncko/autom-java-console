@@ -20,7 +20,7 @@ public class Login extends MetodosUsuario {
     }
 
     public void setUsr(String usr) {
-        this.usr = usr;
+        Login.usr = usr;
     }
 
     public void run() throws Exception {
@@ -33,12 +33,10 @@ public class Login extends MetodosUsuario {
         System.out.println("------- @@@@@@@@@@ @@@ - @@@ -- @@@ -- @@@ - @@@ @@@  @@  @@@ -------");
         System.out.println("------ @@@ ---- @@@ @@@@@@@ --- @@@ --- @@@@@@@  @@@ ---- @@@ -------");
         System.out.println("---------------------------------------------------------------------");
-        System.out.println("---------------------------------------------------------------------");
+        System.out.println("---------------------------------------------------------------------\n");
 
         int x = 0;
         do{
-            DT.DTUsers();
-
             String login = mp.ReadText("Login: ");
             String pass = mp.ReadText("Senha: ");
 
@@ -48,7 +46,6 @@ public class Login extends MetodosUsuario {
                 x = 1;
             } else {
                 System.out.println("\nUsuário inexistente ou senha incorreta.\nTente novamente.\n");
-                x = 0;
             }
         } while (x == 0);
     }

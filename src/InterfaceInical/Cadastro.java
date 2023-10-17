@@ -1,5 +1,6 @@
 package InterfaceInical;
 
+import Database.DataTables;
 import Database.Metodos.*;
 import Database.InterfaceCRUD;
 import Utils.MetodosUtils;
@@ -8,10 +9,11 @@ public class Cadastro implements InterfaceCRUD {
 
     MetodosCliente novoCli;
     MetodosUsuario novoUsr;
+    DataTables DT = new DataTables();
 
-    public Cadastro() {
+    public Cadastro() throws Exception {
         this.novoCli = new MetodosCliente();
-        this.novoUsr = new MetodosUsuario();
+        this.novoUsr = new MetodosUsuario(DT.DTUsers());
     }
 
     /**

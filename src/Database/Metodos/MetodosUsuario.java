@@ -8,73 +8,114 @@ public class MetodosUsuario extends Usuario {
 
     private Map<Integer, Usuario> tabUsuario;
 
+    /**
+     * Construtor
+     */
     public MetodosUsuario() {
-        this.tabUsuario = new HashMap<Integer, Usuario>();
+        this.tabUsuario = new HashMap<>();
     }
 
+    public MetodosUsuario(MetodosUsuario usr) {
+        this.tabUsuario = usr.tabUsuario;
+    }
+
+    /**
+     * Inserir novo usuário
+     */
     public void novoUsuario(Integer id, Usuario user) {
         tabUsuario.put(user.setId(id), new Usuario(user.getLogin(), user.getPassword(), user.getNome(), user.getDepto()));
     }
 
+    /**
+     * Alterar um usuário
+     */
     public void alterUsuario(Integer id, String Campo, String update) throws Exception {
-        Set<Map.Entry<Integer, Usuario>>
-                getUser = tabUsuario.entrySet();
+        if (!tabUsuario.isEmpty()) {
+            fieldUser getCampo = fieldUser.valueOf(Campo.toUpperCase());
 
-        for (Map.Entry<Integer, Usuario> setUser : getUser) {
-            Usuario user = setUser.getValue();
+            Set<Map.Entry<Integer, Usuario>> getUser = tabUsuario.entrySet();
 
+            for (Map.Entry<Integer, Usuario> setUser : getUser) {
+                Usuario user = setUser.getValue();
 
-            if (setUser.getKey().equals(id)) {
+                if (setUser.getKey().equals(id)) {
 
-                switch (Campo) {
-                    case "Login":
-                        tabUsuario.put(id, new Usuario(update, user.getPassword(), user.getNome(), user.getDepto()));
-                        break;
-                    case "Senha":
-                        tabUsuario.put(id, new Usuario(user.getLogin(), Encrypt(update), user.getNome(), user.getDepto()));
-                        break;
-                    case "Nome":
-                        tabUsuario.put(id, new Usuario(user.getLogin(), user.getPassword(), update, user.getDepto()));
-                        break;
-                    case "Depto":
-                        tabUsuario.put(id, new Usuario(user.getLogin(), user.getPassword(), user.getNome(), update));
-                        break;
-                    default:
-                        break;
+                    switch (getCampo) {
+                        case LOGIN:
+                            tabUsuario.put(id, new Usuario(update, user.getPassword(), user.getNome(), user.getDepto()));
+                            break;
+                        case SENHA:
+                            tabUsuario.put(id, new Usuario(user.getLogin(), Encrypt(update), user.getNome(), user.getDepto()));
+                            break;
+                        case NOME:
+                            tabUsuario.put(id, new Usuario(user.getLogin(), user.getPassword(), update, user.getDepto()));
+                            break;
+                        case DEPTO:
+                            tabUsuario.put(id, new Usuario(user.getLogin(), user.getPassword(), user.getNome(), update));
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
+        } else {
+            System.out.println("A tabela de usuário está vazia.");
         }
     }
 
+    /**
+     * Remover um usuário
+     */
     public void remoUsuario(Integer id) {
-        tabUsuario.remove(id);
+        if (!tabUsuario.isEmpty()) {
+            tabUsuario.remove(id);
+        } else {
+            System.out.println("A tabela de usuário está vazia.");
+        }
     }
 
+    /**
+     * Localizar um usuário
+     */
     public void findUsuario(Integer id) {
-        Set<Map.Entry<Integer, Usuario>>
-                getUser = tabUsuario.entrySet();
+        if (!tabUsuario.isEmpty()) {
+            Set<Map.Entry<Integer, Usuario>> getUser = tabUsuario.entrySet();
 
-        getUser.stream()
-                .filter(setid -> setid.getKey().equals(id))
-                .forEach(y -> System.out.println("id{" + y.getKey() + "}, " + y.getValue()));
+            getUser.stream().filter(setid -> setid.getKey().equals(id)).forEach(y -> System.out.println("id{" + y.getKey() + "}, " + y.getValue()));
+        } else {
+            System.out.println("A tabela de usuário está vazia.");
+        }
     }
 
+    /**
+     * Listar usuários por ids
+     */
     public void listbyIdUsuario(Integer ini_id, Integer fim_id) {
-        Set<Map.Entry<Integer, Usuario>>
-                getUser = tabUsuario.entrySet();
+        if (!tabUsuario.isEmpty()) {
+            Set<Map.Entry<Integer, Usuario>> getUser = tabUsuario.entrySet();
 
-        getUser.stream()
-                .filter(setid -> setid.getKey() >= ini_id && setid.getKey() <= fim_id)
-                .forEach(y -> System.out.println("id{" + y.getKey() + "}, " + y.getValue()));
+            getUser.stream().filter(setid -> setid.getKey() >= ini_id && setid.getKey() <= fim_id).forEach(y -> System.out.println("id{" + y.getKey() + "}, " + y.getValue()));
+        } else {
+            System.out.println("A tabela de usuário está vazia.");
+        }
     }
 
+    /**
+     * Remover usuários por ids
+     */
     public void remobyIdUsuario(Integer ini_id, Integer fim_id) {
-        Set<Map.Entry<Integer, Usuario>>
-                getUser = tabUsuario.entrySet();
+        if (!tabUsuario.isEmpty()) {
+            Set<Map.Entry<Integer, Usuario>> getUser = tabUsuario.entrySet();
 
-        getUser.removeIf(setid -> setid.getKey() >= ini_id && setid.getKey() <= fim_id);
+            getUser.removeIf(setid -> setid.getKey() >= ini_id && setid.getKey() <= fim_id);
+        } else {
+            System.out.println("A tabela de usuário está vazia.");
+        }
     }
 
+    /**
+     * Retorna um novo id unico
+     */
     public Integer nextId() {
 
         Integer maxnum = null;
@@ -89,38 +130,52 @@ public class MetodosUsuario extends Usuario {
         return maxnum + 1;
     }
 
+    /**
+     * Validar usuário para acesso a plataforma
+     */
     public boolean validUsuario(String login, String pass, MetodosUsuario dt) throws Exception {
-
         boolean valid = false;
+        if (!tabUsuario.isEmpty()) {
 
-        this.tabUsuario = dt.tabUsuario;
-        String decrypt = String.valueOf(Encrypt(pass));
+            this.tabUsuario = dt.tabUsuario;
+            String decrypt = String.valueOf(Encrypt(pass));
 
-        Set<Map.Entry<Integer, Usuario>>
-                getUser = tabUsuario.entrySet();
+            Set<Map.Entry<Integer, Usuario>> getUser = tabUsuario.entrySet();
 
-        for (Map.Entry<Integer, Usuario> setUser : getUser) {
-            Usuario user = setUser.getValue();
+            for (Map.Entry<Integer, Usuario> setUser : getUser) {
+                Usuario user = setUser.getValue();
 
-            if ((user.getLogin().equals(login)) && (user.getPassword().toString().equals(decrypt))) {
-                valid = true;
-                break;
+                if ((user.getLogin().equals(login)) && (user.getPassword().toString().equals(decrypt))) {
+                    valid = true;
+                    break;
+                }
             }
+        } else {
+            System.out.println("A tabela de usuário está vazia.");
         }
         return valid;
     }
 
+    /**
+     * Imprimir usuários que estão na lista no momento
+     */
     public void PrintMapWithSet() {
-        Set<Map.Entry<Integer, Usuario>>
-                getUser = tabUsuario.entrySet();
+        if (!tabUsuario.isEmpty()) {
+            Set<Map.Entry<Integer, Usuario>> getUser = tabUsuario.entrySet();
 
-        for (Map.Entry<Integer, Usuario> setUser : getUser) {
-            Integer key = setUser.getKey();
-            Usuario user = setUser.getValue();
-            System.out.println("id{" + key + "}, " + user);
+            for (Map.Entry<Integer, Usuario> setUser : getUser) {
+                Integer key = setUser.getKey();
+                Usuario user = setUser.getValue();
+                System.out.println("id{" + key + "}, " + user);
+            }
+        } else {
+            System.out.println("A tabela de usuário está vazia.");
         }
     }
 
+    private enum fieldUser {
+        LOGIN, SENHA, NOME, DEPTO;
+    }
 //#region notes
 /*
     public static void main(String[] args) throws Exception {

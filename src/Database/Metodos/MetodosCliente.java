@@ -12,7 +12,7 @@ public class MetodosCliente extends Cliente {
      * Construtor
      */
     public MetodosCliente() {
-        this.tabCliente = new HashMap<Integer, Cliente>();
+        this.tabCliente = new HashMap<>();
     }
 
     /**
@@ -28,6 +28,8 @@ public class MetodosCliente extends Cliente {
     // PENDENTE ALTERAÇÃO DE CEP OU NUMERO DA CASA
     public void alterCliente(Integer id, String Campo, String update) {
         if (!tabCliente.isEmpty()) {
+            fieldCli getCampo = fieldCli.valueOf(Campo.toUpperCase());
+
             Set<Map.Entry<Integer, Cliente>>
                     getCli = tabCliente.entrySet();
 
@@ -35,20 +37,20 @@ public class MetodosCliente extends Cliente {
                 Cliente cli = setCli.getValue();
 
                 if (setCli.getKey().equals(id)) {
-                    switch (Campo) {
-                        case "Nome":
+                    switch (getCampo) {
+                        case NOME:
                             tabCliente.put(id, new Cliente(update, cli.getIdade(), cli.getCpf(), cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()));
                             break;
-                        case "Idade":
+                        case IDADE:
                             tabCliente.put(id, new Cliente(cli.getNome(), Integer.parseInt(update), cli.getCpf(), cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()));
                             break;
-                        case "CPF":
+                        case CPF:
                             tabCliente.put(id, new Cliente(cli.getNome(), cli.getIdade(), update, cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()));
                             break;
-                        case "E-mail":
+                        case EMAIL:
                             tabCliente.put(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCpf(), update, cli.getTelefone(), cli.getInfoCEP()));
                             break;
-                        case "Telefone":
+                        case TELEFONE:
                             tabCliente.put(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCpf(), cli.getEmail(), update, cli.getInfoCEP()));
                             break;
                         default:
@@ -156,6 +158,9 @@ public class MetodosCliente extends Cliente {
         return maxnum + 1;
     }
 
+    private enum fieldCli {
+        NOME, IDADE, CPF, EMAIL, TELEFONE;
+    }
 //#region notes
 /*
     public static void main(String[] args) {

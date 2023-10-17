@@ -10,10 +10,24 @@ public class MenuPrincipal extends LeitorDados {
     }
 
     public void paginaInicial() throws Exception {
+
+        char[] charLogin = Login.getUsr().toCharArray();
+        String tab = "============================================";
+        String ovtab = (tab.substring(0, String.valueOf(charLogin).length()));
+        String supTab = (tab.substring(String.valueOf(charLogin).length() + 1));
+
+        StringBuilder currentLogin = new StringBuilder();
+        int i = 0;
+        for (char c : ovtab.toCharArray()){
+            c = charLogin[i];
+            currentLogin.append(c);
+            i++;
+        };
+
         System.out.println
-                ("\n=========================================================\n" +
-                        Login.getUsr() +
-                        "\n=========================================================");
+                ("\n=====================================================================\n" +
+                        "============= Bem vinde, " + currentLogin + " " + supTab +
+                        "\n=====================================================================");
         System.out.println("\nMenu:");
         System.out.println("1 - Cadastro");
         System.out.println("2 - Loja");

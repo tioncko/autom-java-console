@@ -47,7 +47,7 @@ public class MetodosUtils {
         return hashcode;
     }
 
-    public class CEP {
+    public static class CEP {
         public static ValidCEP ResponseCEP(String NumCEP, int NumEndereco) {
             ValidCEP novoCEP = new ValidCEP();
             try {

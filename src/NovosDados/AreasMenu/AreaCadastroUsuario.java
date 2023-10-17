@@ -10,7 +10,7 @@ public class AreaCadastroUsuario extends LeitorDados {
     Cadastro cad;
     Cadastro.AcoesUsuario ac;
 
-    public AreaCadastroUsuario() {
+    public AreaCadastroUsuario() throws Exception {
         this.mp = new MenuPrincipal();
         this.cad = new Cadastro();
         this.ac = cad.new AcoesUsuario();
@@ -70,12 +70,17 @@ public class AreaCadastroUsuario extends LeitorDados {
                 case "2":
                     System.out.println("\n# Alterar um usuário #\n");
                     ac.listarUsuario();
+                    System.out.println();
+
+                    int alterId = ReadInt("Id: ");
+                    String field = ReadText("Campo: ");
                     ac.alterarUsuario(
-                            ReadInt("Id: "),
-                            ReadText("Campo: "),
-                            ReadText("Alteração: ")
+                            alterId,
+                            field,
+                            ReadText("Alteração (" + field.toUpperCase() + "): ")
                     );
                     System.out.println("\nAlteração concluída!");
+                    ac.localizarUsuario(alterId);
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoAltUsr = ReadInt("\n\033[3mO que deseja?" +

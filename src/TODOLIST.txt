@@ -1,1 +1,2 @@
-Verificar a possibilidade de enviar o objeto criado na hora de inicializar o programa (parte de Usuários) para replicar aos outros processos - o DT.DTUsers em especifico
+[ok] Verificar a possibilidade de enviar o objeto criado na hora de inicializar o programa (parte de Usuários) para replicar aos outros processos - o DT.DTUsers em especifico
+Avaliação da necessidade de uso de enumerators
