@@ -71,7 +71,7 @@ public class Cadastro implements InterfaceCRUD {
         @Override
         public void cadastrarUsuario(String login, String pass, String nome, String depto) throws Exception{
             novoUsr.setLogin(login);
-            novoUsr.setPassword(MetodosUtils.Encrypt(pass));
+            novoUsr.setPassword(MetodosUtils.Senha.Encrypt(pass));
             novoUsr.setNome(nome);
             novoUsr.setDepto(depto);
 

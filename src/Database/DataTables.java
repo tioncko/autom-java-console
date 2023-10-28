@@ -1,8 +1,7 @@
 package Database;
 
 import Database.Metodos.MetodosUsuario;
-
-import static Utils.MetodosUtils.Encrypt;
+import Utils.MetodosUtils.*;
 
 public class DataTables {
 
@@ -12,16 +11,10 @@ public class DataTables {
         this.musr = new MetodosUsuario();
     }
 
-    public MetodosUsuario DTUsers() throws Exception {
+    public MetodosUsuario DTUsers() {
         musr.setLogin("supervisor".toLowerCase());
-        musr.setPassword(Encrypt("@autom123"));
+        musr.setPassword(Senha.Encrypt("@autom123"));
         musr.setNome("Supervisor");
-        musr.setDepto("Juridico");
-        musr.novoUsuario(musr.nextId(), musr);
-
-        musr.setLogin("user".toLowerCase());
-        musr.setPassword(Encrypt("@user123"));
-        musr.setNome("Paula Matos");
         musr.setDepto("TI");
         musr.novoUsuario(musr.nextId(), musr);
 

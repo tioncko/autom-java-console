@@ -1,6 +1,7 @@
 package Database.Metodos;
 
 import NovosDados.Repositorio.Usuario;
+import Utils.Objetos.PermissaoUsuario;
 
 import java.util.*;
 
@@ -29,7 +30,7 @@ public class MetodosUsuario extends Usuario {
     /**
      * Alterar um usuário
      */
-    public void alterUsuario(Integer id, String Campo, String update) throws Exception {
+    public void alterUsuario(Integer id, String Campo, String update) {
         if (!tabUsuario.isEmpty()) {
             fieldUser getCampo = fieldUser.valueOf(Campo.toUpperCase());
 
@@ -45,7 +46,7 @@ public class MetodosUsuario extends Usuario {
                             tabUsuario.put(id, new Usuario(update.toLowerCase(), user.getPassword(), user.getNome(), user.getDepto()));
                             break;
                         case SENHA:
-                            tabUsuario.put(id, new Usuario(user.getLogin(), Encrypt(update), user.getNome(), user.getDepto()));
+                            tabUsuario.put(id, new Usuario(user.getLogin(), Senha.Encrypt(update), user.getNome(), user.getDepto()));
                             break;
                         case NOME:
                             tabUsuario.put(id, new Usuario(user.getLogin(), user.getPassword(), update, user.getDepto()));
@@ -119,13 +120,12 @@ public class MetodosUsuario extends Usuario {
     public Integer nextId() {
 
         Integer maxnum = null;
-        if(!tabUsuario.isEmpty()) {
-            Set<Map.Entry<Integer, Usuario>>
-                    getUser = tabUsuario.entrySet();
+        if (!tabUsuario.isEmpty()) {
+            Set<Map.Entry<Integer, Usuario>> getUser = tabUsuario.entrySet();
 
             maxnum = getUser.stream().mapToInt(Map.Entry::getKey).max().getAsInt();
-        }
-        else maxnum = 0;
+        } else
+            maxnum = 0;
 
         return maxnum + 1;
     }
@@ -133,20 +133,20 @@ public class MetodosUsuario extends Usuario {
     /**
      * Validar usuário para acesso a plataforma
      */
-    public boolean validUsuario(String login, String pass, MetodosUsuario dt) throws Exception {
+    public boolean validUsuario(String login, String pass, MetodosUsuario dt) {
         boolean valid = false;
         this.tabUsuario = dt.tabUsuario;
 
         if (!tabUsuario.isEmpty()) {
 
-            String decrypt = String.valueOf(Encrypt(pass));
+            String encrypt = String.valueOf(Senha.Encrypt(pass));
 
             Set<Map.Entry<Integer, Usuario>> getUser = tabUsuario.entrySet();
 
             for (Map.Entry<Integer, Usuario> setUser : getUser) {
                 Usuario user = setUser.getValue();
 
-                if ((user.getLogin().equals(login)) && (user.getPassword().toString().equals(decrypt))) {
+                if ((user.getLogin().equals(login)) && (user.getPassword().toString().equals(encrypt))) {
                     valid = true;
                     break;
                 }
@@ -177,7 +177,36 @@ public class MetodosUsuario extends Usuario {
     private enum fieldUser {
         LOGIN, SENHA, NOME, DEPTO;
     }
-//#region notes
+
+    //
+    public class Permissao {
+        Map<Integer, PermissaoUsuario>
+                setUserPass = new HashMap<>();
+
+        public void AccessPermission(Integer id) {
+            Set<Map.Entry<Integer, Usuario>> getUser = tabUsuario.entrySet();
+            for (Map.Entry<Integer, Usuario> setUser : getUser) {
+
+                Usuario user = setUser.getValue();
+                if (setUser.getKey().equals(id)) {
+
+                    Map<Integer, PermissaoUsuario> getUserAccess = new HashMap<>();
+                    getUserAccess.put(1, new PermissaoUsuario("Admin"));
+
+                    Set<Map.Entry<Integer, PermissaoUsuario>> InnerUserPass = getUserAccess.entrySet();
+                    InnerUserPass.forEach(x -> setUserPass.put(id, new PermissaoUsuario(user.getLogin(), user.getPassword(), user.getNome(), user.getDepto(), x.getValue().getPermissao())));
+                }
+            }
+
+            Set<Map.Entry<Integer, PermissaoUsuario>> getThisUser = setUserPass.entrySet();
+            for (Map.Entry<Integer, PermissaoUsuario> setThisUser : getThisUser) {
+                Integer key = setThisUser.getKey();
+                PermissaoUsuario user = setThisUser.getValue();
+                System.out.println("id{" + key + "}, " + user);
+            }
+        }
+    }
+    //#region notes
 /*
     public static void main(String[] args) throws Exception {
 
@@ -186,25 +215,25 @@ public class MetodosUsuario extends Usuario {
         System.out.println("# Lista de clientes #");
 
         musr.setLogin("Keyla");
-        musr.setPassword(Encrypt("1234"));
+        musr.setPassword(Senha.Encrypt("1234"));
         musr.setNome("Keyla Nascimento");
         musr.setDepto("Juridico");
         musr.novoUsuario(1, musr);
 
         musr.setLogin("Paula");
-        musr.setPassword(Encrypt("5845"));
+        musr.setPassword(Senha.Encrypt("5845"));
         musr.setNome("Paula Matos");
         musr.setDepto("TI");
         musr.novoUsuario(2, musr);
 
         musr.setLogin("Rose");
-        musr.setPassword(Encrypt("8754"));
+        musr.setPassword(Senha.Encrypt("8754"));
         musr.setNome("Rose Barros");
         musr.setDepto("TI");
         musr.novoUsuario(3, musr);
 
         musr.setLogin("Tabata");
-        musr.setPassword(Encrypt("9687"));
+        musr.setPassword(Senha.Encrypt("9687"));
         musr.setNome("Tabata Amaral");
         musr.setDepto("Governança");
         musr.novoUsuario(4, musr);
@@ -237,12 +266,14 @@ public class MetodosUsuario extends Usuario {
         musr.remobyIdUsuario(1, 3);
         musr.PrintMapWithSet();
 
-        if (musr.validUsuario("Amaral", "9687")) System.out.println("\n" + "Usuário EXISTE na base de dados");
-        else System.out.println("\n" + "Usuário não existe na base de dados");
+        musr.AccessPermission(4);
+
+        //if (musr.validUsuario("Amaral", "9687")) System.out.println("\n" + "Usuário EXISTE na base de dados");
+        //else System.out.println("\n" + "Usuário não existe na base de dados");
 
         System.out.println("\nPróximo id: " + musr.nextId());
     }
+*/
 
- */
-//#endregion
+    //#endregion
 }

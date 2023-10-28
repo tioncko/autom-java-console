@@ -1,4 +1,4 @@
 [ok] Verificar a possibilidade de enviar o objeto criado na hora de inicializar o programa (parte de Usuários) para replicar aos outros processos - o DT.DTUsers em especifico
 [ok] Avaliação da necessidade de uso de enumerators
+[ok] Se possível, tentar decriptar o hash gerado pela classe "Criptografia"
 Criar variavel de permissão de acesso aos usuários que forem cadastrados (se possível, via enumerator)
-Se possível, tentar decriptar o hasg gerado pela classe "Criptografia"

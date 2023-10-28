@@ -7,7 +7,6 @@ import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
 import java.util.Base64;
 import javax.xml.parsers.DocumentBuilderFactory;
 import Utils.Objetos.Criptografia;
@@ -19,32 +18,90 @@ import org.xml.sax.InputSource;
 
 public class MetodosUtils {
 
-    public static Criptografia Encrypt(String password) throws Exception {
+    public static class Senha {
+        public static Criptografia Encrypt(String password) {
 
-        Base64.Encoder MD5enc64 = Base64.getEncoder();
-        //Base64.Encoder SHA_256enc64 = Base64.getEncoder();
+            Base64.Encoder encrypt = Base64.getEncoder();
+            byte[] request = (password.strip()).getBytes(StandardCharsets.ISO_8859_1);
+            String encoded = encrypt.encodeToString(request);
+            StringBuilder Char_byte = new StringBuilder(CharLength(encoded, Operation.ENCRYPT));
 
-        MessageDigest MD5 = MessageDigest.getInstance("MD5");
-        byte[] MD5_byte = MD5.digest((password.strip()).getBytes(StandardCharsets.UTF_8));
-        String first_hash = MD5enc64.encodeToString(MD5_byte);
-        //System.out.println(first_hash);
+            String HEX = asciiToHex(new String(Char_byte));
 
-        StringBuilder Char_byte = new StringBuilder();
-        for (int i = 0; i < first_hash.length(); i++)
-            Char_byte.append((char) (first_hash.charAt(i) - (first_hash.length() * first_hash.length())));
+            Base64.Encoder encryptHEX = Base64.getEncoder();
+            byte[] requestHEX = (HEX.strip()).getBytes(StandardCharsets.ISO_8859_1);
+            String encodedHEX = encryptHEX.encodeToString(requestHEX);
+            Criptografia hashcode = new Criptografia();
+            hashcode.setEncrypting(encodedHEX);
 
-        MessageDigest SHA_256 = MessageDigest.getInstance("SHA-256");
-        byte[] SHA_256_byte = SHA_256.digest(Char_byte.toString().getBytes(StandardCharsets.UTF_8));
-        //hashcode.setEncrypting(SHA_256enc64.encodeToString(SHA_256_byte));
-
-        StringBuilder HEX = new StringBuilder();
-        for (byte b : SHA_256_byte){
-            HEX.append(String.format("%02X", 0xFF & b));
+            return hashcode;
         }
 
-        Criptografia hashcode = new Criptografia();
-        hashcode.setEncrypting(HEX.toString());
-        return hashcode;
+        private static String Decrypt(String hex) {
+
+            Base64.Decoder decryptHEX = Base64.getDecoder();
+            byte[] responseHEX = decryptHEX.decode(new String(hex));
+            String decodedHEX = new String(responseHEX, StandardCharsets.ISO_8859_1);
+            //--
+            Base64.Decoder decrypt = Base64.getDecoder();
+            String password = hexToASCII(decodedHEX);
+            StringBuilder Char_byte = new StringBuilder(CharLength(password, Operation.DECRYPT));
+
+            byte[] response = decrypt.decode(new String(Char_byte));
+            String decoded = new String(response, StandardCharsets.ISO_8859_1);
+
+            return decoded;
+        }
+
+        private static String asciiToHex(String asciiValue) {
+
+            StringBuilder hex = new StringBuilder();
+
+            char[] chars = asciiValue.toCharArray();
+            for (char aChar : chars) {
+                hex.append(Integer.toHexString(aChar));
+            }
+
+            return hex.toString();
+        }
+
+        private static String hexToASCII(String hexValue) {
+
+            StringBuilder output = new StringBuilder();
+
+            for (int i = 0; i < hexValue.length(); i += 2) {
+                String str = hexValue.substring(i, i + 2);
+                output.append((char) Integer.parseInt(str, 16));
+            }
+
+            return output.toString();
+        }
+
+        private static String CharLength(String password, Operation operation) {
+
+            StringBuilder charStr = new StringBuilder();
+
+            int MathPass = (int) Math.round(4 * 3.14159265359 * password.length())/password.length();
+            switch (operation) {
+                case ENCRYPT:
+                    for (int i = 0; i < password.length(); i++)
+                        charStr.append((char) (password.charAt(i) - (MathPass)));
+                    break;
+                case DECRYPT:
+                    for (int i = 0; i < password.length(); i++)
+                        charStr.append((char) (password.charAt(i) + (MathPass)));
+                    break;
+                default:
+                    break;
+            }
+
+            return new String(charStr);
+        }
+
+        private enum Operation{
+            ENCRYPT,
+            DECRYPT;
+        }
     }
 
     public static class CEP {
@@ -92,6 +149,8 @@ public class MetodosUtils {
             return response;
         }
     }
+
+
 }
 
 //#region notes
