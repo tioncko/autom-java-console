@@ -1,7 +1,8 @@
 package Database.Metodos;
 
-import NovosDados.Repositorio.Usuario;
-import Utils.Objetos.PermissaoUsuario;
+import NovosDados.Repositorio.*;
+import NovosDados.Repositorio.Enums.Permissao;
+import Utils.Objetos.*;
 
 import java.util.*;
 
@@ -174,36 +175,164 @@ public class MetodosUsuario extends Usuario {
         }
     }
 
+    /**
+     * Enum para o campo de alteração da tabUsuario
+     */
     private enum fieldUser {
         LOGIN, SENHA, NOME, DEPTO;
     }
 
-    //
-    public class Permissao {
-        Map<Integer, PermissaoUsuario>
-                setUserPass = new HashMap<>();
+    public Integer UserId(String access, MetodosUsuario dt) {
+        this.tabUsuario = dt.tabUsuario;
+        Integer retrn = null;
 
-        public void AccessPermission(Integer id) {
+        if (!tabUsuario.isEmpty()) {
             Set<Map.Entry<Integer, Usuario>> getUser = tabUsuario.entrySet();
+
             for (Map.Entry<Integer, Usuario> setUser : getUser) {
-
                 Usuario user = setUser.getValue();
-                if (setUser.getKey().equals(id)) {
 
-                    Map<Integer, PermissaoUsuario> getUserAccess = new HashMap<>();
-                    getUserAccess.put(1, new PermissaoUsuario("Admin"));
-
-                    Set<Map.Entry<Integer, PermissaoUsuario>> InnerUserPass = getUserAccess.entrySet();
-                    InnerUserPass.forEach(x -> setUserPass.put(id, new PermissaoUsuario(user.getLogin(), user.getPassword(), user.getNome(), user.getDepto(), x.getValue().getPermissao())));
+                if (user.getLogin().equals(access.toLowerCase())) {
+                    retrn = user.getId();
+                    break;
                 }
             }
+        } else {
+            System.out.println("A tabela de usuário está vazia.");
+        }
+        return retrn;
+    }
 
-            Set<Map.Entry<Integer, PermissaoUsuario>> getThisUser = setUserPass.entrySet();
-            for (Map.Entry<Integer, PermissaoUsuario> setThisUser : getThisUser) {
-                Integer key = setThisUser.getKey();
-                PermissaoUsuario user = setThisUser.getValue();
-                System.out.println("id{" + key + "}, " + user);
+    /**
+     * Validando permissão de acesso ao usuario
+     */
+    public PermissaoUsuario validPermissao(String login, MetodosUsuario dt){
+        this.tabUsuario = dt.tabUsuario;
+
+        PermissaoUsuario access = null;
+        if (!tabUsuario.isEmpty()) {
+
+            Set<Map.Entry<Integer, Usuario>> getUser = tabUsuario.entrySet();
+
+            for (Map.Entry<Integer, Usuario> setUser : getUser) {
+                Usuario user = setUser.getValue();
+
+                if (user.getLogin().equals(login)) {
+                    access = user.getAccess();
+                    break;
+                }
             }
+        } else {
+            System.out.println("A tabela de usuário está vazia.");
+        }
+        return access;
+    }
+
+    /**
+     * Usuário root chumbado
+     */
+    public void rootPermissao(Integer id, String access) {
+        if (!tabUsuario.isEmpty()) {
+            Set<Map.Entry<Integer, Usuario>> getUser = tabUsuario.entrySet();
+
+            for (Map.Entry<Integer, Usuario> setUser : getUser) {
+                Integer kid = setUser.getKey();
+                Usuario user = setUser.getValue();
+                PermissaoUsuario root = new PermissaoUsuario(String.valueOf(Permissao.ROOT));
+
+                if (id.equals(1) && kid.equals(id) && user.getLogin().equals("supervisor".toLowerCase())) {
+                    Permissao acessosup;
+                    acessosup = Numeros.isNumeric(access) ? Permissao.getAccess(Integer.parseInt(access)) : Permissao.valueOf(access.toUpperCase());
+                    PermissaoUsuario perm = new PermissaoUsuario(String.valueOf(acessosup).toUpperCase());
+
+                    tabUsuario.put(id, new Usuario(user.getLogin(), user.getPassword(), user.getNome(), user.getDepto(), perm));
+                }
+            }
+        } else
+            System.out.println("Não foi possível acessar o sistema.");
+    }
+
+    /**
+     * Dar permissão a um usuário
+     */
+    public void darPermissao(Integer id, String access) {
+        if (!tabUsuario.isEmpty()) {
+            Set<Map.Entry<Integer, Usuario>> getUser = tabUsuario.entrySet();
+            Permissao acesso = Numeros.isNumeric(access) ? Permissao.getAccess(Integer.parseInt(access)) : Permissao.valueOf(access.toUpperCase());
+
+            if ((!access.toUpperCase().equals(String.valueOf(Permissao.ROOT))) || (!String.valueOf(acesso).equals(String.valueOf(1)))) {
+                for (Map.Entry<Integer, Usuario> setUser : getUser) {
+                    Usuario user = setUser.getValue();
+
+                    if (setUser.getKey().equals(id)) {
+                        PermissaoUsuario perm = new PermissaoUsuario(String.valueOf(acesso).toUpperCase());
+                        tabUsuario.put(id, new Usuario(user.getLogin(), user.getPassword(), user.getNome(), user.getDepto(), perm));
+                    }
+                }
+            } else
+                System.out.println("Permissão raiz indisponível.");
+        } else {
+            System.out.println("A tabela de usuário está vazia.");
+        }
+    }
+
+    /**
+     * Alterar permissão de um usuário
+     */
+    public void altPermissao(Integer idAdm, Integer id, String access) {
+        if (!tabUsuario.isEmpty()) {
+            if(!access.toUpperCase().equals(String.valueOf(Permissao.ROOT))) {
+                Set<Map.Entry<Integer, Usuario>> getUser = tabUsuario.entrySet();
+                PermissaoUsuario admin = new PermissaoUsuario(String.valueOf(Permissao.ADMIN));
+                PermissaoUsuario root = new PermissaoUsuario(String.valueOf(Permissao.ROOT));
+
+                for (Map.Entry<Integer, Usuario> setUser : getUser) {
+                    Integer idA = setUser.getKey();
+                    Usuario adm = setUser.getValue();
+
+                    if (idA.equals(idAdm)) {
+                        if ((Objects.equals(String.valueOf(adm.getAccess()), String.valueOf(admin))) || (Objects.equals(String.valueOf(adm.getAccess()), String.valueOf(root)))) {
+
+                            for (Map.Entry<Integer, Usuario> setUser2 : getUser) {
+                                Integer kid = setUser2.getKey();
+                                Usuario user = setUser2.getValue();
+
+                                if (kid.equals(id) && (!Objects.equals(String.valueOf(user.getAccess()), String.valueOf(root)))) {
+                                    Permissao acesso = Numeros.isNumeric(access) ? Permissao.getAccess(Integer.parseInt(access)) : Permissao.valueOf(access.toUpperCase());
+                                    PermissaoUsuario perm = new PermissaoUsuario(String.valueOf(acesso).toUpperCase());
+
+                                    tabUsuario.put(id, new Usuario(user.getLogin(), user.getPassword(), user.getNome(), user.getDepto(), perm));
+                                }
+                            }
+                        } else
+                            System.out.println("Este usuário não tem permissão para esta ação.");
+                    }
+                }
+            } else
+                System.out.println("Permissão raiz indisponível.");
+        } else
+            System.out.println("A tabela de usuário está vazia.");
+    }
+
+    /**
+     * Remover permissão de um usuário
+     */
+    public void remPermissao(Integer id) {
+        if (!tabUsuario.isEmpty()) {
+            Set<Map.Entry<Integer, Usuario>> getUser = tabUsuario.entrySet();
+
+            for (Map.Entry<Integer, Usuario> setUser : getUser) {
+                Integer kid = setUser.getKey();
+                Usuario user = setUser.getValue();
+                PermissaoUsuario root = new PermissaoUsuario(String.valueOf(Permissao.ROOT));
+
+                if (kid.equals(id) && (!Objects.equals(String.valueOf(user.getAccess()), String.valueOf(root)))) {
+                    tabUsuario.put(id, new Usuario(user.getLogin(), user.getPassword(), user.getNome(), user.getDepto()));
+                } else
+                    System.out.println("Não é possível retirar permissão raiz deste usuário.");
+            }
+        } else {
+            System.out.println("A tabela de usuário está vazia.");
         }
     }
     //#region notes
@@ -238,6 +367,12 @@ public class MetodosUsuario extends Usuario {
         musr.setDepto("Governança");
         musr.novoUsuario(4, musr);
 
+        musr.setLogin("supervisor");
+        musr.setPassword(Senha.Encrypt("5474"));
+        musr.setNome("Perola Pardo");
+        musr.setDepto("Business");
+        musr.novoUsuario(5, musr);
+
         musr.PrintMapWithSet();
         System.out.println();
 
@@ -266,7 +401,16 @@ public class MetodosUsuario extends Usuario {
         musr.remobyIdUsuario(1, 3);
         musr.PrintMapWithSet();
 
-        musr.AccessPermission(4);
+        System.out.println();
+        musr.darPermissao(5, "root");
+        musr.darPermissao(4, "user");
+        musr.PrintMapWithSet();
+
+        System.out.println();
+        System.out.println("# Alterando permissao #");
+        musr.altPermissao(5,4, "admin");
+        System.out.println();
+        musr.PrintMapWithSet();
 
         //if (musr.validUsuario("Amaral", "9687")) System.out.println("\n" + "Usuário EXISTE na base de dados");
         //else System.out.println("\n" + "Usuário não existe na base de dados");

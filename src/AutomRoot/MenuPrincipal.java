@@ -1,17 +1,26 @@
 package AutomRoot;
 
+import Database.DataTables;
+import Database.Metodos.MetodosUsuario;
 import NovosDados.AreasMenu.AreaCadastroCliente;
 import NovosDados.AreasMenu.AreaCadastroUsuario;
+import NovosDados.Repositorio.Enums.Permissao;
 import Utils.Objetos.LeitorDados;
 
 public class MenuPrincipal extends LeitorDados {
 
+    DataTables dtb;
+    MetodosUsuario mu ;
+
     public MenuPrincipal() {
+        this.mu = new MetodosUsuario();
+        this.dtb = new DataTables();
     }
 
     public void paginaInicial() throws Exception {
 
-        char[] charLogin = Login.getUsr().toCharArray();
+        String logged = Login.getUsr();
+        char[] charLogin = logged.toCharArray();
         String tab = "============================================";
         String ovtab = (tab.substring(0, String.valueOf(charLogin).length()));
         String supTab = (tab.substring(String.valueOf(charLogin).length() + 1));
@@ -31,14 +40,18 @@ public class MenuPrincipal extends LeitorDados {
         System.out.println("\nMenu:");
         System.out.println("1 - Cadastro");
         System.out.println("2 - Loja");
-        //System.out.println("\n\033[3m- Digitar código do menu para suas ações -\033[0m\n");
+
+        String access = String.valueOf(mu.validPermissao(logged, dtb.DTUsers()));
+        Integer userId = mu.UserId(access, dtb.DTUsers());
 
         System.out.print("\n-----------------------------------------");
         String id = ReadText("\n\033[3mDigite código do menu para suas ações: \033[0m");
         System.out.println("-----------------------------------------");
         switch (id) {
             case "1":
-                menuCadastro();
+                if(!(access.equals(String.valueOf(Permissao.USER)))) {
+                    menuCadastro(userId);
+                }
                 break;
             case "2":
                 //menuloja();
@@ -48,7 +61,7 @@ public class MenuPrincipal extends LeitorDados {
         }
     }
 
-    public void menuCadastro() throws Exception {
+    public void menuCadastro(Integer userId) throws Exception {
         System.out.println("\nCadastro:");
         System.out.println("1 - Cliente");
         System.out.println("2 - Fornecedor");
@@ -64,13 +77,13 @@ public class MenuPrincipal extends LeitorDados {
         System.out.println("-----------------------------------------");
         switch (id) {
             case "1":
-                acad.menuCadastroCliente();
+                acad.menuCadastroCliente(userId);
                 break;
             case "2":
                 //acaf.menuCadastroFornecedor();
                 break;
             case "3":
-                acau.menuCadastroUsuario();
+                acau.menuCadastroUsuario(userId);
                 break;
             case "4":
                 //acap.menuCadastroProduto();

@@ -67,7 +67,7 @@ public class Cadastro implements InterfaceCRUD {
     /**
      * Classe interna para as Ações do usuário
      */
-    public class AcoesUsuario implements IUsers{
+    public class AcoesUsuario implements IUsers, IPermissions{
         @Override
         public void cadastrarUsuario(String login, String pass, String nome, String depto) throws Exception{
             novoUsr.setLogin(login);
@@ -106,6 +106,28 @@ public class Cadastro implements InterfaceCRUD {
         @Override
         public void listarUsuario() {
             novoUsr.PrintMapWithSet();
+        }
+
+
+        @Override
+        public Integer returnNextId() {
+            return novoUsr.nextId();
+        }
+
+
+        @Override
+        public void asociarPermissao(Integer id, String access) {
+            novoUsr.darPermissao(id, access);
+        }
+
+        @Override
+        public void alterarPermissao(Integer idAdm, Integer id, String access) {
+            novoUsr.altPermissao(idAdm,id, access);
+        }
+
+        @Override
+        public void removerPermissao(Integer id) {
+            novoUsr.remPermissao(id);
         }
     }
 }

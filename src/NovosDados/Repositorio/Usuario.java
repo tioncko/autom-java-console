@@ -2,6 +2,7 @@ package NovosDados.Repositorio;
 
 import Utils.MetodosUtils;
 import Utils.Objetos.Criptografia;
+import Utils.Objetos.PermissaoUsuario;
 
 public class Usuario extends MetodosUtils {
 
@@ -10,6 +11,15 @@ public class Usuario extends MetodosUtils {
     private Criptografia password;
     private String nome;
     private String depto;
+    private PermissaoUsuario access;
+
+    public Usuario(String login, Criptografia password, String nome, String depto, PermissaoUsuario access) {
+        this.login = login;
+        this.password = password;
+        this.nome = nome;
+        this.depto = depto;
+        this.access = access;
+    }
 
     public Usuario(String login, Criptografia password, String nome, String depto) {
         this.login = login;
@@ -61,6 +71,14 @@ public class Usuario extends MetodosUtils {
         this.depto = depto;
     }
 
+    public PermissaoUsuario getAccess(){
+        return access;
+    }
+
+    public void setAccess(PermissaoUsuario access){
+        this.access = access;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
@@ -68,6 +86,7 @@ public class Usuario extends MetodosUtils {
                 ", password='" + password + '\'' +
                 ", nome='" + nome + '\'' +
                 ", depto='" + depto + '\'' +
+                ", permissao='" + access + '\'' +
                 '}';
     }
 }

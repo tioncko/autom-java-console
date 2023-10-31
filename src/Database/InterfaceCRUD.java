@@ -27,4 +27,11 @@ public interface InterfaceCRUD {
         public void removerMaisUsuarios(Integer ini, Integer fim) throws Exception;
         public void listarUsuario() throws Exception;
     }
+
+    public interface IPermissions{
+        public Integer returnNextId();
+        public void asociarPermissao(Integer id, String access);
+        public void alterarPermissao(Integer idAdm, Integer id, String access);
+        public void removerPermissao(Integer id);
+    }
 }

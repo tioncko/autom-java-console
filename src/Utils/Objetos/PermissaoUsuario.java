@@ -28,12 +28,6 @@ public class PermissaoUsuario extends Usuario {
 
 
     public String toString() {
-        return "Usuario{" +
-                "login='" + getLogin() + '\'' +
-                ", password='" + getPassword() + '\'' +
-                ", nome='" + getNome() + '\'' +
-                ", depto='" + getDepto() + '\'' +
-                ", Permissao='" + Permissao + '\'' +
-                '}';
+        return Permissao;
     }
 }

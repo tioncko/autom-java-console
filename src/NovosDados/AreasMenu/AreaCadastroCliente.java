@@ -16,7 +16,7 @@ public class AreaCadastroCliente extends LeitorDados {
         this.ac = cad.new AcoesCliente();
     }
 
-    public void menuCadastroCliente() throws Exception {
+    public void menuCadastroCliente(Integer userId) throws Exception {
         System.out.println("\nCliente:");
         System.out.println("1 - Cadastrar Cliente");
         System.out.println("2 - Alterar Cliente");
@@ -29,10 +29,10 @@ public class AreaCadastroCliente extends LeitorDados {
         System.out.print("\n-----------------------------------------");
         String id = ReadText("\n\033[3mDigite código do menu para suas ações: \033[0m");
         System.out.println("-----------------------------------------");
-        AcoesCadastroCliente(id);
+        AcoesCadastroCliente(id, userId);
     }
 
-    void AcoesCadastroCliente(String id) throws Exception {
+    void AcoesCadastroCliente(String id, Integer userId) throws Exception {
         boolean session = true;
         while (session) {
             switch (id) {
@@ -58,12 +58,12 @@ public class AreaCadastroCliente extends LeitorDados {
                             "\n(4) Sair da aplicação?: \033[0m");
                     System.out.println("----------------------------------------------");
 
-                    if (opcaoCadCli == 1) menuCadastroCliente();
+                    if (opcaoCadCli == 1) menuCadastroCliente(userId);
                     if (opcaoCadCli == 2) {
                         session = false;
                         mp.paginaInicial();
                     }
-                    if (opcaoCadCli == 3) mp.menuCadastro();
+                    if (opcaoCadCli == 3) mp.menuCadastro(userId);
                     if (opcaoCadCli == 4) {
                         System.out.println("\nAplicação encerrada.");
                         System.exit(0);
@@ -93,12 +93,12 @@ public class AreaCadastroCliente extends LeitorDados {
                             "\n(4) Sair da aplicação?: \033[0m");
                     System.out.println("----------------------------------------------");
 
-                    if (opcaoAltCli == 1) menuCadastroCliente();
+                    if (opcaoAltCli == 1) menuCadastroCliente(userId);
                     if (opcaoAltCli == 2) {
                         session = false;
                         mp.paginaInicial();
                     }
-                    if (opcaoAltCli == 3) mp.menuCadastro();
+                    if (opcaoAltCli == 3) mp.menuCadastro(userId);
                     if (opcaoAltCli == 4) {
                         System.out.println("\nAplicação encerrada.");
                         System.exit(0);
@@ -120,12 +120,12 @@ public class AreaCadastroCliente extends LeitorDados {
                             "\n(4) Sair da aplicação?: \033[0m");
                     System.out.println("----------------------------------------------");
 
-                    if (opcaoExcCli == 1) menuCadastroCliente();
+                    if (opcaoExcCli == 1) menuCadastroCliente(userId);
                     if (opcaoExcCli == 2) {
                         session = false;
                         mp.paginaInicial();
                     }
-                    if (opcaoExcCli == 3) mp.menuCadastro();
+                    if (opcaoExcCli == 3) mp.menuCadastro(userId);
                     if (opcaoExcCli == 4) {
                         System.out.println("\nAplicação encerrada.");
                         System.exit(0);
@@ -146,12 +146,12 @@ public class AreaCadastroCliente extends LeitorDados {
                             "\n(4) Sair da aplicação?: \033[0m");
                     System.out.println("----------------------------------------------");
 
-                    if (opcaoLocCli == 1) menuCadastroCliente();
+                    if (opcaoLocCli == 1) menuCadastroCliente(userId);
                     if (opcaoLocCli == 2) {
                         session = false;
                         mp.paginaInicial();
                     }
-                    if (opcaoLocCli == 3) mp.menuCadastro();
+                    if (opcaoLocCli == 3) mp.menuCadastro(userId);
                     if (opcaoLocCli == 4) {
                         System.out.println("\nAplicação encerrada.");
                         System.exit(0);
@@ -173,12 +173,12 @@ public class AreaCadastroCliente extends LeitorDados {
                             "\n(4) Sair da aplicação?: \033[0m");
                     System.out.println("----------------------------------------------");
 
-                    if (opcaoLocMCli == 1) menuCadastroCliente();
+                    if (opcaoLocMCli == 1) menuCadastroCliente(userId);
                     if (opcaoLocMCli == 2) {
                         session = false;
                         mp.paginaInicial();
                     }
-                    if (opcaoLocMCli == 3) mp.menuCadastro();
+                    if (opcaoLocMCli == 3) mp.menuCadastro(userId);
                     if (opcaoLocMCli == 4) {
                         System.out.println("\nAplicação encerrada.");
                         System.exit(0);
@@ -200,12 +200,12 @@ public class AreaCadastroCliente extends LeitorDados {
                             "\n(4) Sair da aplicação?: \033[0m");
                     System.out.println("----------------------------------------------");
 
-                    if (opcaoRemMCli == 1) menuCadastroCliente();
+                    if (opcaoRemMCli == 1) menuCadastroCliente(userId);
                     if (opcaoRemMCli == 2) {
                         session = false;
                         mp.paginaInicial();
                     }
-                    if (opcaoRemMCli == 3) mp.menuCadastro();
+                    if (opcaoRemMCli == 3) mp.menuCadastro(userId);
                     if (opcaoRemMCli == 4) {
                         System.out.println("\nAplicação encerrada.");
                         System.exit(0);
@@ -224,12 +224,12 @@ public class AreaCadastroCliente extends LeitorDados {
                             "\n(4) Sair da aplicação?: \033[0m");
                     System.out.println("----------------------------------------------");
 
-                    if (opcaoListUsr == 1) menuCadastroCliente();
+                    if (opcaoListUsr == 1) menuCadastroCliente(userId);
                     if (opcaoListUsr == 2) {
                         session = false;
                         mp.paginaInicial();
                     }
-                    if (opcaoListUsr == 3) mp.menuCadastro();
+                    if (opcaoListUsr == 3) mp.menuCadastro(userId);
                     if (opcaoListUsr == 4) {
                         System.out.println("\nAplicação encerrada.");
                         System.exit(0);
