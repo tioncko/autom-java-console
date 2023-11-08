@@ -133,7 +133,7 @@ public class MetodosCliente extends Cliente {
     /**
      * Imprimir clientes que estão na lista no momento
      */
-    public void PrintMapWithSet() {
+    public boolean PrintMapWithSet() {
         if (!tabCliente.isEmpty()) {
             Set<Map.Entry<Integer, Cliente>>
                     entries = tabCliente.entrySet();
@@ -143,8 +143,10 @@ public class MetodosCliente extends Cliente {
                 Cliente cli = entry.getValue();
                 System.out.println("id{" + key + "}, " + cli);
             }
+            return true;
         } else {
             System.out.println("A tabela de cliente está vazia.");
+            return false;
         }
     }
 

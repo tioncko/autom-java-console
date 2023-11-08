@@ -40,7 +40,7 @@ public class Login extends MetodosUsuario {
             String login = mp.ReadText("Login: ").toLowerCase();
             String pass = mp.ReadText("Senha: ");
 
-            if (validUsuario(login, pass, DT.DTUsers())) {
+            if (validLoginUsuario(login, pass, DT.DTUsers())) {
                 setUsr(login);
                 mp.paginaInicial();
                 x = 1;

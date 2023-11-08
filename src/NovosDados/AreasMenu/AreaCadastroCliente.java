@@ -40,11 +40,11 @@ public class AreaCadastroCliente extends LeitorDados {
                     System.out.println("\n# Cadastrar novo cliente #\n");
                     //ac.cadastrarCliente("Jorge", 22, "04472205484", "teste@olos.com.br", "014585445489", "04472205", 38);
                     ac.cadastrarCliente(
-                            ReadText("Nome: "),
+                            ReadSentence("Nome: "),
                             ReadInt("Idade: "),
                             ReadText("CPF: "),
                             ReadText("E-mail: "),
-                            ReadText("Telefone: "),
+                            ReadSentence("Telefone: "),
                             ReadText("CEP: ").replace("-",""),
                             ReadInt("Nùmero da residência: ")
                     );
@@ -72,18 +72,19 @@ public class AreaCadastroCliente extends LeitorDados {
 
                 case "2":
                     System.out.println("\n# Alterar um cliente #\n");
-                    ac.listarClientes();
-                    System.out.println();
+                    if(ac.listarClientes()){
+                        System.out.println();
 
-                    int alterId = ReadInt("Id: ");
-                    String field = ReadText("Campo: ");
-                    ac.alterarCliente(
-                            alterId,
-                            field,
-                            ReadText("Alteração (" + field.toUpperCase() + "): ")
-                    );
-                    System.out.println("\nAlteração concluída!");
-                    ac.localizarCliente(alterId);
+                        int alterId = ReadInt("Id: ");
+                        String field = ReadText("Campo: ");
+                        ac.alterarCliente(
+                               alterId,
+                                field,
+                                ReadSentence("Alteração (" + field.toUpperCase() + "): ")
+                        );
+                        System.out.println("\nAlteração concluída!");
+                        ac.localizarCliente(alterId);
+                    }
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoAltCli = ReadInt("\n\033[3mO que deseja?" +
@@ -107,10 +108,14 @@ public class AreaCadastroCliente extends LeitorDados {
 
                 case "3":
                     System.out.println("\n# Excluir um cliente #\n");
-                    ac.excluirCliente(
-                            ReadInt("Id: ")
-                    );
-                    System.out.println("\nExclusão concluída!");
+                    if(ac.listarClientes()) {
+                        System.out.println();
+
+                        ac.excluirCliente(
+                                ReadInt("Id: ")
+                        );
+                        System.out.println("\nExclusão concluída!");
+                    }
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoExcCli = ReadInt("\n\033[3mO que deseja?" +
@@ -134,9 +139,13 @@ public class AreaCadastroCliente extends LeitorDados {
 
                 case "4":
                     System.out.println("\n# Localizar um cliente #\n");
-                    ac.localizarCliente(
-                            ReadInt("Id: ")
-                    );
+                    if(ac.listarClientes()){
+                        System.out.println();
+
+                        ac.localizarCliente(
+                                ReadInt("Id: ")
+                        );
+                    }
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoLocCli = ReadInt("\n\033[3mO que deseja?" +
@@ -160,10 +169,14 @@ public class AreaCadastroCliente extends LeitorDados {
 
                 case "5":
                     System.out.println("\n# Localizar vários clientes #\n");
-                    ac.localizarMaisClientes(
-                            ReadInt("Início: "),
-                            ReadInt("Fim: ")
-                    );
+                    if(ac.listarClientes()){
+                        System.out.println();
+
+                        ac.localizarMaisClientes(
+                                ReadInt("Início: "),
+                                ReadInt("Fim: ")
+                        );
+                    }
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoLocMCli = ReadInt("\n\033[3mO que deseja?" +
@@ -187,10 +200,14 @@ public class AreaCadastroCliente extends LeitorDados {
 
                 case "6":
                     System.out.println("\n# Remover vários clientes #\n");
-                    ac.removerMaisClientes(
-                            ReadInt("Início: "),
-                            ReadInt("Fim: ")
-                    );
+                    if(ac.listarClientes()){
+                        System.out.println();
+
+                        ac.removerMaisClientes(
+                                ReadInt("Início: "),
+                                ReadInt("Fim: ")
+                       );
+                    }
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoRemMCli = ReadInt("\n\033[3mO que deseja?" +

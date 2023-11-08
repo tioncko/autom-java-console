@@ -9,11 +9,13 @@ public class Cadastro implements InterfaceCRUD {
 
     MetodosCliente novoCli;
     MetodosUsuario novoUsr;
+    MetodosFornecedor novoFrn;
     DataTables DT = new DataTables();
 
-    public Cadastro() throws Exception {
+    public Cadastro(){
         this.novoCli = new MetodosCliente();
         this.novoUsr = new MetodosUsuario(DT.DTUsers());
+        this.novoFrn = new MetodosFornecedor();
     }
 
     /**
@@ -58,8 +60,8 @@ public class Cadastro implements InterfaceCRUD {
         }
 
         @Override
-        public void listarClientes() {
-            novoCli.PrintMapWithSet();
+        public boolean listarClientes() {
+            return novoCli.PrintMapWithSet();
         }
 
     }
@@ -69,7 +71,7 @@ public class Cadastro implements InterfaceCRUD {
      */
     public class AcoesUsuario implements IUsers, IPermissions{
         @Override
-        public void cadastrarUsuario(String login, String pass, String nome, String depto) throws Exception{
+        public void cadastrarUsuario(String login, String pass, String nome, String depto){
             novoUsr.setLogin(login);
             novoUsr.setPassword(MetodosUtils.Senha.Encrypt(pass));
             novoUsr.setNome(nome);
@@ -79,8 +81,9 @@ public class Cadastro implements InterfaceCRUD {
         }
 
         @Override
-        public void alterarUsuario(Integer id, String campo, String update) throws Exception {
+        public void alterarUsuario(Integer id, String campo, String update){
             novoUsr.alterUsuario(id, campo, update);
+            System.out.println(MetodosUsuario.cod == 1 ? "\nUsuário alterado" : "\nNão foi possível alterar este usuário");
         }
 
         @Override
@@ -104,8 +107,8 @@ public class Cadastro implements InterfaceCRUD {
         }
 
         @Override
-        public void listarUsuario() {
-            novoUsr.PrintMapWithSet();
+        public boolean listarUsuario() {
+            return novoUsr.PrintMapWithSet();
         }
 
 
@@ -118,16 +121,62 @@ public class Cadastro implements InterfaceCRUD {
         @Override
         public void asociarPermissao(Integer id, String access) {
             novoUsr.darPermissao(id, access);
+            System.out.print(MetodosUsuario.cod == 1 ? "\nUsuário inserido" : "\nUsuario existente");
         }
 
         @Override
         public void alterarPermissao(Integer idAdm, Integer id, String access) {
             novoUsr.altPermissao(idAdm,id, access);
+            System.out.println(MetodosUsuario.cod == 1 ? "\nUsuário alterado" : "\nNão foi possível alterar este usuário");
         }
 
         @Override
         public void removerPermissao(Integer id) {
             novoUsr.remPermissao(id);
+        }
+    }
+
+    public class AcoesFornecedor implements IFornecedor{
+        @Override
+        public void cadastrarFornecedor(String razaoSocial, String nomeFantasia, String cnpj, String email, String telefone, String CEP, int numCasa) {
+            novoFrn.setRazaoSocial(razaoSocial);
+            novoFrn.setNomeFantasia(nomeFantasia);
+            novoFrn.setCnpj(cnpj);
+            novoFrn.setEmail(email);
+            novoFrn.setTelefone(telefone);
+            novoFrn.setInfoCEP(MetodosUtils.CEP.ResponseCEP(CEP, numCasa));
+
+            novoFrn.novoFornecedor(novoFrn.nextId(), novoFrn);
+        }
+
+        @Override
+        public void alterarFornecedor(Integer id, String campo, String update) {
+            novoFrn.alterFornecedor(id, campo, update);
+        }
+
+        @Override
+        public void excluirFornecedor(Integer id) {
+            novoFrn.remoFornecedor(id);
+        }
+
+        @Override
+        public void localizarFornecedor(Integer id) {
+            novoFrn.findFornecedor(id);
+        }
+
+        @Override
+        public void localizarMaisFornecedores(Integer ini, Integer fim) {
+            novoFrn.listbyIdFornecedor(ini, fim);
+        }
+
+        @Override
+        public void removerMaisFornecedores(Integer ini, Integer fim) {
+            novoFrn.remobyIdFornecedor(ini, fim);
+        }
+
+        @Override
+        public boolean listarFornecedores() {
+            return novoFrn.PrintMapWithSet();
         }
     }
 }

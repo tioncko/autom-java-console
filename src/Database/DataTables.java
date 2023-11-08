@@ -14,7 +14,9 @@ public class DataTables {
     }
 
     public MetodosUsuario DTUsers() {
+
         Integer idSup = musr.nextId();
+        musr.setId(idSup);
         musr.setLogin("supervisor".toLowerCase());
         musr.setPassword(Senha.Encrypt("@autom123"));
         musr.setNome("Supervisor");
@@ -23,6 +25,7 @@ public class DataTables {
         musr.rootPermissao(idSup, String.valueOf(Permissao.ROOT));
 
         Integer idAdm = musr.nextId();
+        musr.setId(idAdm);
         musr.setLogin("admin".toLowerCase());
         musr.setPassword(Senha.Encrypt("@admin123"));
         musr.setNome("Admin");

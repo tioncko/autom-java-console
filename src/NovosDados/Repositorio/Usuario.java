@@ -4,6 +4,8 @@ import Utils.MetodosUtils;
 import Utils.Objetos.Criptografia;
 import Utils.Objetos.PermissaoUsuario;
 
+import java.util.Objects;
+
 public class Usuario extends MetodosUtils {
 
     private int id;
@@ -77,6 +79,19 @@ public class Usuario extends MetodosUtils {
 
     public void setAccess(PermissaoUsuario access){
         this.access = access;
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Usuario user)) return false;
+        return Objects.equals(this.getLogin(), user.getLogin());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getLogin());
     }
 
     @Override

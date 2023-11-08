@@ -1,13 +1,26 @@
 package NovosDados.Repositorio;
 
 import Utils.MetodosUtils;
+import Utils.Objetos.ValidCEP;
 
 public class Fornecedor extends MetodosUtils {
 
     private int id;
     private String razaoSocial;
     private String nomeFantasia;
-    private int cnpj;
+    private String cnpj;
+    private String email;
+    private String telefone;
+    private ValidCEP infoCEP;
+
+    public Fornecedor(String razaoSocial, String nomeFantasia, String cnpj, String email, String telefone, ValidCEP infoCEP) {
+        this.razaoSocial = razaoSocial;
+        this.nomeFantasia = nomeFantasia;
+        this.cnpj = cnpj;
+        this.email = email;
+        this.telefone = telefone;
+        this.infoCEP = infoCEP;
+    }
 
     public Fornecedor() {
     }
@@ -16,8 +29,8 @@ public class Fornecedor extends MetodosUtils {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Integer setId(int id) {
+        return this.id = id;
     }
 
     public String getRazaoSocial() {
@@ -36,21 +49,47 @@ public class Fornecedor extends MetodosUtils {
         this.nomeFantasia = nomeFantasia;
     }
 
-    public int getCnpj() {
+    public String getCnpj() {
         return cnpj;
     }
 
-    public void setCnpj(int cnpj) {
+    public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public ValidCEP getInfoCEP() {
+        return infoCEP;
+    }
+
+    public void setInfoCEP(ValidCEP infoCEP) {
+        this.infoCEP = infoCEP;
     }
 
     @Override
     public String toString() {
         return "Fornecedor{" +
-                "id=" + id +
-                ", razaoSocial='" + razaoSocial + '\'' +
+                "razaoSocial='" + razaoSocial + '\'' +
                 ", nomeFantasia='" + nomeFantasia + '\'' +
                 ", cnpj=" + cnpj +
+                ", email='" + email + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", " + infoCEP +
                 '}';
     }
 }

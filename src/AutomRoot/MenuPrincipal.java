@@ -2,8 +2,7 @@ package AutomRoot;
 
 import Database.DataTables;
 import Database.Metodos.MetodosUsuario;
-import NovosDados.AreasMenu.AreaCadastroCliente;
-import NovosDados.AreasMenu.AreaCadastroUsuario;
+import NovosDados.AreasMenu.*;
 import NovosDados.Repositorio.Enums.Permissao;
 import Utils.Objetos.LeitorDados;
 
@@ -42,7 +41,7 @@ public class MenuPrincipal extends LeitorDados {
         System.out.println("2 - Loja");
 
         String access = String.valueOf(mu.validPermissao(logged, dtb.DTUsers()));
-        Integer userId = mu.UserId(access, dtb.DTUsers());
+        Integer userId = mu.UserId(logged, dtb.DTUsers());
 
         System.out.print("\n-----------------------------------------");
         String id = ReadText("\n\033[3mDigite código do menu para suas ações: \033[0m");
@@ -71,6 +70,9 @@ public class MenuPrincipal extends LeitorDados {
 
         AreaCadastroCliente acad = new AreaCadastroCliente();
         AreaCadastroUsuario acau = new AreaCadastroUsuario();
+        AreaCadastroFornecedor acaf = new AreaCadastroFornecedor();
+        //AreaCadastroProduto acap = new AreaCadastroProduto();
+        //AreaCadastroServico acas = new AreaCadastroServico();
 
         System.out.print("\n-----------------------------------------");
         String id = ReadText("\n\033[3mDigite código do menu para suas ações: \033[0m");
@@ -80,7 +82,7 @@ public class MenuPrincipal extends LeitorDados {
                 acad.menuCadastroCliente(userId);
                 break;
             case "2":
-                //acaf.menuCadastroFornecedor();
+                acaf.menuCadastroFornecedor(userId);
                 break;
             case "3":
                 acau.menuCadastroUsuario(userId);
