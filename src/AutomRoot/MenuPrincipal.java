@@ -1,19 +1,19 @@
 package AutomRoot;
 
-import Database.DataTables;
-import Database.Metodos.MetodosUsuario;
+import Database.DTO;
+import Database.Metodos.*;
 import NovosDados.AreasMenu.*;
 import NovosDados.Repositorio.Enums.Permissao;
-import Utils.Objetos.LeitorDados;
+import Utils.*;
 
 public class MenuPrincipal extends LeitorDados {
 
-    DataTables dtb;
+    DTO dtb;
     MetodosUsuario mu ;
 
     public MenuPrincipal() {
         this.mu = new MetodosUsuario();
-        this.dtb = new DataTables();
+        this.dtb = new DTO();
     }
 
     public void paginaInicial() throws Exception {
@@ -32,10 +32,19 @@ public class MenuPrincipal extends LeitorDados {
             i++;
         };
 
-        System.out.println
-                ("\n=====================================================================\n" +
-                        "============= Bem vinde, " + currentLogin + " " + supTab +
-                        "\n=====================================================================");
+        if(MetodosUtils.Tools.Daily().equals("Bom dia")){
+            System.out.println
+                    ("\n=====================================================================\n" +
+                            "============= " + MetodosUtils.Tools.Daily() + ", " + currentLogin + " " + supTab + "==" +
+                            "\n=====================================================================");
+        }
+        if(MetodosUtils.Tools.Daily().equals("Boa tarde") || MetodosUtils.Tools.Daily().equals("Boa noite")){
+            System.out.println
+                    ("\n=====================================================================\n" +
+                            "============= " + MetodosUtils.Tools.Daily() + ", " + currentLogin + " " + supTab +
+                            "\n=====================================================================");
+        }
+
         System.out.println("\nMenu:");
         System.out.println("1 - Cadastro");
         System.out.println("2 - Loja");
@@ -67,11 +76,12 @@ public class MenuPrincipal extends LeitorDados {
         System.out.println("3 - Usuário");
         System.out.println("4 - Produto");
         System.out.println("5 - Serviço");
+        System.out.println("* - Voltar para a tela anterior");
 
         AreaCadastroCliente acad = new AreaCadastroCliente();
         AreaCadastroUsuario acau = new AreaCadastroUsuario();
         AreaCadastroFornecedor acaf = new AreaCadastroFornecedor();
-        //AreaCadastroProduto acap = new AreaCadastroProduto();
+        AreaCadastroProduto acap = new AreaCadastroProduto();
         //AreaCadastroServico acas = new AreaCadastroServico();
 
         System.out.print("\n-----------------------------------------");
@@ -88,10 +98,13 @@ public class MenuPrincipal extends LeitorDados {
                 acau.menuCadastroUsuario(userId);
                 break;
             case "4":
-                //acap.menuCadastroProduto();
+               // acap.menuCadastroProduto(userId);
                 break;
             case "5":
                 //acas.menuCadastroServico();
+                break;
+            case "*":
+                paginaInicial();
                 break;
         }
     }

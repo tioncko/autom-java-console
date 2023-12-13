@@ -1,0 +1,863 @@
+[
+  {
+    "Nome": "4 Amortecedores + Kits de Suspensao Completos",
+    "Quantidade": 19,
+    "Preco": 1654.89,
+    "Categoria": "Amortecedores Automotivos & Kits",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "2 Amortecedores + Kits de Suspensao Completos",
+    "Quantidade": 25,
+    "Preco": 1323.09,
+    "Categoria": "Amortecedores Automotivos & Kits",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Amortecedores Dianteiros",
+    "Quantidade": 12,
+    "Preco": 287.98,
+    "Categoria": "Amortecedores Automotivos & Kits",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Amortecedores Traseiros",
+    "Quantidade": 5,
+    "Preco": 183.87,
+    "Categoria": "Amortecedores Automotivos & Kits",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Bandejas Dianteiras",
+    "Quantidade": 6,
+    "Preco": 192.87,
+    "Categoria": "Bandeja de Suspensao",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Bandejas Traseiras",
+    "Quantidade": 17,
+    "Preco": 267.88,
+    "Categoria": "Bandeja de Suspensao",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Bracos de Suspensao Dianteiro Superior",
+    "Quantidade": 28,
+    "Preco": 323.89,
+    "Categoria": "Bandeja de Suspensao",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Bracos de Suspensao Dianteiro Inferior",
+    "Quantidade": 7,
+    "Preco": 788.58,
+    "Categoria": "Bandeja de Suspensao",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Pivôs da Bandeja",
+    "Quantidade": 4,
+    "Preco": 159.88,
+    "Categoria": "Bandeja de Suspensao",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Bieletas Dianteiras",
+    "Quantidade": 12,
+    "Preco": 69.87,
+    "Categoria": "Bieletas",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Bieletas Traseiras",
+    "Quantidade": 3,
+    "Preco": 51.45,
+    "Categoria": "Bieletas",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Buchas da Bandeja",
+    "Quantidade": 4,
+    "Preco": 12.65,
+    "Categoria": "Buchas",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Buchas do Feixe de Mola",
+    "Quantidade": 29,
+    "Preco": 42.94,
+    "Categoria": "Buchas",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Buchas do Braco",
+    "Quantidade": 13,
+    "Preco": 39.06,
+    "Categoria": "Buchas",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Buchas do Amortecedor",
+    "Quantidade": 20,
+    "Preco": 19.76,
+    "Categoria": "Buchas",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Buchas do Eixo",
+    "Quantidade": 28,
+    "Preco": 53.99,
+    "Categoria": "Buchas",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Buchas do Tensor",
+    "Quantidade": 28,
+    "Preco": 9.95,
+    "Categoria": "Buchas",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Buchas do Quadro",
+    "Quantidade": 10,
+    "Preco": 59.76,
+    "Categoria": "Buchas",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Abracadeira de Suspensao",
+    "Quantidade": 15,
+    "Preco": 289.39,
+    "Categoria": "Componentes de Suspensao",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Algemas de Suspensao",
+    "Quantidade": 12,
+    "Preco": 124.36,
+    "Categoria": "Componentes de Suspensao",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Batentes do Amortecedor",
+    "Quantidade": 6,
+    "Preco": 142.21,
+    "Categoria": "Componentes de Suspensao",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Coifas do Amortecedor",
+    "Quantidade": 27,
+    "Preco": 139.22,
+    "Categoria": "Componentes de Suspensao",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Coxins de Suspensao",
+    "Quantidade": 18,
+    "Preco": 131.98,
+    "Categoria": "Componentes de Suspensao",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Kits de Reparo do Amortecedor Dianteiro",
+    "Quantidade": 19,
+    "Preco": 419.12,
+    "Categoria": "Componentes de Suspensao",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Kits de Reparo do Amortecedor Traseiro",
+    "Quantidade": 8,
+    "Preco": 144.34,
+    "Categoria": "Componentes de Suspensao",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Rolamentos do Amortecedor",
+    "Quantidade": 25,
+    "Preco": 69.23,
+    "Categoria": "Componentes de Suspensao",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Suportes da Suspensao",
+    "Quantidade": 11,
+    "Preco": 254.64,
+    "Categoria": "Componentes de Suspensao",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Feixes de Molas Traseiras",
+    "Quantidade": 5,
+    "Preco": 483.92,
+    "Categoria": "Feixes de Mola",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Molas Dianteiras",
+    "Quantidade": 23,
+    "Preco": 389.89,
+    "Categoria": "Molas de Suspensao",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Molas Traseiras",
+    "Quantidade": 2,
+    "Preco": 387.72,
+    "Categoria": "Molas de Suspensao",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Molas Esportivas",
+    "Quantidade": 15,
+    "Preco": 1192.41,
+    "Categoria": "Molas de Suspensao",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Calcos de Mola",
+    "Quantidade": 21,
+    "Preco": 49.59,
+    "Categoria": "Molas de Suspensao",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Cubos de Roda Dianteiro",
+    "Quantidade": 4,
+    "Preco": 420.23,
+    "Categoria": "Cubos de Roda",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Cubos de Roda Traseiro",
+    "Quantidade": 15,
+    "Preco": 149.42,
+    "Categoria": "Cubos de Roda",
+    "Grupo": "Suspensao"
+  },
+  {
+    "Nome": "Interruptores de Óleo",
+    "Quantidade": 15,
+    "Preco": 48.44,
+    "Categoria": "Interruptores Automotivos",
+    "Grupo": "Motor"
+  },
+  {
+    "Nome": "Radiadores",
+    "Quantidade": 16,
+    "Preco": 1298.21,
+    "Categoria": "Arrefecimento",
+    "Grupo": "Motor"
+  },
+  {
+    "Nome": "Reservatórios Parabrisa",
+    "Quantidade": 13,
+    "Preco": 55.98,
+    "Categoria": "Arrefecimento",
+    "Grupo": "Motor"
+  },
+  {
+    "Nome": "Reservatórios Radiador",
+    "Quantidade": 10,
+    "Preco": 89.21,
+    "Categoria": "Arrefecimento",
+    "Grupo": "Motor"
+  },
+  {
+    "Nome": "Reservatório Partida Frio",
+    "Quantidade": 2,
+    "Preco": 56.19,
+    "Categoria": "Arrefecimento",
+    "Grupo": "Motor"
+  },
+  {
+    "Nome": "Valvula Termostática",
+    "Quantidade": 7,
+    "Preco": 129.29,
+    "Categoria": "Arrefecimento",
+    "Grupo": "Motor"
+  },
+  {
+    "Nome": "Coxins do Motor",
+    "Quantidade": 1,
+    "Preco": 139.38,
+    "Categoria": "Buchas e Coxins de Motor",
+    "Grupo": "Motor"
+  },
+  {
+    "Nome": "Buchas do Coxim",
+    "Quantidade": 13,
+    "Preco": 39.59,
+    "Categoria": "Buchas e Coxins de Motor",
+    "Grupo": "Motor"
+  },
+  {
+    "Nome": "Polias",
+    "Quantidade": 1,
+    "Preco": 86.24,
+    "Categoria": "Distribuicao do Motor",
+    "Grupo": "Motor"
+  },
+  {
+    "Nome": "Bico injetor (injecao eletrônica)",
+    "Quantidade": 6,
+    "Preco": 125.65,
+    "Categoria": "Distribuicao do Motor",
+    "Grupo": "Motor"
+  },
+  {
+    "Nome": "Correias Dentadas",
+    "Quantidade": 17,
+    "Preco": 116.98,
+    "Categoria": "Distribuicao do Motor",
+    "Grupo": "Motor"
+  },
+  {
+    "Nome": "Kit Correia Dentada",
+    "Quantidade": 9,
+    "Preco": 424.21,
+    "Categoria": "Distribuicao do Motor",
+    "Grupo": "Motor"
+  },
+  {
+    "Nome": "Mangueira Filtro Ar",
+    "Quantidade": 22,
+    "Preco": 81.58,
+    "Categoria": "Distribuicao do Motor",
+    "Grupo": "Motor"
+  },
+  {
+    "Nome": "Filtros de Ar do Motor",
+    "Quantidade": 2,
+    "Preco": 51.24,
+    "Categoria": "Filtros Automotivos",
+    "Grupo": "Motor"
+  },
+  {
+    "Nome": "Filtros de Óleo do Motor",
+    "Quantidade": 15,
+    "Preco": 16.57,
+    "Categoria": "Filtros Automotivos",
+    "Grupo": "Motor"
+  },
+  {
+    "Nome": "Filtros de Combustivel",
+    "Quantidade": 1,
+    "Preco": 34.47,
+    "Categoria": "Filtros Automotivos",
+    "Grupo": "Motor"
+  },
+  {
+    "Nome": "Kit de Cabos + Velas",
+    "Quantidade": 2,
+    "Preco": 174.26,
+    "Categoria": "Sistema de Ignicao",
+    "Grupo": "Motor"
+  },
+  {
+    "Nome": "Kits de Revisao (Filtros Lubrificantes)",
+    "Quantidade": 10,
+    "Preco": 214.78,
+    "Categoria": "Kits de Revisao",
+    "Grupo": "Motor"
+  },
+  {
+    "Nome": "Discos Dianteiros",
+    "Quantidade": 25,
+    "Preco": 410.21,
+    "Categoria": "Discos de Freio",
+    "Grupo": "Freio"
+  },
+  {
+    "Nome": "Discos Traseiros",
+    "Quantidade": 7,
+    "Preco": 359.45,
+    "Categoria": "Discos de Freio",
+    "Grupo": "Freio"
+  },
+  {
+    "Nome": "Kit de Freios Completos",
+    "Quantidade": 8,
+    "Preco": 2458.65,
+    "Categoria": "Discos de Freio",
+    "Grupo": "Freio"
+  },
+  {
+    "Nome": "Pastilha de Freio Dianteiros",
+    "Quantidade": 21,
+    "Preco": 135.65,
+    "Categoria": "Pastilhas de Freio",
+    "Grupo": "Freio"
+  },
+  {
+    "Nome": "Pastilha de Freio Traseiros",
+    "Quantidade": 20,
+    "Preco": 141.47,
+    "Categoria": "Pastilhas de Freio",
+    "Grupo": "Freio"
+  },
+  {
+    "Nome": "Kit de Discos & Pastilhas de Freio",
+    "Quantidade": 26,
+    "Preco": 454.21,
+    "Categoria": "Pastilhas de Freio",
+    "Grupo": "Freio"
+  },
+  {
+    "Nome": "Tabores de Freios Dianteiros",
+    "Quantidade": 16,
+    "Preco": 404.35,
+    "Categoria": "Tambores de Freio",
+    "Grupo": "Freio"
+  },
+  {
+    "Nome": "Tambores de Freios Traseiros",
+    "Quantidade": 15,
+    "Preco": 359.36,
+    "Categoria": "Tambores de Freio",
+    "Grupo": "Freio"
+  },
+  {
+    "Nome": "Lona de freio",
+    "Quantidade": 26,
+    "Preco": 31.65,
+    "Categoria": "Lonas de Freio",
+    "Grupo": "Freio"
+  },
+  {
+    "Nome": "Aditivos para Gasolina",
+    "Quantidade": 25,
+    "Preco": 25.63,
+    "Categoria": "Aditivos para Combustivel",
+    "Grupo": "Fluidos"
+  },
+  {
+    "Nome": "Aditivos para Alcóol",
+    "Quantidade": 9,
+    "Preco": 24.59,
+    "Categoria": "Aditivos para Combustivel",
+    "Grupo": "Fluidos"
+  },
+  {
+    "Nome": "Aditivos para Diesel",
+    "Quantidade": 27,
+    "Preco": 26.24,
+    "Categoria": "Aditivos para Combustivel",
+    "Grupo": "Fluidos"
+  },
+  {
+    "Nome": "Aditivos Limpeza de Injecao",
+    "Quantidade": 17,
+    "Preco": 31.59,
+    "Categoria": "Aditivos para Combustivel",
+    "Grupo": "Fluidos"
+  },
+  {
+    "Nome": "Aditivos para Motor Flex",
+    "Quantidade": 1,
+    "Preco": 28.89,
+    "Categoria": "Aditivos para Combustivel",
+    "Grupo": "Fluidos"
+  },
+  {
+    "Nome": "Fluido de Freio Dot 3",
+    "Quantidade": 3,
+    "Preco": 21.59,
+    "Categoria": "Flúidos de Freio",
+    "Grupo": "Fluidos"
+  },
+  {
+    "Nome": "Fluido de Freio Dot 4",
+    "Quantidade": 21,
+    "Preco": 23.57,
+    "Categoria": "Flúidos de Freio",
+    "Grupo": "Fluidos"
+  },
+  {
+    "Nome": "Fluido de Freio Dot 5.1",
+    "Quantidade": 5,
+    "Preco": 39.57,
+    "Categoria": "Flúidos de Freio",
+    "Grupo": "Fluidos"
+  },
+  {
+    "Nome": "Óleos de Motor Minerais",
+    "Quantidade": 16,
+    "Preco": 41.25,
+    "Categoria": "Óleos de Motor",
+    "Grupo": "Fluidos"
+  },
+  {
+    "Nome": "Óleos de Motor Semissintéticos",
+    "Quantidade": 18,
+    "Preco": 46.65,
+    "Categoria": "Óleos de Motor",
+    "Grupo": "Fluidos"
+  },
+  {
+    "Nome": "Óleos de Motor Sintéticos",
+    "Quantidade": 8,
+    "Preco": 54.31,
+    "Categoria": "Óleos de Motor",
+    "Grupo": "Fluidos"
+  },
+  {
+    "Nome": "Óleos de Motor para Motocicleta",
+    "Quantidade": 10,
+    "Preco": 57.58,
+    "Categoria": "Óleos de Motor",
+    "Grupo": "Fluidos"
+  },
+  {
+    "Nome": "Aditivos Anti Fumaca",
+    "Quantidade": 3,
+    "Preco": 24.58,
+    "Categoria": "Óleos de Motor",
+    "Grupo": "Fluidos"
+  },
+  {
+    "Nome": "Aditivos Limpa Carter",
+    "Quantidade": 5,
+    "Preco": 24.96,
+    "Categoria": "Óleos de Motor",
+    "Grupo": "Fluidos"
+  },
+  {
+    "Nome": "Flúidos de Transmissao Automática",
+    "Quantidade": 18,
+    "Preco": 69.58,
+    "Categoria": "Flúidos de Transmissao",
+    "Grupo": "Fluidos"
+  },
+  {
+    "Nome": "Flúidos de Transmissao Manual",
+    "Quantidade": 2,
+    "Preco": 79.36,
+    "Categoria": "Flúidos de Transmissao",
+    "Grupo": "Fluidos"
+  },
+  {
+    "Nome": "Flúidos de Transmissao Diferencial",
+    "Quantidade": 9,
+    "Preco": 85.24,
+    "Categoria": "Flúidos de Transmissao",
+    "Grupo": "Fluidos"
+  },
+  {
+    "Nome": "Aditivos Organicos para Radiador",
+    "Quantidade": 16,
+    "Preco": 66.58,
+    "Categoria": "Aditivos para Radiador",
+    "Grupo": "Fluidos"
+  },
+  {
+    "Nome": "Aditivos Inorganicos para Radiador",
+    "Quantidade": 28,
+    "Preco": 69.64,
+    "Categoria": "Aditivos para Radiador",
+    "Grupo": "Fluidos"
+  },
+  {
+    "Nome": "Aditivos Flush para Radiador",
+    "Quantidade": 16,
+    "Preco": 71.23,
+    "Categoria": "Aditivos para Radiador",
+    "Grupo": "Fluidos"
+  },
+  {
+    "Nome": "Águas Desmineralizadas",
+    "Quantidade": 16,
+    "Preco": 5.25,
+    "Categoria": "Aditivos para Radiador",
+    "Grupo": "Fluidos"
+  },
+  {
+    "Nome": "Flúidos de Direcao Hidráulica Minerais",
+    "Quantidade": 24,
+    "Preco": 45.59,
+    "Categoria": "Flúidos de Direcao Hidráulica",
+    "Grupo": "Fluidos"
+  },
+  {
+    "Nome": "Flúidos de Direcao Hidráulica Sintéticos",
+    "Quantidade": 7,
+    "Preco": 49.57,
+    "Categoria": "Flúidos de Direcao Hidráulica",
+    "Grupo": "Fluidos"
+  },
+  {
+    "Nome": "Kits Coifa Homocinética",
+    "Quantidade": 15,
+    "Preco": 36.97,
+    "Categoria": "Coifas de Transmissao",
+    "Grupo": "Transmissao"
+  },
+  {
+    "Nome": "Coxins do Câmbio",
+    "Quantidade": 2,
+    "Preco": 141.29,
+    "Categoria": "Coxins",
+    "Grupo": "Transmissao"
+  },
+  {
+    "Nome": "Coxins da Transmissao",
+    "Quantidade": 20,
+    "Preco": 191.97,
+    "Categoria": "Coxins",
+    "Grupo": "Transmissao"
+  },
+  {
+    "Nome": "Coxins de Suporte",
+    "Quantidade": 8,
+    "Preco": 169.97,
+    "Categoria": "Coxins",
+    "Grupo": "Transmissao"
+  },
+  {
+    "Nome": "Buchas do Trambulador",
+    "Quantidade": 10,
+    "Preco": 275.95,
+    "Categoria": "Trambulador",
+    "Grupo": "Transmissao"
+  },
+  {
+    "Nome": "Suporte do Trambulador",
+    "Quantidade": 23,
+    "Preco": 373.99,
+    "Categoria": "Trambulador",
+    "Grupo": "Transmissao"
+  },
+  {
+    "Nome": "Reparo do Trambulador",
+    "Quantidade": 1,
+    "Preco": 51.35,
+    "Categoria": "Trambulador",
+    "Grupo": "Transmissao"
+  },
+  {
+    "Nome": "Hastes do Trambulador",
+    "Quantidade": 9,
+    "Preco": 147.36,
+    "Categoria": "Trambulador",
+    "Grupo": "Transmissao"
+  },
+  {
+    "Nome": "Barras de Direcao",
+    "Quantidade": 21,
+    "Preco": 148.65,
+    "Categoria": "Barras",
+    "Grupo": "Direcao"
+  },
+  {
+    "Nome": "Barras Centrais de Direcao",
+    "Quantidade": 28,
+    "Preco": 458.98,
+    "Categoria": "Barras",
+    "Grupo": "Direcao"
+  },
+  {
+    "Nome": "Barras de Ligacao",
+    "Quantidade": 27,
+    "Preco": 813.98,
+    "Categoria": "Barras",
+    "Grupo": "Direcao"
+  },
+  {
+    "Nome": "Bracos de Direcao Auxiliares",
+    "Quantidade": 21,
+    "Preco": 248.56,
+    "Categoria": "Bracos",
+    "Grupo": "Direcao"
+  },
+  {
+    "Nome": "Bracos Pitman de Direcao",
+    "Quantidade": 14,
+    "Preco": 201.32,
+    "Categoria": "Bracos",
+    "Grupo": "Direcao"
+  },
+  {
+    "Nome": "Buchas de Barra Estabilizadora",
+    "Quantidade": 6,
+    "Preco": 26.54,
+    "Categoria": "Buchas",
+    "Grupo": "Direcao"
+  },
+  {
+    "Nome": "Buchas do Eixo",
+    "Quantidade": 4,
+    "Preco": 27.58,
+    "Categoria": "Buchas",
+    "Grupo": "Direcao"
+  },
+  {
+    "Nome": "Buchas de Articulacao",
+    "Quantidade": 0,
+    "Preco": 89.47,
+    "Categoria": "Buchas",
+    "Grupo": "Direcao"
+  },
+  {
+    "Nome": "Buchas do Terminal de Direcao",
+    "Quantidade": 26,
+    "Preco": 12.65,
+    "Categoria": "Buchas",
+    "Grupo": "Direcao"
+  },
+  {
+    "Nome": "Buchas do Braco de Direcao",
+    "Quantidade": 1,
+    "Preco": 42.36,
+    "Categoria": "Buchas",
+    "Grupo": "Direcao"
+  },
+  {
+    "Nome": "Buchas da Barra Tensora",
+    "Quantidade": 18,
+    "Preco": 41.35,
+    "Categoria": "Buchas",
+    "Grupo": "Direcao"
+  },
+  {
+    "Nome": "Kits de Buchas da Caixa de Direcao",
+    "Quantidade": 26,
+    "Preco": 43.65,
+    "Categoria": "Buchas",
+    "Grupo": "Direcao"
+  },
+  {
+    "Nome": "Caixa de Direcao & Kits",
+    "Quantidade": 9,
+    "Preco": 23.38,
+    "Categoria": "Coifas",
+    "Grupo": "Direcao"
+  },
+  {
+    "Nome": "Terminais de Direcao",
+    "Quantidade": 11,
+    "Preco": 36.54,
+    "Categoria": "Terminais",
+    "Grupo": "Direcao"
+  },
+  {
+    "Nome": "Terminais da Barra de Direcao",
+    "Quantidade": 22,
+    "Preco": 54.95,
+    "Categoria": "Terminais",
+    "Grupo": "Direcao"
+  },
+  {
+    "Nome": "Bateria",
+    "Quantidade": 23,
+    "Preco": 439.65,
+    "Categoria": "Baterias",
+    "Grupo": "Energia"
+  },
+  {
+    "Nome": "Filtros de Ar Condicionado",
+    "Quantidade": 27,
+    "Preco": 18.65,
+    "Categoria": "Geral",
+    "Grupo": "Acessórios"
+  },
+  {
+    "Nome": "Lixas de Ferro",
+    "Quantidade": 27,
+    "Preco": 4.57,
+    "Categoria": "Geral",
+    "Grupo": "Acessórios"
+  },
+  {
+    "Nome": "Colas e Adesivos",
+    "Quantidade": 22,
+    "Preco": 11.23,
+    "Categoria": "Geral",
+    "Grupo": "Acessórios"
+  },
+  {
+    "Nome": "Higienizadores",
+    "Quantidade": 21,
+    "Preco": 38.57,
+    "Categoria": "Geral",
+    "Grupo": "Acessórios"
+  },
+  {
+    "Nome": "Graxas Automotivas",
+    "Quantidade": 19,
+    "Preco": 45.58,
+    "Categoria": "Geral",
+    "Grupo": "Acessórios"
+  },
+  {
+    "Nome": "Vaselina",
+    "Quantidade": 10,
+    "Preco": 6.98,
+    "Categoria": "Geral",
+    "Grupo": "Acessórios"
+  },
+  {
+    "Nome": "Kit Seguranca",
+    "Quantidade": 2,
+    "Preco": 21.39,
+    "Categoria": "Geral",
+    "Grupo": "Acessórios"
+  },
+  {
+    "Nome": "Troca de Óleo e Filtro",
+    "Quantidade": 0,
+    "Preco": 179.05,
+    "Categoria": "Geral",
+    "Grupo": "Servicos Automotivos"
+  },
+  {
+    "Nome": "Retifica de Disco e Tambor",
+    "Quantidade": 0,
+    "Preco": 1563.49,
+    "Categoria": "Geral",
+    "Grupo": "Servicos Automotivos"
+  },
+  {
+    "Nome": "Troca de Lona de Freio",
+    "Quantidade": 0,
+    "Preco": 61.77,
+    "Categoria": "Geral",
+    "Grupo": "Servicos Automotivos"
+  },
+  {
+    "Nome": "Limpeza de bicos",
+    "Quantidade": 0,
+    "Preco": 155.77,
+    "Categoria": "Geral",
+    "Grupo": "Servicos Automotivos"
+  },
+  {
+    "Nome": "Troca de Bateria",
+    "Quantidade": 0,
+    "Preco": 447.27,
+    "Categoria": "Geral",
+    "Grupo": "Servicos Automotivos"
+  },
+  {
+    "Nome": "Limpeza de Arrefecimento",
+    "Quantidade": 0,
+    "Preco": 651.52,
+    "Categoria": "Geral",
+    "Grupo": "Servicos Automotivos"
+  },
+  {
+    "Nome": "Instalacao Calha de Chuva",
+    "Quantidade": 0,
+    "Preco": 75.64,
+    "Categoria": "Geral",
+    "Grupo": "Servicos Automotivos"
+  },
+  {
+    "Nome": "Troca de Palheta",
+    "Quantidade": 0,
+    "Preco": 68.34,
+    "Categoria": "Geral",
+    "Grupo": "Servicos Automotivos"
+  }
+]

@@ -2,7 +2,7 @@ package NovosDados.AreasMenu;
 
 import AutomRoot.MenuPrincipal;
 import InterfaceInical.Cadastro;
-import Utils.Objetos.LeitorDados;
+import Utils.LeitorDados;
 
 public class AreaCadastroUsuario extends LeitorDados {
 
@@ -27,6 +27,7 @@ public class AreaCadastroUsuario extends LeitorDados {
         System.out.println("7 - Listar Usuarios");
         System.out.println("8 - Alterar Permissão de Usuarios");
         System.out.println("9 - Remover Permissão de Usuarios");
+        System.out.println("* - Mais");
 
         System.out.print("\n-----------------------------------------");
         String id = ReadText("\n\033[3mDigite código do menu para suas ações: \033[0m");
@@ -53,7 +54,7 @@ public class AreaCadastroUsuario extends LeitorDados {
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoCadUsr = ReadInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do cliente" +
+                            "\n(1) Permanecer na tela de cadastro do usuário" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
                             "\n(4) Sair da aplicação?: \033[0m");
@@ -89,7 +90,7 @@ public class AreaCadastroUsuario extends LeitorDados {
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoAltUsr = ReadInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do cliente" +
+                            "\n(1) Permanecer na tela de cadastro do usuário" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
                             "\n(4) Sair da aplicação?: \033[0m");
@@ -120,7 +121,7 @@ public class AreaCadastroUsuario extends LeitorDados {
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoExcUsr = ReadInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do cliente" +
+                            "\n(1) Permanecer na tela de cadastro do usuário" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
                             "\n(4) Sair da aplicação?: \033[0m");
@@ -150,7 +151,7 @@ public class AreaCadastroUsuario extends LeitorDados {
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoLocUsr = ReadInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do cliente" +
+                            "\n(1) Permanecer na tela de cadastro do usuário" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
                             "\n(4) Sair da aplicação?: \033[0m");
@@ -181,7 +182,7 @@ public class AreaCadastroUsuario extends LeitorDados {
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoLocMUsr = ReadInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do cliente" +
+                            "\n(1) Permanecer na tela de cadastro do usuário" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
                             "\n(4) Sair da aplicação?: \033[0m");
@@ -212,7 +213,7 @@ public class AreaCadastroUsuario extends LeitorDados {
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoRemMUsr = ReadInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do cliente" +
+                            "\n(1) Permanecer na tela de cadastro do usuário" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
                             "\n(4) Sair da aplicação?: \033[0m");
@@ -236,7 +237,7 @@ public class AreaCadastroUsuario extends LeitorDados {
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoListUsr = ReadInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do cliente" +
+                            "\n(1) Permanecer na tela de cadastro do usuário" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
                             "\n(4) Sair da aplicação?: \033[0m");
@@ -269,7 +270,7 @@ public class AreaCadastroUsuario extends LeitorDados {
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoAltPerm = ReadInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do cliente" +
+                            "\n(1) Permanecer na tela de cadastro do usuário" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
                             "\n(4) Sair da aplicação?: \033[0m");
@@ -300,7 +301,7 @@ public class AreaCadastroUsuario extends LeitorDados {
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoRemPerm = ReadInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do cliente" +
+                            "\n(1) Permanecer na tela de cadastro do usuário" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
                             "\n(4) Sair da aplicação?: \033[0m");
@@ -317,6 +318,27 @@ public class AreaCadastroUsuario extends LeitorDados {
                         System.exit(0);
                     }
                     break;
+
+                case "*":
+                    Integer opcaoVoltar = ReadInt("\n\033[3mO que deseja?" +
+                            "\n(1) Permanecer na tela de cadastro do usuário" +
+                            "\n(2) Retornar ao menu principal" +
+                            "\n(3) Ir para o menu de cadastro geral" +
+                            "\n(4) Sair da aplicação?: \033[0m");
+                    System.out.println("----------------------------------------------");
+
+                    if (opcaoVoltar == 1) menuCadastroUsuario(userId);
+                    if (opcaoVoltar == 2) {
+                        session = false;
+                        mp.paginaInicial();
+                    }
+                    if (opcaoVoltar == 3) mp.menuCadastro(userId);
+                    if (opcaoVoltar == 4) {
+                        System.out.println("\nAplicação encerrada.");
+                        System.exit(0);
+                    }
+                    break;
+
                 default:
                     break;
             }

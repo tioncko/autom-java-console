@@ -1,8 +1,8 @@
-package NovosDados.Repositorio;
+package NovosDados.Repositorio.Cadastro;
 
 import Utils.MetodosUtils;
-import Utils.Objetos.Criptografia;
-import Utils.Objetos.PermissaoUsuario;
+import NovosDados.Repositorio.Auxiliar.Criptografia;
+import NovosDados.Repositorio.Auxiliar.PermissaoUsuario;
 
 import java.util.Objects;
 
@@ -80,7 +80,6 @@ public class Usuario extends MetodosUtils {
     public void setAccess(PermissaoUsuario access){
         this.access = access;
     }
-
 
     @Override
     public boolean equals(Object obj) {

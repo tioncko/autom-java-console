@@ -1,26 +1,26 @@
-package NovosDados.Repositorio;
+package NovosDados.Repositorio.Cadastro;
 
-import Utils.MetodosUtils;
-import Utils.Objetos.ValidCEP;
+import NovosDados.Repositorio.Abstratos.OutrosDados;
+import NovosDados.Repositorio.Auxiliar.ValidCEP;
 
-public class Cliente extends MetodosUtils {
+public class Cliente extends OutrosDados {
 
     private int id;
     private String nome;
     private int idade;
     private String cpf;
-    private String email;
-    private String telefone;
-    private ValidCEP infoCEP;
+    //private String email;
+    //private String telefone;
+    //private ValidCEP infoCEP;
 
     public Cliente(String nome, int idade, String cpf, String email, String telefone, ValidCEP infoCEP) {
 
         this.nome = nome;
         this.idade = idade;
         this.cpf = cpf;
-        this.email = email;
-        this.telefone = telefone;
-        this.infoCEP = infoCEP;
+        this.setEmail(email);
+        this.setTelefone(telefone);
+        this.setInfoCEP(infoCEP);
     }
 
     public Cliente() {
@@ -61,6 +61,7 @@ public class Cliente extends MetodosUtils {
         this.cpf = cpf;
     }
 
+    /*
     public String getEmail() {
         return email;
     }
@@ -84,7 +85,7 @@ public class Cliente extends MetodosUtils {
     public void setInfoCEP(ValidCEP infoCEP) {
         this.infoCEP = infoCEP;
     }
-
+*/
 //#endregion
 
     @Override
@@ -93,9 +94,9 @@ public class Cliente extends MetodosUtils {
                 "nome='" + nome + '\'' +
                 ", idade=" + idade +
                 ", cpf='" + cpf + '\'' +
-                ", email='" + email + '\'' +
-                ", telefone='" + telefone + '\'' +
-                ", " + infoCEP +
+                ", email='" + getEmail() + '\'' +
+                ", telefone='" + getTelefone() + '\'' +
+                ", " + getInfoCEP() +
                 '}';
     }
 }

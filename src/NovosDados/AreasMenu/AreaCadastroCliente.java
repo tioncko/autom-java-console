@@ -2,7 +2,7 @@ package NovosDados.AreasMenu;
 
 import AutomRoot.MenuPrincipal;
 import InterfaceInical.Cadastro;
-import Utils.Objetos.LeitorDados;
+import Utils.LeitorDados;
 
 public class AreaCadastroCliente extends LeitorDados {
 
@@ -25,6 +25,7 @@ public class AreaCadastroCliente extends LeitorDados {
         System.out.println("5 - Localizar Mais Clientes");
         System.out.println("6 - Remover Mais Clientes");
         System.out.println("7 - Listar Clientes");
+        System.out.println("* - Mais");
 
         System.out.print("\n-----------------------------------------");
         String id = ReadText("\n\033[3mDigite código do menu para suas ações: \033[0m");
@@ -248,6 +249,26 @@ public class AreaCadastroCliente extends LeitorDados {
                     }
                     if (opcaoListUsr == 3) mp.menuCadastro(userId);
                     if (opcaoListUsr == 4) {
+                        System.out.println("\nAplicação encerrada.");
+                        System.exit(0);
+                    }
+                    break;
+
+                case "*":
+                    Integer opcaoVoltar = ReadInt("\n\033[3mO que deseja?" +
+                            "\n(1) Permanecer na tela de cadastro do cliente" +
+                            "\n(2) Retornar ao menu principal" +
+                            "\n(3) Ir para o menu de cadastro geral" +
+                            "\n(4) Sair da aplicação?: \033[0m");
+                    System.out.println("----------------------------------------------");
+
+                    if (opcaoVoltar == 1) menuCadastroCliente(userId);
+                    if (opcaoVoltar == 2) {
+                        session = false;
+                        mp.paginaInicial();
+                    }
+                    if (opcaoVoltar == 3) mp.menuCadastro(userId);
+                    if (opcaoVoltar == 4) {
                         System.out.println("\nAplicação encerrada.");
                         System.exit(0);
                     }

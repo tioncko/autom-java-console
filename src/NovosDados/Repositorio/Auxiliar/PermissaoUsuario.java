@@ -1,8 +1,6 @@
-package Utils.Objetos;
+package NovosDados.Repositorio.Auxiliar;
 
-import NovosDados.Repositorio.Usuario;
-
-public class PermissaoUsuario extends Usuario {
+public class PermissaoUsuario {
 
     private final String Permissao;
 

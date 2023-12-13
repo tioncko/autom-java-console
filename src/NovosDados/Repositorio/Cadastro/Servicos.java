@@ -1,10 +1,18 @@
-package NovosDados.Repositorio;
+package NovosDados.Repositorio.Cadastro;
 
-public class Servicos {
+import NovosDados.Repositorio.Abstratos.Gondola;
+
+public class Servicos extends Gondola {
 
     private String id;
     private String nome;
-    private double preço;
+
+    public Servicos(String nome, double preco, int qtd, String tipoItem) {
+        this.nome = nome;
+        this.setPreco(preco);
+        //Employee
+        //this.setTipoItem(tipoItem);
+    }
 
     public Servicos() {
     }
@@ -25,20 +33,12 @@ public class Servicos {
         this.nome = nome;
     }
 
-    public double getPreço() {
-        return preço;
-    }
-
-    public void setPreço(double preço) {
-        this.preço = preço;
-    }
-
     @Override
     public String toString() {
         return "Servicos{" +
                 "id='" + id + '\'' +
                 ", nome='" + nome + '\'' +
-                ", preço=" + preço +
+                ", preço=" + getPreco()  +
                 '}';
     }
 }

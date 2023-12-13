@@ -1,25 +1,29 @@
-package NovosDados.Repositorio;
+package NovosDados.Repositorio.Cadastro;
 
-import Utils.MetodosUtils;
-import Utils.Objetos.ValidCEP;
+import NovosDados.Repositorio.Abstratos.OutrosDados;
+import NovosDados.Repositorio.Auxiliar.ValidCEP;
 
-public class Fornecedor extends MetodosUtils {
+public class Fornecedor extends OutrosDados {
 
     private int id;
     private String razaoSocial;
     private String nomeFantasia;
     private String cnpj;
-    private String email;
-    private String telefone;
-    private ValidCEP infoCEP;
+    //private String email;
+    private String inscEstadual;
+    private String inscMunicipal;
+    //private String telefone;
+    //private ValidCEP infoCEP;
 
-    public Fornecedor(String razaoSocial, String nomeFantasia, String cnpj, String email, String telefone, ValidCEP infoCEP) {
+    public Fornecedor(String razaoSocial, String nomeFantasia, String cnpj, String email, String inscEstadual, String inscMunicipal, String telefone, ValidCEP infoCEP) {
         this.razaoSocial = razaoSocial;
         this.nomeFantasia = nomeFantasia;
         this.cnpj = cnpj;
-        this.email = email;
-        this.telefone = telefone;
-        this.infoCEP = infoCEP;
+        this.setEmail(email);
+        this.inscEstadual = inscEstadual;
+        this.inscMunicipal = inscMunicipal;
+        this.setTelefone(telefone);
+        this.setInfoCEP(infoCEP);
     }
 
     public Fornecedor() {
@@ -56,7 +60,7 @@ public class Fornecedor extends MetodosUtils {
     public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
     }
-
+/*
     public String getEmail() {
         return email;
     }
@@ -64,7 +68,23 @@ public class Fornecedor extends MetodosUtils {
     public void setEmail(String email) {
         this.email = email;
     }
+*/
+    public String getInscEstadual() {
+        return inscEstadual;
+    }
 
+    public void setInscEstadual(String inscEstadual) {
+        this.inscEstadual = inscEstadual;
+    }
+
+    public String getInscMunicipal() {
+        return inscMunicipal;
+    }
+
+    public void setInscMunicipal(String inscMunicipal) {
+        this.inscMunicipal = inscMunicipal;
+    }
+/*
     public String getTelefone() {
         return telefone;
     }
@@ -80,16 +100,19 @@ public class Fornecedor extends MetodosUtils {
     public void setInfoCEP(ValidCEP infoCEP) {
         this.infoCEP = infoCEP;
     }
+*/
 
     @Override
     public String toString() {
         return "Fornecedor{" +
                 "razaoSocial='" + razaoSocial + '\'' +
                 ", nomeFantasia='" + nomeFantasia + '\'' +
-                ", cnpj=" + cnpj +
-                ", email='" + email + '\'' +
-                ", telefone='" + telefone + '\'' +
-                ", " + infoCEP +
+                ", cnpj=" + cnpj + '\'' +
+                ", email='" + getEmail() + '\'' +
+                ", inscEstadual='" + inscEstadual + '\'' +
+                ", inscMunicipal='" + inscMunicipal + '\'' +
+                ", telefone='" + getTelefone() + '\'' +
+                ", " + getInfoCEP() +
                 '}';
     }
 }

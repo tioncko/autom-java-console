@@ -1,6 +1,6 @@
 package NovosDados.AreasMenu;
 
-import Utils.Objetos.LeitorDados;
+import Utils.LeitorDados;
 
 public class AreaCadastroProduto extends LeitorDados {
 }

@@ -1,6 +1,6 @@
 package Database.Metodos;
 
-import NovosDados.Repositorio.Cliente;
+import NovosDados.Repositorio.Cadastro.Cliente;
 import Utils.MetodosUtils;
 
 import java.util.*;

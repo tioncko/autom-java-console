@@ -1,6 +1,6 @@
 package InterfaceInical;
 
-import Database.DataTables;
+import Database.DTO;
 import Database.Metodos.*;
 import Database.InterfaceCRUD;
 import Utils.MetodosUtils;
@@ -10,7 +10,7 @@ public class Cadastro implements InterfaceCRUD {
     MetodosCliente novoCli;
     MetodosUsuario novoUsr;
     MetodosFornecedor novoFrn;
-    DataTables DT = new DataTables();
+    DTO DT = new DTO();
 
     public Cadastro(){
         this.novoCli = new MetodosCliente();
@@ -21,7 +21,7 @@ public class Cadastro implements InterfaceCRUD {
     /**
      * Classe interna para as Ações do cliente
      */
-    public class AcoesCliente implements ICliente {
+    public class AcoesCliente implements ICustomer {
         @Override
         public void cadastrarCliente(String nome, int idade, String cpf, String email, String telefone, String CEP, int numCasa) {
             novoCli.setNome(nome);
@@ -63,7 +63,6 @@ public class Cadastro implements InterfaceCRUD {
         public boolean listarClientes() {
             return novoCli.PrintMapWithSet();
         }
-
     }
 
     /**
@@ -136,13 +135,15 @@ public class Cadastro implements InterfaceCRUD {
         }
     }
 
-    public class AcoesFornecedor implements IFornecedor{
+    public class AcoesFornecedor implements ISupplier {
         @Override
-        public void cadastrarFornecedor(String razaoSocial, String nomeFantasia, String cnpj, String email, String telefone, String CEP, int numCasa) {
+        public void cadastrarFornecedor(String razaoSocial, String nomeFantasia, String cnpj, String email, String inscEstadual, String inscMunicipal, String telefone, String CEP, int numCasa) {
             novoFrn.setRazaoSocial(razaoSocial);
             novoFrn.setNomeFantasia(nomeFantasia);
             novoFrn.setCnpj(cnpj);
             novoFrn.setEmail(email);
+            novoFrn.setInscEstadual(inscEstadual);
+            novoFrn.setInscMunicipal(inscMunicipal);
             novoFrn.setTelefone(telefone);
             novoFrn.setInfoCEP(MetodosUtils.CEP.ResponseCEP(CEP, numCasa));
 

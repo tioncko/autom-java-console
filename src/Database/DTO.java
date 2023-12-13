@@ -3,13 +3,12 @@ package Database;
 import Database.Metodos.MetodosUsuario;
 import NovosDados.Repositorio.Enums.Permissao;
 import Utils.MetodosUtils.*;
-import Utils.Objetos.PermissaoUsuario;
 
-public class DataTables {
+public class DTO {
 
     MetodosUsuario musr;
 
-    public DataTables() {
+    public DTO() {
         this.musr = new MetodosUsuario();
     }
 

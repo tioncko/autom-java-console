@@ -4,3 +4,13 @@
 [OK] Criar variavel de permissão de acesso aos usuários que forem cadastrados (se possível, via enumerator)
 [OK] Alterar dentro da classe <MetodosUsuario> todas as instancias Usuário para Set<Usuario> para evitar repetição de logins
 [OK] Necessário validar antes de entrar no metodo por o set vai funcionar com um objeto fixo, e não variado
+
+
+--
+Novas tarefas
+
+Implementar area de cadastro
+    - carros
+    - funcionarios
+    - produtos
+    - servicos

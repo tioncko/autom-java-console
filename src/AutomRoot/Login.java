@@ -1,16 +1,16 @@
 package AutomRoot;
 
-import Database.DataTables;
+import Database.DTO;
 import Database.Metodos.*;
 
 public class Login extends MetodosUsuario {
 
     MenuPrincipal mp;
-    DataTables DT;
+    DTO DT;
 
     public Login() {
         this.mp = new MenuPrincipal();
-        this.DT = new DataTables();
+        this.DT = new DTO();
     }
 
     private static String usr;

@@ -7,16 +7,20 @@ import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.time.*;
+import java.time.chrono.ChronoLocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
+import java.util.Date;
 import javax.xml.parsers.DocumentBuilderFactory;
-import Utils.Objetos.Criptografia;
-import Utils.Objetos.ValidCEP;
+import NovosDados.Repositorio.Auxiliar.Criptografia;
+import NovosDados.Repositorio.Auxiliar.ValidCEP;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-public class MetodosUtils {
+public abstract class MetodosUtils {
 
     public static class Senha {
         public static Criptografia Encrypt(String password) {
@@ -48,7 +52,8 @@ public class MetodosUtils {
             StringBuilder Char_byte = new StringBuilder(CharLength(password, Operation.DECRYPT));
 
             byte[] response = decrypt.decode(new String(Char_byte));
-            String decoded = new String(response, StandardCharsets.ISO_8859_1);
+            String decoded;
+            decoded = new String(response, StandardCharsets.ISO_8859_1);
 
             return decoded;
         }
@@ -124,7 +129,7 @@ public class MetodosUtils {
                     System.out.printf("Não foi possível retornar com os dados do CEP: %s informado", NumCEP);
                 }
             } catch (Exception e) {
-                System.out.println(e);
+                System.out.println(e.getMessage());
             }
             return novoCEP;
         }
@@ -144,13 +149,63 @@ public class MetodosUtils {
                 }
                 in.close();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException(e.getMessage());
             }
             return response;
         }
     }
 
+    public static class Tools {
+        public static String Daily() {
 
+            String period = null;
+
+            LocalTime currentDate = LocalTime.now();
+            Date currentTime  = Date.from(currentDate.atDate(LocalDate.now())
+                    .atZone(ZoneId.systemDefault())
+                    .toInstant());
+
+            LocalTime midnight = LocalTime.of(0, 0, 0);
+            LocalTime morning = LocalTime.of(11, 59, 59);
+            LocalTime afternoon = LocalTime.of(17, 59, 59);
+            LocalTime evening = LocalTime.of(23, 59, 59);
+
+            Date dtMidnight = Date.from(midnight.atDate(LocalDate.now())
+                    .atZone(ZoneId.systemDefault())
+                    .toInstant());
+            Date dtMorning = Date.from(morning.atDate(LocalDate.now())
+                    .atZone(ZoneId.systemDefault())
+                    .toInstant());
+            Date dtAfternoon = Date.from(afternoon.atDate(LocalDate.now())
+                    .atZone(ZoneId.systemDefault())
+                    .toInstant());
+            Date dtEvening = Date.from(evening.atDate(LocalDate.now())
+                    .atZone(ZoneId.systemDefault())
+                    .toInstant());
+
+            if(currentTime.after(dtMidnight) && currentTime.before(dtMorning)) period = Current.morning.getDay();
+            if(currentTime.after(dtMorning) && currentTime.before(dtAfternoon)) period = Current.afternoon.getDay();
+            if(currentTime.after(dtAfternoon) && currentTime.before(dtEvening)) period = Current.evening.getDay();
+
+            return period;
+        }
+
+        public enum Current {
+            morning("Bom dia"),
+            afternoon("Boa tarde"),
+            evening("Boa noite");
+
+            private final String day;
+
+            Current(String value) {
+                this.day = value;
+            }
+
+            public String getDay(){
+                return day;
+            }
+        }
+    }
 }
 
 //#region notes

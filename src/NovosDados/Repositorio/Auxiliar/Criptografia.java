@@ -1,12 +1,8 @@
-package Utils.Objetos;
+package NovosDados.Repositorio.Auxiliar;
 
 public class Criptografia {
 
     private String Encrypting;
-
-    public Criptografia() {
-
-    }
 
     public String getEncrypting() {
         return Encrypting;

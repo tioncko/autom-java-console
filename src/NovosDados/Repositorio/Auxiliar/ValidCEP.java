@@ -1,6 +1,6 @@
-package Utils.Objetos;
+package NovosDados.Repositorio.Auxiliar;
 
-public class ValidCEP{
+public class ValidCEP {
 
     private String CEP;
     private String endereco;
@@ -8,9 +8,6 @@ public class ValidCEP{
     private String bairro;
     private String cidade;
     private String UF;
-
-    public ValidCEP(){
-    }
 
     public String getCEP() {
         return CEP;
@@ -52,8 +49,7 @@ public class ValidCEP{
 
     @Override
     public String toString() {
-        return "" +
-                "CEP='" + CEP + '\'' +
+        return "CEP='" + CEP + '\'' +
                 ", endereco='" + endereco + '\'' +
                 ", num=" + Num +
                 ", bairro='" + bairro + '\'' +

@@ -1,8 +1,9 @@
 package Database.Metodos;
 
-import NovosDados.Repositorio.*;
+import NovosDados.Repositorio.Auxiliar.PermissaoUsuario;
+import NovosDados.Repositorio.Cadastro.Usuario;
 import NovosDados.Repositorio.Enums.Permissao;
-import Utils.Objetos.*;
+import Utils.Numeros;
 
 import java.util.*;
 

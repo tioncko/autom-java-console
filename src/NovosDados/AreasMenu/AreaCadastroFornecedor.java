@@ -2,7 +2,7 @@ package NovosDados.AreasMenu;
 
 import AutomRoot.MenuPrincipal;
 import InterfaceInical.Cadastro;
-import Utils.Objetos.LeitorDados;
+import Utils.LeitorDados;
 
 public class AreaCadastroFornecedor extends LeitorDados {
 
@@ -25,6 +25,7 @@ public class AreaCadastroFornecedor extends LeitorDados {
         System.out.println("5 - Localizar Mais Fornecedores");
         System.out.println("6 - Remover Mais Fornecedores");
         System.out.println("7 - Listar Fornecedores");
+        System.out.println("* - Mais");
 
         System.out.print("\n-----------------------------------------");
         String id = ReadText("\n\033[3mDigite código do menu para suas ações: \033[0m");
@@ -44,6 +45,8 @@ public class AreaCadastroFornecedor extends LeitorDados {
                             ReadSentence("Nome Fantasia: "),
                             ReadText("CNPJ: "),
                             ReadText("E-mail: "),
+                            ReadText("Inscrição Estadual: "),
+                            ReadText("Inscrição Municipal: "),
                             ReadSentence("Telefone: "),
                             ReadText("CEP: ").replace("-",""),
                             ReadInt("Nùmero da residência: ")
@@ -244,6 +247,26 @@ public class AreaCadastroFornecedor extends LeitorDados {
                     }
                     if (opcaoListFornr == 3) mp.menuCadastro(userId);
                     if (opcaoListFornr == 4) {
+                        System.out.println("\nAplicação encerrada.");
+                        System.exit(0);
+                    }
+                    break;
+
+                case "*":
+                    Integer opcaoVoltar = ReadInt("\n\033[3mO que deseja?" +
+                            "\n(1) Permanecer na tela de cadastro do fornecedor" +
+                            "\n(2) Retornar ao menu principal" +
+                            "\n(3) Ir para o menu de cadastro geral" +
+                            "\n(4) Sair da aplicação?: \033[0m");
+                    System.out.println("----------------------------------------------");
+
+                    if (opcaoVoltar == 1) menuCadastroFornecedor(userId);
+                    if (opcaoVoltar == 2) {
+                        session = false;
+                        mp.paginaInicial();
+                    }
+                    if (opcaoVoltar == 3) mp.menuCadastro(userId);
+                    if (opcaoVoltar == 4) {
                         System.out.println("\nAplicação encerrada.");
                         System.exit(0);
                     }
