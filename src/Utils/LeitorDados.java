@@ -1,12 +1,10 @@
 package Utils;
 
-import Database.InterfaceCRUD;
+import Database.INovosDados;
 
-import java.util.Arrays;
-import java.util.Objects;
 import java.util.Scanner;
 
-public abstract class LeitorDados implements InterfaceCRUD.IReader {
+public abstract class LeitorDados implements INovosDados.IReader {
 
     private static final Scanner txt;
 

@@ -1,7 +1,8 @@
-package Testes;
+package Lab;
 
 import NovosDados.Repositorio.Auxiliar.API.Referencias.*;
 import NovosDados.Repositorio.Cadastro.Produtos;
+import Propriedades.Config;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -14,6 +15,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class api_v4<T> {
 
@@ -22,6 +26,8 @@ public class api_v4<T> {
     public api_v4() {
         this.items = new ArrayList<>();
     }
+
+    public static Logger log = Logger.getLogger(Config.class.getName());
 
     public List<T> addItemToBox(T t) {
         items.add(t);
@@ -45,7 +51,10 @@ public class api_v4<T> {
 
         api_v4<Produtos> x = new api_v4<>();
         List<Produtos> novos = x.returned(Produtos.class.getDeclaredConstructor().newInstance());
-        novos.stream().filter(p -> p.toString().contains("Servicos")).forEach(System.out::println);
+        //novos.stream().filter(p -> p.toString().contains("Servicos")).forEach(System.out::println);
+
+        Predicate<Produtos> pred = c -> (!c.toString().contains("Servicos Automotivos"));
+        novos.stream().filter(pred).forEach(System.out::println);
 
         System.out.print("+++++++++++++++++++++++++++++++++++++++++++++\n");
 
@@ -97,8 +106,9 @@ public class api_v4<T> {
                 }
             }
             //ret.stream().filter(d -> (!d.toString().contains("Servicos"))).forEach(System.out::println);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            log.log(Level.WARNING, e.getMessage(), e);
+            log.log(Level.SEVERE, e.getMessage(), e);
         }
         return ret;
     }
@@ -115,7 +125,9 @@ public class api_v4<T> {
 
             pr = "src/" + prop.getProperty(param);
         } catch (IOException e) {
-            e.printStackTrace();
+
+            log.log(Level.WARNING, e.getMessage(), e);
+            log.log(Level.SEVERE, e.getMessage(), e);
         }
         return pr;
     }

@@ -2,10 +2,10 @@ package InterfaceInical;
 
 import Database.DTO;
 import Database.Metodos.*;
-import Database.InterfaceCRUD;
+import Database.INovosDados;
 import Utils.MetodosUtils;
 
-public class Cadastro implements InterfaceCRUD {
+public class Cadastro implements INovosDados {
 
     MetodosCliente novoCli;
     MetodosUsuario novoUsr;

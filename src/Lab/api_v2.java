@@ -1,4 +1,4 @@
-package Testes;
+package Lab;
 
 import java.io.*;
 import java.lang.reflect.Type;

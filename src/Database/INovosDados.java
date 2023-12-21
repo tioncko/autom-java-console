@@ -2,7 +2,7 @@ package Database;
 
 import NovosDados.Repositorio.Cadastro.Fornecedor;
 
-public interface InterfaceCRUD {
+public interface INovosDados {
 
     public interface IReader {
         public String ReadText(String str);

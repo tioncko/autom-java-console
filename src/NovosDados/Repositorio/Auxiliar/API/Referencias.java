@@ -1,5 +1,7 @@
 package NovosDados.Repositorio.Auxiliar.API;
 
+import java.util.Objects;
+
 public class Referencias {
 
     public static class Categoria {
@@ -14,11 +16,24 @@ public class Referencias {
             this.Categoria = categoria;
         }
 
-        public Categoria() {
-        }
-
+        @Override
         public String toString() {
             return Categoria;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o)
+                return true;
+            if (o == null || getClass() != o.getClass())
+                return false;
+            Categoria categoria = (Categoria) o;
+            return Objects.equals(Categoria, categoria.Categoria);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(Categoria);
         }
     }
 
@@ -34,12 +49,22 @@ public class Referencias {
             this.Grupo = grupo;
         }
 
-        public Grupos() {
-
-        }
-
+        @Override
         public String toString() {
             return Grupo;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Grupos grupo = (Grupos) o;
+            return Objects.equals(Grupo, grupo.Grupo);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(Grupo);
         }
     }
 }
