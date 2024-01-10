@@ -1,0 +1,202 @@
+[
+  {
+    "razaoSocial": "ROBERT BOSCH LIMITADA",
+    "nomeFantasia": "BOSCH",
+    "cnpj": 45990181000189,
+    "email": "contato@br.bosch.com",
+    "inscEstadual": 244007410115,
+    "telefone": 1921031954,
+    "infoCEP": 13065900,
+    "numLocal": 154
+  },
+  {
+    "razaoSocial": "MARELLI COFAP DO BRASIL LTDA",
+    "nomeFantasia": "COFAP",
+    "cnpj": 2865246000151,
+    "email": "marilda.santos@marelli.com",
+    "inscEstadual": 442406329110,
+    "telefone": 1121442143,
+    "infoCEP": 9380120,
+    "numLocal": 8524
+  },
+  {
+    "razaoSocial": "CONTINENTAL BRASIL INDUSTRIA AUTOMOTIVA LTDA",
+    "nomeFantasia": "CONTINENTAL",
+    "cnpj": 48754139000157,
+    "email": "renata.bassi@continental.com",
+    "inscEstadual": 336244296118,
+    "telefone": 1129234718,
+    "infoCEP": 7042020,
+    "numLocal": 145
+  },
+  {
+    "razaoSocial": "DAYCO POWER TRANSMISSION LTDA",
+    "nomeFantasia": "DAYCO",
+    "cnpj": 1083192000100,
+    "email": "vagner.machado@dayco.com",
+    "inscEstadual": 7401055440066,
+    "telefone": 3187318927,
+    "infoCEP": 32215000,
+    "numLocal": 1515
+  },
+  {
+    "razaoSocial": "MAHLE METAL LEVE SA",
+    "nomeFantasia": "MAHLE",
+    "cnpj": 60476884000268,
+    "email": "daniel.camargo@mahle.com",
+    "inscEstadual": 455088144118,
+    "telefone": 1938619169,
+    "infoCEP": 13849050,
+    "numLocal": 151
+  },
+  {
+    "razaoSocial": "NAKATA AUTOMOTIVA SA",
+    "nomeFantasia": "NAKATA",
+    "cnpj": 4156194000250,
+    "email": "ricardo.martins@nakata.com.br",
+    "inscEstadual": 286254851118,
+    "telefone": 1136028047,
+    "infoCEP": 9950400,
+    "numLocal": 85
+  },
+  {
+    "razaoSocial": "CERAMICA E VELAS DE IGNICAO NGK DO BRASIL LTDA",
+    "nomeFantasia": "NGK",
+    "cnpj": 52541760000100,
+    "email": "contato@ngkntk.com.br",
+    "inscEstadual": 454036318111,
+    "telefone": 1147938000,
+    "infoCEP": 8880900,
+    "numLocal": 965
+  },
+  {
+    "razaoSocial": "MONROE AXIOS TENNECO AUTOMOTIVE BRASIL LTDA",
+    "nomeFantasia": "MONROE",
+    "cnpj": 44023471000271,
+    "email": "mbarbosa@driv.com",
+    "inscEstadual": 278014492119,
+    "telefone": 1938057145,
+    "infoCEP": 6701000,
+    "numLocal": 47
+  },
+  {
+    "razaoSocial": "NSK BRASIL LTDA",
+    "nomeFantasia": "NSK",
+    "cnpj": 71917181000163,
+    "email": "laurindo-p@nsk.com",
+    "inscEstadual": 672011946115,
+    "telefone": 1147482355,
+    "infoCEP": 8685000,
+    "numLocal": 102
+  },
+  {
+    "razaoSocial": "PHILIPS DO BRASIL LTDA",
+    "nomeFantasia": "PHILLIPS",
+    "cnpj": 61086336000103,
+    "email": "alia.henrique.morgado@philips.com",
+    "inscEstadual": 206117203117,
+    "telefone": 1121250428,
+    "infoCEP": 6460040,
+    "numLocal": 474
+  },
+  {
+    "razaoSocial": "PARAFLU DO BRASIL INDUSTRIA DE PRODUTOS QUIMICOS LTDA",
+    "nomeFantasia": "PARAFLU",
+    "cnpj": 24957152000145,
+    "email": "atendimento@paraflu.ind.br",
+    "inscEstadual": 1280057340,
+    "telefone": 5136351837,
+    "infoCEP": 95760000,
+    "numLocal": 484
+  },
+  {
+    "razaoSocial": "PARKER HANNIFIN INDUSTRIA E COMERCIO LTDA",
+    "nomeFantasia": "PARKER",
+    "cnpj": 54823455000136,
+    "email": "tax.fsu@parker.com",
+    "inscEstadual": 645785439110,
+    "telefone": 1239545262,
+    "infoCEP": 12247015,
+    "numLocal": 762
+  },
+  {
+    "razaoSocial": "SACHS AUTOMOTIVE BRASIL LTDA",
+    "nomeFantasia": "SACHS",
+    "cnpj": 57000317000145,
+    "email": "contato@sachs.com",
+    "inscEstadual": 985848854854,
+    "telefone": 1143412118,
+    "infoCEP": 9891901,
+    "numLocal": 495
+  },
+  {
+    "razaoSocial": "ZF AUTOMOTIVE BRASIL LTDA",
+    "nomeFantasia": "ZF",
+    "cnpj": 60857349002543,
+    "email": "antonio.champini@zf.com",
+    "inscEstadual": 799307299116,
+    "telefone": 1934041395,
+    "infoCEP": 9891901,
+    "numLocal": 4000
+  },
+  {
+    "razaoSocial": "PST ELETRONICA LTDA",
+    "nomeFantasia": "POSITRON",
+    "cnpj": 84496066000104,
+    "email": "rgsilva@stoneridge.com",
+    "inscEstadual": 804010337116,
+    "telefone": 92961116000,
+    "infoCEP": 69075020,
+    "numLocal": 15478
+  },
+  {
+    "razaoSocial": "SCHAEFFLER BRASIL LTDA",
+    "nomeFantasia": "SCHAEFFLER",
+    "cnpj": 57000036000192,
+    "email": "tributos@schaeffler.com",
+    "inscEstadual": 669097115112,
+    "telefone": 1533351500,
+    "infoCEP": 18103000,
+    "numLocal": 6262
+  },
+  {
+    "razaoSocial": "VALEO SISTEMAS AUTOMOTIVOS LTDA",
+    "nomeFantasia": "VALEO",
+    "cnpj": 57010662000160,
+    "email": "contato@valeo.com",
+    "inscEstadual": 382014857110,
+    "telefone": 1155336546,
+    "infoCEP": 13250904,
+    "numLocal": 451
+  },
+  {
+    "razaoSocial": "YPF BRASIL COMERCIO DE DERIVADOS DE PETROLEO LTDA",
+    "nomeFantasia": "YPF",
+    "cnpj": 3972433000105,
+    "email": "fiscalbrazil@ypf.com",
+    "inscEstadual": 286422211119,
+    "telefone": 1131450320,
+    "infoCEP": 9941202,
+    "numLocal": 145
+  },
+  {
+    "razaoSocial": "THERMAL MANAGEMENT SOLUTIONS BRAZIL LTDA",
+    "nomeFantasia": "WAHLER",
+    "cnpj": 46242558000184,
+    "email": "tiago.santana@thermansol.com",
+    "inscEstadual": 535049678110,
+    "telefone": 1934299033,
+    "infoCEP": 13422210,
+    "numLocal": 1692
+  },
+  {
+    "razaoSocial": "MOVENT AUTOMOTIVE INDUSTRIA E COMERCIO DE AUTOPECAS LTDA",
+    "nomeFantasia": "SPICER",
+    "cnpj": 61091963000647,
+    "email": "luciane.esteves@dana.com",
+    "inscEstadual": 286156637114,
+    "telefone": 5134893377,
+    "infoCEP": 9950400,
+    "numLocal": 555
+  }
+]
