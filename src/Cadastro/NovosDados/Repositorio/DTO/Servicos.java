@@ -35,7 +35,7 @@ public class Servicos extends Gondola {
     @Override
     public String toString() {
         return "Servicos{" +
-                ", nome='" + nomeServ + '\'' +
+                "nome='" + nomeServ + '\'' +
                 ", preço=" + getPreco()  +
                 ", categoria=" + getCategoria()  +
                 ", grupo=" + getGrupo()  +

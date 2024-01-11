@@ -1,6 +1,6 @@
 package Cadastro.NovosDados.Repositorio.Enums;
 
-public enum camposProd {
+public enum camposItens {
      DESCRICAO
     ,PRECO
     ,QTD

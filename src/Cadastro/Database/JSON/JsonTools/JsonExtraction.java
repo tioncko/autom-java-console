@@ -4,14 +4,21 @@ import Cadastro.NovosDados.Repositorio.Enums.arquivoConfig;
 import Cadastro.NovosDados.Repositorio.Abstratos.Gondola;
 import Cadastro.NovosDados.Repositorio.Auxiliar.Propriedades.*;
 import Cadastro.NovosDados.Repositorio.DTO.*;
+import Raiz.Core.ImpressaoLog;
 import Raiz.Utils.LeitorDados;
 
 import java.util.*;
 import java.util.function.*;
+import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 public class JsonExtraction extends JsonResponse {
 
     public static class ColetaJsonDados extends LeitorDados {
+
+        ImpressaoLog.LogGenerico<ColetaJsonDados> printLog = new ImpressaoLog.LogGenerico<>();
+        @SuppressWarnings("unchecked") Logger log = printLog.getLogRetorno((Class<ColetaJsonDados>) (Object) (ColetaJsonDados.class));
+
         public <T> Categoria nomeCategoria(Integer id, Class<T> classe) throws Exception {
 
             Categoria cat;
@@ -140,16 +147,11 @@ public class JsonExtraction extends JsonResponse {
                 String fileParam = arquivoConfig.Fornecedores.getPropriedade();
                 Map<Integer, Fornecedor> sup = p.getMapRecord(Fornecedor.class, fileParam);
 
-                // Set<Map.Entry<Integer, Fornecedor>> getForn ........ entrySet();
-                // Predicate<T> filtroLoja = instance instanceof Produtos ? c -> (!c.toString().contains(varContains)) : c -> (c.toString().contains(varContains));
-                //
-                // criar Set<> para retornar apenas os produtos na lista (consequentemente, os serviços virão)
-                //
-
                 return sup;
 
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                //System.out.println(e.getMessage());
+                log.warning("[" + ColetaJsonDados.class.getSimpleName() + "] " + e.getMessage());
             }
             return new HashMap<>();
         }
@@ -184,11 +186,22 @@ public class JsonExtraction extends JsonResponse {
                 JsonToMap p = new JsonToMap();
                 //String fileParam = Config.NameSettings.Loja.getProperty();
                 String fileParam = arquivoConfig.Loja.getPropriedade();
-                Map<Integer, Produtos> sup = p.getMapRecord(Produtos.class, fileParam);
-                return sup;
+                String varContains = "Servicos Automotivos";
+                Stream <Map.Entry <Integer, Produtos>>
+                        sup = p.getMapRecord(Produtos.class, fileParam).entrySet().stream()
+                        .filter(c -> (!c.getValue().toString().contains(varContains)));
 
+                List<Produtos> prod = new ArrayList<>();
+                sup.forEach(x -> prod.add(x.getValue()));
+
+                Map<Integer, Produtos> ret = new HashMap<>();
+                for(int i = 1; i < prod.size(); i++){
+                    ret.put(i, prod.get(i));
+                }
+                return ret;
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                //System.out.println(e.getMessage());
+                log.warning("[" + ColetaJsonDados.class.getSimpleName() + "] " + e.getMessage());
             }
             return new HashMap<>();
         }
@@ -213,11 +226,22 @@ public class JsonExtraction extends JsonResponse {
                 JsonToMap p = new JsonToMap();
                 //String fileParam = Config.NameSettings.Loja.getProperty();
                 String fileParam = arquivoConfig.Loja.getPropriedade();
-                Map<Integer, Servicos> sup = p.getMapRecord(Servicos.class, fileParam);
-                return sup;
+                String varContains = "Servicos Automotivos";
+                Stream <Map.Entry <Integer, Servicos>>
+                        sup = p.getMapRecord(Servicos.class, fileParam).entrySet().stream()
+                        .filter(c -> (c.getValue().toString().contains(varContains)));
 
+                List<Servicos> serv = new ArrayList<>();
+                sup.forEach(x -> serv.add(x.getValue()));
+
+                Map<Integer, Servicos> ret = new HashMap<>();
+                for(int i = 1; i < serv.size(); i++){
+                    ret.put(i, serv.get(i));
+                }
+                return ret;
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                //System.out.println(e.getMessage());
+                log.warning("[" + ColetaJsonDados.class.getSimpleName() + "] " + e.getMessage());
             }
             return new HashMap<>();
         }

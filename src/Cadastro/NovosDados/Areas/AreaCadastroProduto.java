@@ -63,7 +63,7 @@ public class AreaCadastroProduto extends LeitorDados implements IAreaCadastro.IP
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoCadProd = ReadInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do fornecedor" +
+                            "\n(1) Permanecer na tela de cadastro do produto" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
                             "\n(4) Sair da aplicação?: \033[0m");
@@ -102,7 +102,7 @@ public class AreaCadastroProduto extends LeitorDados implements IAreaCadastro.IP
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoAltProd = ReadInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do cliente" +
+                            "\n(1) Permanecer na tela de cadastro do produto" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral?" +
                             "\n(4) Sair da aplicação?: \033[0m");
@@ -133,7 +133,7 @@ public class AreaCadastroProduto extends LeitorDados implements IAreaCadastro.IP
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoExcProd = ReadInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do cliente" +
+                            "\n(1) Permanecer na tela de cadastro do produto" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
                             "\n(4) Sair da aplicação?: \033[0m");
@@ -163,7 +163,7 @@ public class AreaCadastroProduto extends LeitorDados implements IAreaCadastro.IP
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoLocProd = ReadInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do cliente" +
+                            "\n(1) Permanecer na tela de cadastro do produto" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
                             "\n(4) Sair da aplicação?: \033[0m");
@@ -194,7 +194,7 @@ public class AreaCadastroProduto extends LeitorDados implements IAreaCadastro.IP
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoLocMProd = ReadInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do cliente" +
+                            "\n(1) Permanecer na tela de cadastro do produto" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
                             "\n(4) Sair da aplicação?: \033[0m");
@@ -225,7 +225,7 @@ public class AreaCadastroProduto extends LeitorDados implements IAreaCadastro.IP
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoRemMProd = ReadInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do cliente" +
+                            "\n(1) Permanecer na tela de cadastro do produto" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
                             "\n(4) Sair da aplicação?: \033[0m");
@@ -249,7 +249,7 @@ public class AreaCadastroProduto extends LeitorDados implements IAreaCadastro.IP
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoListProd = ReadInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do cliente" +
+                            "\n(1) Permanecer na tela de cadastro do produto" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
                             "\n(4) Sair da aplicação?: \033[0m");
@@ -269,7 +269,7 @@ public class AreaCadastroProduto extends LeitorDados implements IAreaCadastro.IP
 
                 case "*":
                     Integer opcaoVoltar = ReadInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do cliente" +
+                            "\n(1) Permanecer na tela de cadastro do produto" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
                             "\n(4) Sair da aplicação?: \033[0m");

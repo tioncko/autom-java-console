@@ -52,7 +52,7 @@ public class AreaCadastroServico extends LeitorDados implements IAreaCadastro.IS
             switch (id) {
                 case "1":
                     System.out.println("\n# Cadastrar novo serviço #\n");
-                    //af.cadastrarFornecedor("Jorge", "22", "04472205484", "teste@olos.com.br", "014585445489", "2555555", "04472205", 38, String.valueOf(ReadStrList("try: ")));
+                    //as.cadastrarServico("Jorge", "22", "04472205484", "teste@olos.com.br", "014585445489", "2555555", "04472205", 38, String.valueOf(ReadStrList("try: ")));
 
                     as.cadastrarServico(
                             ReadSentence("Nome do serviço: "),
@@ -63,7 +63,7 @@ public class AreaCadastroServico extends LeitorDados implements IAreaCadastro.IS
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoCadProd = ReadInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do fornecedor" +
+                            "\n(1) Permanecer na tela de cadastro do serviço" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
                             "\n(4) Sair da aplicação?: \033[0m");
@@ -81,13 +81,173 @@ public class AreaCadastroServico extends LeitorDados implements IAreaCadastro.IS
                     }
                     break;
 
+                case "2":
+                    System.out.println("\n# Alterar um serviço #\n");
+                    if (as.listarServicos()) {
+                        System.out.println();
+
+                        int alterId = ReadInt("Id: ");
+                        String field = ReadText("Campo: ").toUpperCase();
+                        as.alterarServico(
+                                alterId,
+                                field,
+                                ReadSentence("Alteração (" + field.toUpperCase() + "): ")
+                        );
+
+                        System.out.println("\nAlteração concluída!");
+                        as.localizarServico(alterId);
+                    }
+
+                    System.out.print("\n----------------------------------------------");
+                    Integer opcaoAltProd = ReadInt("\n\033[3mO que deseja?" +
+                            "\n(1) Permanecer na tela de cadastro do serviço" +
+                            "\n(2) Retornar ao menu principal" +
+                            "\n(3) Ir para o menu de cadastro geral?" +
+                            "\n(4) Sair da aplicação?: \033[0m");
+                    System.out.println("----------------------------------------------");
+
+                    if (opcaoAltProd == 1) menuCadastroServico(userId);
+                    if (opcaoAltProd == 2) {
+                        session = false;
+                        mp.paginaInicial(banco);
+                    }
+                    if (opcaoAltProd == 3) mp.menuCadastro(userId, banco);
+                    if (opcaoAltProd == 4) {
+                        System.out.println("\nAplicação encerrada.");
+                        System.exit(0);
+                    }
+                    break;
+
+                case "3":
+                    System.out.println("\n# Excluir um produto #\n");
+                    if(as.listarServicos()) {
+                        System.out.println();
+
+                        as.excluirServico(
+                                ReadInt("Id: ")
+                        );
+                        System.out.println("\nExclusão concluída!");
+                    }
+
+                    System.out.print("\n----------------------------------------------");
+                    Integer opcaoExcProd = ReadInt("\n\033[3mO que deseja?" +
+                            "\n(1) Permanecer na tela de cadastro do serviço" +
+                            "\n(2) Retornar ao menu principal" +
+                            "\n(3) Ir para o menu de cadastro geral" +
+                            "\n(4) Sair da aplicação?: \033[0m");
+                    System.out.println("----------------------------------------------");
+
+                    if (opcaoExcProd == 1) menuCadastroServico(userId);
+                    if (opcaoExcProd == 2) {
+                        session = false;
+                        mp.paginaInicial(banco);
+                    }
+                    if (opcaoExcProd == 3) mp.menuCadastro(userId, banco);
+                    if (opcaoExcProd == 4) {
+                        System.out.println("\nAplicação encerrada.");
+                        System.exit(0);
+                    }
+                    break;
+
+                case "4":
+                    System.out.println("\n# Localizar um produto #\n");
+                    if(as.listarServicos()){
+                        System.out.println();
+
+                        as.localizarServico(
+                                ReadInt("Id: ")
+                        );
+                    }
+
+                    System.out.print("\n----------------------------------------------");
+                    Integer opcaoLocProd = ReadInt("\n\033[3mO que deseja?" +
+                            "\n(1) Permanecer na tela de cadastro do serviço" +
+                            "\n(2) Retornar ao menu principal" +
+                            "\n(3) Ir para o menu de cadastro geral" +
+                            "\n(4) Sair da aplicação?: \033[0m");
+                    System.out.println("----------------------------------------------");
+
+                    if (opcaoLocProd == 1) menuCadastroServico(userId);
+                    if (opcaoLocProd == 2) {
+                        session = false;
+                        mp.paginaInicial(banco);
+                    }
+                    if (opcaoLocProd == 3) mp.menuCadastro(userId, banco);
+                    if (opcaoLocProd == 4) {
+                        System.out.println("\nAplicação encerrada.");
+                        System.exit(0);
+                    }
+                    break;
+
+                case "5":
+                    System.out.println("\n# Localizar vários produtos #\n");
+                    if(as.listarServicos()){
+                        System.out.println();
+
+                        as.localizarMaisServicos(
+                                ReadInt("Início: "),
+                                ReadInt("Fim: ")
+                        );
+                    }
+
+                    System.out.print("\n----------------------------------------------");
+                    Integer opcaoLocMProd = ReadInt("\n\033[3mO que deseja?" +
+                            "\n(1) Permanecer na tela de cadastro do serviço" +
+                            "\n(2) Retornar ao menu principal" +
+                            "\n(3) Ir para o menu de cadastro geral" +
+                            "\n(4) Sair da aplicação?: \033[0m");
+                    System.out.println("----------------------------------------------");
+
+                    if (opcaoLocMProd == 1) menuCadastroServico(userId);
+                    if (opcaoLocMProd == 2) {
+                        session = false;
+                        mp.paginaInicial(banco);
+                    }
+                    if (opcaoLocMProd == 3) mp.menuCadastro(userId, banco);
+                    if (opcaoLocMProd == 4) {
+                        System.out.println("\nAplicação encerrada.");
+                        System.exit(0);
+                    }
+                    break;
+
+                case "6":
+                    System.out.println("\n# Remover vários produtos #\n");
+                    if(as.listarServicos()){
+                        System.out.println();
+
+                        as.removerMaisServicos(
+                                ReadInt("Início: "),
+                                ReadInt("Fim: ")
+                        );
+                    }
+
+                    System.out.print("\n----------------------------------------------");
+                    Integer opcaoRemMProd = ReadInt("\n\033[3mO que deseja?" +
+                            "\n(1) Permanecer na tela de cadastro do serviço" +
+                            "\n(2) Retornar ao menu principal" +
+                            "\n(3) Ir para o menu de cadastro geral" +
+                            "\n(4) Sair da aplicação?: \033[0m");
+                    System.out.println("----------------------------------------------");
+
+                    if (opcaoRemMProd == 1) menuCadastroServico(userId);
+                    if (opcaoRemMProd == 2) {
+                        session = false;
+                        mp.paginaInicial(banco);
+                    }
+                    if (opcaoRemMProd == 3) mp.menuCadastro(userId, banco);
+                    if (opcaoRemMProd == 4) {
+                        System.out.println("\nAplicação encerrada.");
+                        System.exit(0);
+                    }
+                    break;
+
                 case "7":
                     System.out.println("\n# Lista de produtos #\n");
                     as.listarServicos();
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoListProd = ReadInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do cliente" +
+                            "\n(1) Permanecer na tela de cadastro do serviço" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
                             "\n(4) Sair da aplicação?: \033[0m");
@@ -107,7 +267,7 @@ public class AreaCadastroServico extends LeitorDados implements IAreaCadastro.IS
 
                 case "*":
                     Integer opcaoVoltar = ReadInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do cliente" +
+                            "\n(1) Permanecer na tela de cadastro do serviço" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
                             "\n(4) Sair da aplicação?: \033[0m");

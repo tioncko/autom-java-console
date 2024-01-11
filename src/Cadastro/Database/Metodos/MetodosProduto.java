@@ -1,10 +1,13 @@
 package Cadastro.Database.Metodos;
 import java.util.*;
+import java.util.logging.Logger;
 
 import Cadastro.Database.DataSet;
 import Cadastro.Database.JSON.JsonTools.JsonExtraction.*;
+import Cadastro.Database.JSON.JsonTools.JsonResponse;
 import Cadastro.NovosDados.Repositorio.DTO.*;
-import Cadastro.NovosDados.Repositorio.Enums.camposProd;
+import Cadastro.NovosDados.Repositorio.Enums.camposItens;
+import Raiz.Core.ImpressaoLog;
 
 public class MetodosProduto extends Produtos {
 
@@ -12,6 +15,8 @@ public class MetodosProduto extends Produtos {
     private final ColetaJsonDados loja = new ColetaJsonDados();
     private final DataSet<Produtos> DS;
 
+    ImpressaoLog.LogGenerico<MetodosProduto> printLog = new ImpressaoLog.LogGenerico<>();
+    @SuppressWarnings("unchecked") Logger log = printLog.getLogRetorno((Class<MetodosProduto>) (Object) (MetodosProduto.class));
     /*
     public MetodosProduto() {
        this.tabProdutos = new HashMap<>();
@@ -39,7 +44,7 @@ public class MetodosProduto extends Produtos {
     public void alterProduto(Integer id, String Campo, String update) {
         if(!DS.select(Produtos.class).isEmpty()){
             //fieldProd getCampo = fieldProd.valueOf(Campo.toUpperCase());
-            camposProd getCampo = camposProd.valueOf(Campo.toUpperCase());
+            camposItens getCampo = camposItens.valueOf(Campo.toUpperCase());
 
             Set<Map.Entry<Integer, Produtos>> getProd = DS.select(Produtos.class).entrySet();
             getProd.stream()
@@ -54,14 +59,16 @@ public class MetodosProduto extends Produtos {
                                 try {
                                     DS.insert(id, new Produtos(prod.getValue().getnomeProd(), prod.getValue().getPreco(), prod.getValue().getQtd(), prod.getValue().getForn(), loja.nomeCategoria(Integer.parseInt(update), Produtos.class), prod.getValue().getGrupo()), Produtos.class);
                                 } catch (Exception e) {
-                                    System.out.println(e.getMessage());
+                                    //System.out.println(e.getMessage());
+                                    log.warning("[" + MetodosProduto.class.getSimpleName() + "] " + e.getMessage());
                                 }
                             }
                             case GRUPO      -> {
                                 try {
                                     DS.insert(id, new Produtos(prod.getValue().getnomeProd(), prod.getValue().getPreco(), prod.getValue().getQtd(), prod.getValue().getForn(), prod.getValue().getCategoria(), loja.nomeGrupo(Integer.parseInt(update), Produtos.class)), Produtos.class);
                                 } catch (Exception e) {
-                                    System.out.println(e.getMessage());
+                                    //System.out.println(e.getMessage());
+                                    log.warning("[" + MetodosProduto.class.getSimpleName() + "] " + e.getMessage());
                                 }
                             }
                         }

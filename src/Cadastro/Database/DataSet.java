@@ -1,11 +1,14 @@
 package Cadastro.Database;
 
 import Cadastro.Database.JSON.JsonTools.JsonExtraction;
+import Cadastro.Database.JSON.JsonTools.JsonResponse;
 import Cadastro.NovosDados.Repositorio.DTO.*;
+import Raiz.Core.ImpressaoLog;
 import Raiz.Utils.LeitorDados;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class DataSet<T> extends LeitorDados {
     /*
@@ -40,6 +43,9 @@ public class DataSet<T> extends LeitorDados {
         this.tabServico = new HashMap<>(json.MapServ());
     }
 
+    ImpressaoLog.LogGenerico<DataSet<T>> printLog = new ImpressaoLog.LogGenerico<>();
+    @SuppressWarnings("unchecked") Logger log = printLog.getLogRetorno((Class<DataSet<T>>) (Object) (DataSet.class));
+
     public void insert(Integer id, T value, Class<T> classe) {
         try {
             T instance = getClassNewInstance(classe);
@@ -61,7 +67,8 @@ public class DataSet<T> extends LeitorDados {
                     break;
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
+            log.warning("[" + DataSet.class.getSimpleName() + "] " + e.getMessage());
         }
     }
 
@@ -78,7 +85,8 @@ public class DataSet<T> extends LeitorDados {
                 default -> null;
             };
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
+            log.warning("[" + DataSet.class.getSimpleName() + "] " + e.getMessage());
         }
         return new HashMap<>();
     }

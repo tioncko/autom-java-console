@@ -13,14 +13,6 @@ public class Cadastro implements INovosDados {
     MetodosFornecedor novoFrn;
     MetodosProduto novoPrd;
     MetodosServico novoSrv;
-    //AdminAccess DT = new AdminAccess();
-
-    public Cadastro() throws Exception {
-        //this.novoCli = new MetodosCliente();
-        //this.novoUsr = new MetodosUsuario(DT.DTUsers());
-        //this.novoFrn = new MetodosFornecedor(JE.DTForn());
-        //this.novoPrd = new MetodosProduto(JE.DTProd());
-    }
 
     public Cadastro(DataSet<?> DS) throws Exception {
         this.novoCli = new MetodosCliente(DS);
@@ -122,12 +114,10 @@ public class Cadastro implements INovosDados {
             return novoUsr.PrintMapWithSet();
         }
 
-
         @Override
         public Integer returnNextId() {
             return novoUsr.nextId();
         }
-
 
         @Override
         public void associarPermissao(Integer id, String access) {
@@ -263,27 +253,27 @@ public class Cadastro implements INovosDados {
 
         @Override
         public void alterarServico(Integer id, String campo, String update) {
-
+            novoSrv.alterServico(id, campo, update);
         }
 
         @Override
         public void excluirServico(Integer id) {
-
+            novoSrv.remoServico(id);
         }
 
         @Override
         public void localizarServico(Integer id) {
-
+            novoSrv.findServico(id);
         }
 
         @Override
         public void localizarMaisServicos(Integer ini, Integer fim) {
-
+            novoSrv.listbyIdServico(ini, fim);
         }
 
         @Override
         public void removerMaisServicos(Integer ini, Integer fim) {
-
+            novoSrv.remobyIdServico(ini, fim);
         }
 
         @Override

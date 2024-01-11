@@ -9,12 +9,15 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.*;
 import java.util.*;
+import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import Cadastro.Database.JSON.JsonTools.JsonResponse;
 import Cadastro.NovosDados.Repositorio.Auxiliar.Criptografia;
 import Cadastro.NovosDados.Repositorio.Auxiliar.ValidCEP;
 import Cadastro.NovosDados.Repositorio.Enums.agora;
 import Cadastro.NovosDados.Repositorio.Enums.operacao;
+import Raiz.Core.ImpressaoLog;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -112,6 +115,10 @@ public abstract class SmartTools {
 
     public static class CEP {
         public static ValidCEP ResponseCEP(String NumCEP, int NumEndereco) {
+
+            ImpressaoLog.LogGenerico<CEP> printLog = new ImpressaoLog.LogGenerico<>();
+            @SuppressWarnings("unchecked") Logger log = printLog.getLogRetorno((Class<CEP>) (Object) (CEP.class));
+
             ValidCEP novoCEP = new ValidCEP();
             try {
                 StringBuffer response = getResponse(NumCEP);
@@ -135,12 +142,17 @@ public abstract class SmartTools {
                     System.out.printf("Não foi possível retornar com os dados do CEP: %s informado", NumCEP);
                 }
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                //System.out.println(e.getMessage());
+                log.warning("[" + CEP.class.getSimpleName() + "] " + e.getMessage());
             }
             return novoCEP;
         }
 
-        private static StringBuffer getResponse(String NumCEP) throws IOException {
+        private static StringBuffer getResponse(String NumCEP) throws Exception {
+
+            ImpressaoLog.LogGenerico<CEP> printLog = new ImpressaoLog.LogGenerico<>();
+            @SuppressWarnings("unchecked") Logger log = printLog.getLogRetorno((Class<CEP>) (Object) (CEP.class));
+
             String url = "https://viacep.com.br/ws/" + NumCEP + "/xml/";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -154,8 +166,9 @@ public abstract class SmartTools {
                     response.append(inputLine.replace('\u00A0', ' '));
                 }
                 in.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e.getMessage());
+            } catch (Exception e) {
+                //throw new RuntimeException(e.getMessage());
+                log.warning("[" + CEP.class.getSimpleName() + "] " + e.getMessage());
             }
             return response;
         }

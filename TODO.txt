@@ -1,16 +1,35 @@
-[OK] Verificar a possibilidade de enviar o objeto criado na hora de inicializar o programa (parte de Usuários) para replicar aos outros processos - o DT.DTUsers em especifico
-[OK] Avaliação da necessidade de uso de enumerators
-[OK] Se possível, tentar decriptar o hash gerado pela classe "Criptografia"
-[OK] Criar variavel de permissão de acesso aos usuários que forem cadastrados (se possível, via enumerator)
-[OK] Alterar dentro da classe <MetodosUsuario> todas as instancias Usuário para Set<Usuario> para evitar repetição de logins
-[OK] Necessário validar antes de entrar no metodo por o set vai funcionar com um objeto fixo, e não variado
+==============================
 
+# Áreas implementadas #
 
---
-Novas tarefas
+Tela Cadastro:
+- Cliente
+- Fornecedor
+- Usuário
+- Produtos e Serviços
 
-Implementar area de cadastro
-    - carros
-    - funcionarios
-    - produtos
-    - servicos
+==============================
+
+# Áreas pendentes #
+
+Tela Cadastro
+- Funcionário
+- Carro
+
+Tela Loja
+- A definir áreas
+
+==============================
+
+# Soluções para implementar #
+
+- Validação de exclusão de item da lista de cada classe "Metodos" [exemplo: código X já foi excluído]
+- Aplicar try/catch em métodos que utilizam "throws Exception"
+- Validar se os logs implementados estão funcionando da forma que foi planejada
+- Descrição dos métodos [o que são, o que fazem e o que retornam]
+- Releitura de nomes de variáveis, métodos e classes [exemplo: Map<Integer, Servicos> x = new HashMap<>(); -> Map<Integer, Servicos> mapServ = new HashMap<>();]
+- Alterar o README.md com a imagem atual do projeto e ir atualizando conforme o projeto evolui
+- (se possível) aplicar cor fixa nos menus
+- Limpar comentários das classes
+
+==============================
