@@ -25,7 +25,7 @@ public class MenuPrincipal extends LeitorDados {
         this.banco = DS;
     }
 
-    public void paginaInicial(DataSet<?> banco) throws Exception {
+    public void paginaInicial(DataSet<?> banco) {
 
         String logged = Login.getUsr();
         char[] charLogin = logged.toCharArray();
@@ -43,18 +43,18 @@ public class MenuPrincipal extends LeitorDados {
 
         if(SmartTools.DiaAtual.Daily().equals("Bom dia")){
             System.out.println
-                    ("\n=====================================================================\n" +
-                            "============= " + SmartTools.DiaAtual.Daily() + ", " + currentLogin + " " + supTab + "==" +
-                            "\n=====================================================================");
+            ("\n=====================================================================\n" +
+             "============= " + SmartTools.DiaAtual.Daily() + ", \u001B[31m" + currentLogin + " " + supTab + "\u001B[0m==" +
+             "\n=====================================================================");
         }
         if(SmartTools.DiaAtual.Daily().equals("Boa tarde") || SmartTools.DiaAtual.Daily().equals("Boa noite")){
             System.out.println
-                    ("\n=====================================================================\n" +
-                            "============= " + SmartTools.DiaAtual.Daily() + ", " + currentLogin + " " + supTab +
-                            "\n=====================================================================");
+            ("\n=====================================================================\n" +
+             "============= " + SmartTools.DiaAtual.Daily() + ", \u001B[31m" + currentLogin + "\u001B[0m " + supTab +
+             "\n=====================================================================");
         }
 
-        System.out.println("\nMenu:");
+        System.out.println("\n\u001B[36mMenu:\u001B[0m");
         System.out.println("1 - Cadastro");
         System.out.println("2 - Loja");
 
@@ -78,8 +78,8 @@ public class MenuPrincipal extends LeitorDados {
         }
     }
 
-    public void menuCadastro(Integer userId, DataSet<?> banco) throws Exception {
-        System.out.println("\nCadastro:");
+    public void menuCadastro(Integer userId, DataSet<?> banco) {
+        System.out.println("\n\u001B[36mCadastro:\u001B[0m");
         System.out.println("1 - Cliente");
         System.out.println("2 - Fornecedor");
         System.out.println("3 - Usuário");

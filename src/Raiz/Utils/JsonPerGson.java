@@ -34,7 +34,7 @@ public abstract class JsonPerGson extends HTTPResponse {
         }
     }
 
-    public static <T, R> List<T> requestJson(String uri, Class<T> objClass, R JsonDeserializerObject) throws Exception {
+    public static <T, R> List<T> requestJson(String uri, Class<T> objClass, R JsonDeserializerObject)  {
 
         String content = responseContent(uri);
         Gson gson = new GsonBuilder().registerTypeAdapter(objClass, JsonDeserializerObject).serializeNulls().create();

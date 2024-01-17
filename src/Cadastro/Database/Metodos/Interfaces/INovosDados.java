@@ -12,6 +12,7 @@ public interface INovosDados {
         public String ReadSentence(String str);
         public Double ReadDbl(String str);
         public List<String> ReadStrList(String str);
+        public String ReadMask(String str);
     }
 
     public interface ICustomer {
@@ -25,13 +26,13 @@ public interface INovosDados {
     }
 
     public interface IUsers {
-        public void cadastrarUsuario(String login, String pass, String nome, String depto) throws Exception;
-        public void alterarUsuario(Integer id, String campo, String update) throws Exception;
-        public void excluirUsuario(Integer id) throws Exception;
-        public void localizarUsuario(Integer id) throws Exception;
-        public void localizarMaisUsuarios(Integer ini, Integer fim) throws Exception;
-        public void removerMaisUsuarios(Integer ini, Integer fim) throws Exception;
-        public boolean listarUsuario() throws Exception;
+        public void cadastrarUsuario(String login, String pass, String nome, String depto);
+        public void alterarUsuario(Integer id, String campo, String update);
+        public void excluirUsuario(Integer id);
+        public void localizarUsuario(Integer id);
+        public void localizarMaisUsuarios(Integer ini, Integer fim);
+        public void removerMaisUsuarios(Integer ini, Integer fim);
+        public boolean listarUsuario();
     }
 
     public interface IPermissions {
@@ -69,5 +70,6 @@ public interface INovosDados {
         public void localizarMaisServicos(Integer ini, Integer fim);
         public void removerMaisServicos(Integer ini, Integer fim);
         public boolean listarServicos();
+
     }
 }

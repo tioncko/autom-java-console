@@ -35,7 +35,7 @@ public class JsonMarcas extends JsonPerGson {
         }
     }
 
-    public Map<Integer, Marcas> ListaMarcas() throws Exception {
+    public Map<Integer, Marcas> ListaMarcas()  {
 
         Map<Integer, Marcas> lista = new HashMap<>();
         //String configParam = Config.NameSettings.Marcas.getProperty();
@@ -54,7 +54,7 @@ public class JsonMarcas extends JsonPerGson {
         return lista;
     }
 
-    public Marcas nomeMarca (Integer id) throws Exception {
+    public Marcas nomeMarca (Integer id) {
 
         Marcas mar;
         Set<Map.Entry<Integer, Marcas>> getMar = ListaMarcas().entrySet();

@@ -14,7 +14,7 @@ public class Produtos extends Gondola {
         this.nome = nomeProd;
         this.setPreco(preco);
         this.qtd = qtd;
-        this.setForn(forn);
+        this.forn = forn;
         this.setCategoria(categoria);
         this.setGrupo(grupo);
     }
@@ -56,7 +56,7 @@ public class Produtos extends Gondola {
                 "nome='" + nome + '\'' +
                 ", preco=" + getPreco() +
                 ", qtd=" + qtd +
-                ", fornecedor=" + getForn() +
+                ", fornecedor=" + forn +
                 ", categoria='" + getCategoria() + '\'' +
                 ", grupo='" + getGrupo() + '\'' +
                 '}';

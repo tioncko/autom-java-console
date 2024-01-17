@@ -21,15 +21,22 @@ Tela Loja
 
 ==============================
 
-# Soluções para implementar #
+# Soluções para implementar # (8/15)
 
-- Validação de exclusão de item da lista de cada classe "Metodos" [exemplo: código X já foi excluído]
-- Aplicar try/catch em métodos que utilizam "throws Exception"
-- Validar se os logs implementados estão funcionando da forma que foi planejada
+[OK] Validação de exclusão de item da lista de cada classe "Metodos" [exemplo: código X já foi excluído]
+[OK] Incluir condição para impressão da mensagem de saída [sout("Alteração concluida") ou sout("a tabela tá vazia")]
+[OK] Aplicar validação nos métodos de localização
+[OK] Incluir novo método para validar se o atributo getAtividades da tela de fornecedores está vazia, para assim, permitir o insert
+[OK] Revisar ajustes feitos na area de fornecedor para as areas Cliente e Usuario (validId)
+[OK] Implementar equals e hashcode para CPF e CNPJ
+[OK] Aplicar try/catch em métodos que utilizam "throws Exception"
+[OK] Validar se os logs implementados estão funcionando da forma que foi planejada
 - Descrição dos métodos [o que são, o que fazem e o que retornam]
 - Releitura de nomes de variáveis, métodos e classes [exemplo: Map<Integer, Servicos> x = new HashMap<>(); -> Map<Integer, Servicos> mapServ = new HashMap<>();]
 - Alterar o README.md com a imagem atual do projeto e ir atualizando conforme o projeto evolui
-- (se possível) aplicar cor fixa nos menus
+[OK] (se possível) aplicar cor fixa nos menus (Cor fixa nos títulos)
 - Limpar comentários das classes
+[OK] Verificar a possibilidade de criar uma validação de response code na parte do cep [Ajuste feito]
+- Inserir fornecedores na lista de produtos
 
 ==============================

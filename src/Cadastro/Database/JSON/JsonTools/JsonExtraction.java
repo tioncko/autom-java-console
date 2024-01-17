@@ -19,16 +19,16 @@ public class JsonExtraction extends JsonResponse {
         ImpressaoLog.LogGenerico<ColetaJsonDados> printLog = new ImpressaoLog.LogGenerico<>();
         @SuppressWarnings("unchecked") Logger log = printLog.getLogRetorno((Class<ColetaJsonDados>) (Object) (ColetaJsonDados.class));
 
-        public <T> Categoria nomeCategoria(Integer id, Class<T> classe) throws Exception {
+        public <T> Categoria nomeCategoria(Integer id, Class<T> classe) {
+            try {
+                Categoria cat;
+                JsonToMap p = new JsonToMap();
+                //String fileParam = Config.NameSettings.Loja.getProperty();
+                String fileParam = arquivoConfig.Loja.getPropriedade();
 
-            Categoria cat;
-            JsonToMap p = new JsonToMap();
-            //String fileParam = Config.NameSettings.Loja.getProperty();
-            String fileParam = arquivoConfig.Loja.getPropriedade();
-
-            Set<Map.Entry<Integer, Categoria>> getCat;
-            //ListaJsonResponse<T> lis = new ListaJsonResponse<>();
-            T instance = getClassNewInstance(classe);
+                Set<Map.Entry<Integer, Categoria>> getCat;
+                //ListaJsonResponse<T> lis = new ListaJsonResponse<>();
+                T instance = getClassNewInstance(classe);
 
             /*
             if (instance instanceof Produtos) {
@@ -43,17 +43,17 @@ public class JsonExtraction extends JsonResponse {
                 getCat = p.getMapCategorias(Servicos.class, propC).entrySet();
             }
 */
-            getCat = switch (instance.getClass().getSimpleName()) {
-                case "Produtos" -> {
-                    Function<Produtos, Categoria> propC = Gondola::getCategoria;
-                    yield p.getMapObjects(Produtos.class, propC, (a, b) -> new Categoria(b), fileParam).entrySet();
-                }
-                case "Servicos" -> {
-                    Function<Servicos, Categoria> propC = Gondola::getCategoria;
-                    yield p.getMapObjects(Servicos.class, propC, (a, b) -> new Categoria(b), fileParam).entrySet();
-                }
-                default -> null;
-            };
+                getCat = switch (instance.getClass().getSimpleName()) {
+                    case "Produtos" -> {
+                        Function<Produtos, Categoria> propC = Gondola::getCategoria;
+                        yield p.getMapObjects(Produtos.class, propC, (a, b) -> new Categoria(b), fileParam).entrySet();
+                    }
+                    case "Servicos" -> {
+                        Function<Servicos, Categoria> propC = Gondola::getCategoria;
+                        yield p.getMapObjects(Servicos.class, propC, (a, b) -> new Categoria(b), fileParam).entrySet();
+                    }
+                    default -> null;
+                };
 
             /*
 
@@ -65,21 +65,25 @@ public class JsonExtraction extends JsonResponse {
                     ? p.getObjects(Produtos.class, propP, (a, b) -> new Categoria(b)).entrySet()
                     : p.getObjects(Servicos.class, propS, (a, b) -> new Categoria(b)).entrySet();
 */
-            assert getCat != null;
-            cat = getCat.stream().filter(setid -> setid.getKey().equals(id)).findFirst().orElseThrow().getValue();
-            return cat;
+                assert getCat != null;
+                cat = getCat.stream().filter(setid -> setid.getKey().equals(id)).findFirst().orElseThrow().getValue();
+                return cat;
+            } catch (Exception e) {
+                log.severe("[" + ColetaJsonDados.class.getSimpleName() + "] " + e.getMessage());
+            }
+            return new Categoria();
         }
 
-        public <T> Grupos nomeGrupo(Integer id, Class<T> classe) throws Exception {
+        public <T> Grupos nomeGrupo(Integer id, Class<T> classe) {
+            try {
+                Grupos gp;
+                JsonToMap p = new JsonToMap();
+                //String fileParam = Config.NameSettings.Loja.getProperty();
+                String fileParam = arquivoConfig.Loja.getPropriedade();
 
-            Grupos gp;
-            JsonToMap p = new JsonToMap();
-            //String fileParam = Config.NameSettings.Loja.getProperty();
-            String fileParam = arquivoConfig.Loja.getPropriedade();
-
-            Set<Map.Entry<Integer, Grupos>> getGp;
-            //ListaJsonResponse<T> lis = new ListaJsonResponse<>();
-            T instance = getClassNewInstance(classe);
+                Set<Map.Entry<Integer, Grupos>> getGp;
+                //ListaJsonResponse<T> lis = new ListaJsonResponse<>();
+                T instance = getClassNewInstance(classe);
 
             /*
             if (instance instanceof Produtos) {
@@ -94,22 +98,25 @@ public class JsonExtraction extends JsonResponse {
                 //getGp = p.getObjects(Servicos.class, propG, (a, b) -> new Grupos()).entrySet();
             }
 */
-            getGp = switch (instance.getClass().getSimpleName()) {
-                case "Produtos" -> {
-                    Function<Produtos, Grupos> propG = Gondola::getGrupo;
-                    yield p.getMapObjects(Produtos.class, propG, (a, b) -> new Grupos(b), fileParam).entrySet();
-                }
-                case "Servicos" -> {
-                    Function<Servicos, Grupos> propG = Gondola::getGrupo;
-                    yield p.getMapObjects(Servicos.class, propG, (a, b) -> new Grupos(b), fileParam).entrySet();
-                }
-                default -> null;
-            };
+                getGp = switch (instance.getClass().getSimpleName()) {
+                    case "Produtos" -> {
+                        Function<Produtos, Grupos> propG = Gondola::getGrupo;
+                        yield p.getMapObjects(Produtos.class, propG, (a, b) -> new Grupos(b), fileParam).entrySet();
+                    }
+                    case "Servicos" -> {
+                        Function<Servicos, Grupos> propG = Gondola::getGrupo;
+                        yield p.getMapObjects(Servicos.class, propG, (a, b) -> new Grupos(b), fileParam).entrySet();
+                    }
+                    default -> null;
+                };
 
-            assert getGp != null;
-            gp = getGp.stream().filter(setid -> setid.getKey().equals(id)).findFirst().orElseThrow().getValue();
-
-            return gp;
+                assert getGp != null;
+                gp = getGp.stream().filter(setid -> setid.getKey().equals(id)).findFirst().orElseThrow().getValue();
+                return gp;
+            } catch (Exception e) {
+                log.severe("[" + ColetaJsonDados.class.getSimpleName() + "] " + e.getMessage());
+            }
+            return new Grupos();
         }
         /*
         public MetodosFornecedor DTForn() {
@@ -151,7 +158,7 @@ public class JsonExtraction extends JsonResponse {
 
             } catch (Exception e) {
                 //System.out.println(e.getMessage());
-                log.warning("[" + ColetaJsonDados.class.getSimpleName() + "] " + e.getMessage());
+                log.severe("[" + ColetaJsonDados.class.getSimpleName() + "] " + e.getMessage());
             }
             return new HashMap<>();
         }
@@ -201,7 +208,7 @@ public class JsonExtraction extends JsonResponse {
                 return ret;
             } catch (Exception e) {
                 //System.out.println(e.getMessage());
-                log.warning("[" + ColetaJsonDados.class.getSimpleName() + "] " + e.getMessage());
+                log.severe("[" + ColetaJsonDados.class.getSimpleName() + "] " + e.getMessage());
             }
             return new HashMap<>();
         }
@@ -241,7 +248,7 @@ public class JsonExtraction extends JsonResponse {
                 return ret;
             } catch (Exception e) {
                 //System.out.println(e.getMessage());
-                log.warning("[" + ColetaJsonDados.class.getSimpleName() + "] " + e.getMessage());
+                log.severe("[" + ColetaJsonDados.class.getSimpleName() + "] " + e.getMessage());
             }
             return new HashMap<>();
         }
@@ -250,7 +257,7 @@ public class JsonExtraction extends JsonResponse {
 
     protected static class JsonToMap {
 
-        protected <T> Map<Integer, T> getMapRecord(Class<T> classe, String fileParam) throws Exception {
+        protected <T> Map<Integer, T> getMapRecord(Class<T> classe, String fileParam) {
             Map<Integer, T> f1 = new HashMap<>();
             ListaJsonResponse<T> lr = new ListaJsonResponse<>();
 
@@ -262,7 +269,7 @@ public class JsonExtraction extends JsonResponse {
             return f1;
         }
 
-        protected <T, R, U> Map<Integer, U> getMapObjects(Class<T> classe, Function<T, R> prop, BiFunction<Integer, String, U> obj, String fileParam) throws Exception {
+        protected <T, R, U> Map<Integer, U> getMapObjects(Class<T> classe, Function<T, R> prop, BiFunction<Integer, String, U> obj, String fileParam) {
             Map<Integer, U> m1 = new HashMap<>();
             ListaJsonResponse<T> li = new ListaJsonResponse<>();
 
@@ -301,29 +308,38 @@ public class JsonExtraction extends JsonResponse {
     }
 
     protected static class ListaJsonResponse<T> extends LeitorDados {
+        ImpressaoLog.LogGenerico<ListaJsonResponse<T>> printLog = new ImpressaoLog.LogGenerico<>();
+        @SuppressWarnings("unchecked") Logger log = printLog.getLogRetorno((Class<ListaJsonResponse<T>>) (Object) (ListaJsonResponse.class));
+
        /*
         protected T getClassNewInstance(Class<T> classe) throws Exception {
             return classe.getDeclaredConstructor().newInstance();
         }
         */
 
-        protected <R> List<R> getListProperties(Class<T> classe, Function<T, R> property, String fileParam) throws Exception {
-            List<R> str = new ArrayList<>();
-            ListaJsonResponse<T> prod = new ListaJsonResponse<>();
+        protected <R> List<R> getListProperties(Class<T> classe, Function<T, R> property, String fileParam) {
+            try {
+                List<R> str = new ArrayList<>();
+                ListaJsonResponse<T> prod = new ListaJsonResponse<>();
 
-            prod.getListObjects(classe, fileParam).forEach(p -> str.add(property.apply(p)));
-            return str.stream().distinct().toList();
+                prod.getListObjects(classe, fileParam).forEach(p -> str.add(property.apply(p)));
+                return str.stream().distinct().toList();
+            } catch (Exception e) {
+                log.severe("[" + ListaJsonResponse.class.getSimpleName() + "] " + e.getMessage());
+            }
+            return new ArrayList<>();
         }
 
-        protected List<T> getListObjects(Class<T> classe, String fileParam) throws Exception {
-            T instance = getClassNewInstance(classe);
+        protected List<T> getListObjects(Class<T> classe, String fileParam) {
+            try {
+                T instance = getClassNewInstance(classe);
 
-            JsonGenericObjects<T> x = new JsonGenericObjects<>();
-            //String fileParam = Config.arquivoConfig.Loja.getProperty();
-            List<T> lp = x.JsonReturn(instance, fileParam);
+                JsonGenericObjects<T> x = new JsonGenericObjects<>();
+                //String fileParam = Config.arquivoConfig.Loja.getProperty();
+                List<T> lp = x.JsonReturn(instance, fileParam);
 
-            String varContains = "Servicos Automotivos";
-            Predicate<T> filtroLoja = instance instanceof Produtos ? c -> (!c.toString().contains(varContains)) : c -> (c.toString().contains(varContains));
+                String varContains = "Servicos Automotivos";
+                Predicate<T> filtroLoja = instance instanceof Produtos ? c -> (!c.toString().contains(varContains)) : c -> (c.toString().contains(varContains));
 
             /*
             if (instance instanceof Produtos) {
@@ -336,17 +352,26 @@ public class JsonExtraction extends JsonResponse {
             }
             return new ArrayList<>();
             */
-            return lp.stream().filter(filtroLoja).toList();
+                return lp.stream().filter(filtroLoja).toList();
+            } catch (Exception e) {
+                log.severe("[" + ListaJsonResponse.class.getSimpleName() + "] " + e.getMessage());
+            }
+            return new ArrayList<>();
         }
 
-        protected List<T> getListLegal(Class<T> classe, String fileParam) throws Exception {
-            T instance = getClassNewInstance(classe);
+        protected List<T> getListLegal(Class<T> classe, String fileParam) {
+            try {
+                T instance = getClassNewInstance(classe);
 
-            JsonGenericObjects<T> x = new JsonGenericObjects<>();
-            //String fileParam = Config.arquivoConfig.Fornecedores.getProperty();
-            List<T> lp = x.JsonReturn(instance, fileParam);
+                JsonGenericObjects<T> x = new JsonGenericObjects<>();
+                //String fileParam = Config.arquivoConfig.Fornecedores.getProperty();
+                List<T> lp = x.JsonReturn(instance, fileParam);
 
-            return lp.stream().toList();
+                return lp.stream().toList();
+            } catch (Exception e) {
+                log.severe("[" + ListaJsonResponse.class.getSimpleName() + "] " + e.getMessage());
+            }
+            return new ArrayList<>();
         }
     }
 
@@ -423,5 +448,6 @@ public class JsonExtraction extends JsonResponse {
         //System.out.println(u.nomeForn(5).getRazaoSocial());
     }
 */
+
     //#endregion
 }

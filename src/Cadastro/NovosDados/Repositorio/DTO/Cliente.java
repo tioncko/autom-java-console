@@ -3,6 +3,8 @@ package Cadastro.NovosDados.Repositorio.DTO;
 import Cadastro.NovosDados.Repositorio.Abstratos.OutrosDados;
 import Cadastro.NovosDados.Repositorio.Auxiliar.ValidCEP;
 
+import java.util.Objects;
+
 public class Cliente extends OutrosDados {
 
     private int id;
@@ -47,14 +49,14 @@ public class Cliente extends OutrosDados {
         this.idade = idade;
     }
 
-    public String getCpf() {
+    public String getCPF() {
         return cpf;
     }
-    public void setCpf(String cpf) {
+    public void setCPF(String cpf) {
         this.cpf = cpf;
     }
 
-    /*
+/*
     public String getEmail() {
         return email;
     }
@@ -79,6 +81,18 @@ public class Cliente extends OutrosDados {
         this.infoCEP = infoCEP;
     }
 */
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Cliente cli)) return false;
+        return Objects.equals(this.getCPF(), cli.getCPF());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCPF());
+    }
 
     @Override
     public String toString() {

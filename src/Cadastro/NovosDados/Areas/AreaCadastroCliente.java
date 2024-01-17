@@ -1,6 +1,9 @@
 package Cadastro.NovosDados.Areas;
 
 import Cadastro.Database.DataSet;
+import Cadastro.Database.Metodos.MetodosCliente;
+import Cadastro.Database.Metodos.MetodosFornecedor;
+import Cadastro.Database.Metodos.MetodosServico;
 import Raiz.Acesso.MenuPrincipal;
 import Cadastro.Database.Metodos.Interfaces.IAreaCadastro;
 import Raiz.Inicio.Cadastro;
@@ -13,15 +16,15 @@ public class AreaCadastroCliente extends LeitorDados implements IAreaCadastro.IC
     Cadastro.AcoesCliente ac;
     DataSet<?> banco;
 
-    public AreaCadastroCliente(DataSet<?> DS) throws Exception {
+    public AreaCadastroCliente(DataSet<?> DS) {
         this.mp = new MenuPrincipal(DS);
         this.cad = new Cadastro(DS);
         this.ac = cad.new AcoesCliente();
         this.banco = DS;
     }
 
-    public void menuCadastroCliente(Integer userId) throws Exception {
-        System.out.println("\nCliente:");
+    public void menuCadastroCliente(Integer userId)  {
+        System.out.println("\n\u001B[34mCliente:\u001B[0m");
         System.out.println("1 - Cadastrar Cliente");
         System.out.println("2 - Alterar Cliente");
         System.out.println("3 - Excluir Cliente");
@@ -37,23 +40,26 @@ public class AreaCadastroCliente extends LeitorDados implements IAreaCadastro.IC
         AcoesCadastroCliente(id, userId);
     }
 
-    public void AcoesCadastroCliente(String id, Integer userId) throws Exception {
+    public void AcoesCadastroCliente(String id, Integer userId) {
         boolean session = true;
         while (session) {
             switch (id) {
                 case "1":
+                    //#region Cadastrar novo cliente
                     System.out.println("\n# Cadastrar novo cliente #\n");
                     //ac.cadastrarCliente("Jorge", 22, "04472205484", "teste@olos.com.br", "014585445489", "04472205", 38);
                     ac.cadastrarCliente(
                             ReadSentence("Nome: "),
                             ReadInt("Idade: "),
-                            ReadText("CPF: "),
+                            ReadMask("CPF: "),
                             ReadText("E-mail: "),
                             ReadSentence("Telefone: "),
                             ReadText("CEP: ").replace("-",""),
                             ReadInt("Nùmero da residência: ")
                     );
-                    System.out.println("\nCadastro concluído!");
+                    if (!(MetodosCliente.message == null))
+                    System.out.println(MetodosCliente.message);
+                    else System.out.println("\nCadastro concluído!");
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoCadCli = ReadInt("\n\033[3mO que deseja?" +
@@ -74,21 +80,48 @@ public class AreaCadastroCliente extends LeitorDados implements IAreaCadastro.IC
                         System.exit(0);
                     }
                     break;
-
+                    //#endregion
                 case "2":
+                    //#region Alterar um cliente
                     System.out.println("\n# Alterar um cliente #\n");
                     if(ac.listarClientes()){
                         System.out.println();
 
                         int alterId = ReadInt("Id: ");
-                        String field = ReadText("Campo: ");
-                        ac.alterarCliente(
-                               alterId,
-                                field,
-                                ReadSentence("Alteração (" + field.toUpperCase() + "): ")
-                        );
-                        System.out.println("\nAlteração concluída!");
-                        ac.localizarCliente(alterId);
+                        if (ac.validarId(alterId)) {
+                            String field = ReadText("Campo: ");
+
+                            if (field.equalsIgnoreCase("CPF")){
+                                String document = ReadMask("Alteração (" + field.toUpperCase() + "): ");
+
+                                if(document != null) {
+                                    ac.alterarCliente(
+                                            alterId,
+                                            field,
+                                            document
+                                    );
+
+                                    if (!(MetodosCliente.message == null))
+                                        System.out.println(MetodosCliente.message);
+                                    else System.out.println("\nAlteração concluída!");
+                                    ac.localizarCliente(alterId);
+                                }
+                                else System.out.println("\nNão foi possível realizar a alteração solicitada.");
+                            } else {
+                                ac.alterarCliente(
+                                        alterId,
+                                        field,
+                                        ReadSentence("Alteração (" + field.toUpperCase() + "): ")
+                                );
+
+                                if (!(MetodosCliente.message == null))
+                                    System.out.println(MetodosCliente.message);
+                                else System.out.println("\nAlteração concluída!");
+                                ac.localizarCliente(alterId);
+                            }
+                        }
+                        if (!(MetodosCliente.message == null))
+                            System.out.println(MetodosCliente.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
@@ -110,16 +143,24 @@ public class AreaCadastroCliente extends LeitorDados implements IAreaCadastro.IC
                         System.exit(0);
                     }
                     break;
-
+                    //#endregion
                 case "3":
+                    //#region Excluir um cliente
                     System.out.println("\n# Excluir um cliente #\n");
                     if(ac.listarClientes()) {
                         System.out.println();
 
-                        ac.excluirCliente(
-                                ReadInt("Id: ")
-                        );
-                        System.out.println("\nExclusão concluída!");
+                        int remoId = ReadInt("Id: ");
+                        if (ac.validarId(remoId)) {
+                            ac.excluirCliente(
+                                    remoId //ReadInt("Id: ")
+                            );
+                            if (!(MetodosCliente.message == null))
+                                System.out.println(MetodosCliente.message);
+                            else System.out.println("\nExclusão concluída!");
+                        }
+                        if (!(MetodosCliente.message == null))
+                            System.out.println(MetodosCliente.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
@@ -141,15 +182,23 @@ public class AreaCadastroCliente extends LeitorDados implements IAreaCadastro.IC
                         System.exit(0);
                     }
                     break;
-
+                    //#endregion
                 case "4":
+                    //#region Localizar um cliente
                     System.out.println("\n# Localizar um cliente #\n");
                     if(ac.listarClientes()){
                         System.out.println();
 
-                        ac.localizarCliente(
-                                ReadInt("Id: ")
-                        );
+                        int findId = ReadInt("Id: ");
+                        if (ac.validarId(findId)) {
+                            ac.localizarCliente(
+                                    findId //ReadInt("Id: ")
+                            );
+                            if (!(MetodosCliente.message == null))
+                                System.out.println(MetodosCliente.message);
+                        }
+                        if (!(MetodosCliente.message == null))
+                            System.out.println(MetodosCliente.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
@@ -171,16 +220,23 @@ public class AreaCadastroCliente extends LeitorDados implements IAreaCadastro.IC
                         System.exit(0);
                     }
                     break;
-
+                    //#endregion
                 case "5":
+                    //#region Localizar vários clientes
                     System.out.println("\n# Localizar vários clientes #\n");
                     if(ac.listarClientes()){
                         System.out.println();
 
-                        ac.localizarMaisClientes(
-                                ReadInt("Início: "),
-                                ReadInt("Fim: ")
-                        );
+                        int findId = ReadInt("Início: ");
+                        if (ac.validarId(findId)) {
+                            ac.localizarMaisClientes(
+                                    findId, //ReadInt("Início: "),
+                                    ReadInt("Fim: "));
+                            if (!(MetodosCliente.message == null))
+                                System.out.println(MetodosCliente.message);
+                        }
+                        if (!(MetodosCliente.message == null))
+                            System.out.println(MetodosCliente.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
@@ -202,16 +258,24 @@ public class AreaCadastroCliente extends LeitorDados implements IAreaCadastro.IC
                         System.exit(0);
                     }
                     break;
-
+                    //#endregion
                 case "6":
+                    //#region Remover vários clientes
                     System.out.println("\n# Remover vários clientes #\n");
                     if(ac.listarClientes()){
                         System.out.println();
 
-                        ac.removerMaisClientes(
-                                ReadInt("Início: "),
-                                ReadInt("Fim: ")
-                       );
+                        int remoId = ReadInt("Início: ");
+                        if (ac.validarId(remoId)) {
+                            ac.removerMaisClientes(
+                                    remoId, //ReadInt("Início: "),
+                                    ReadInt("Fim: ")
+                            );
+                            if (!(MetodosCliente.message == null))
+                                System.out.println(MetodosCliente.message);
+                        }
+                        if (!(MetodosCliente.message == null))
+                            System.out.println(MetodosCliente.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
@@ -233,8 +297,9 @@ public class AreaCadastroCliente extends LeitorDados implements IAreaCadastro.IC
                         System.exit(0);
                     }
                     break;
-
+                    //#endregion
                 case "7":
+                    //#region Lista de clientes
                     System.out.println("\n# Lista de clientes #\n");
                     ac.listarClientes();
 
@@ -257,8 +322,9 @@ public class AreaCadastroCliente extends LeitorDados implements IAreaCadastro.IC
                         System.exit(0);
                     }
                     break;
-
+                    //#endregion
                 case "*":
+                    //#region Retorno ao menu
                     Integer opcaoVoltar = ReadInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do cliente" +
                             "\n(2) Retornar ao menu principal" +
@@ -277,7 +343,7 @@ public class AreaCadastroCliente extends LeitorDados implements IAreaCadastro.IC
                         System.exit(0);
                     }
                     break;
-
+                    //#endregion
                 default:
                     break;
             }

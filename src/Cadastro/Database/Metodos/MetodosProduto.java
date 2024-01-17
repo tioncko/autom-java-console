@@ -14,6 +14,7 @@ public class MetodosProduto extends Produtos {
     //private Map<Integer, Produtos> tabProdutos;
     private final ColetaJsonDados loja = new ColetaJsonDados();
     private final DataSet<Produtos> DS;
+    public static String message;
 
     ImpressaoLog.LogGenerico<MetodosProduto> printLog = new ImpressaoLog.LogGenerico<>();
     @SuppressWarnings("unchecked") Logger log = printLog.getLogRetorno((Class<MetodosProduto>) (Object) (MetodosProduto.class));
@@ -43,6 +44,7 @@ public class MetodosProduto extends Produtos {
 
     public void alterProduto(Integer id, String Campo, String update) {
         if(!DS.select(Produtos.class).isEmpty()){
+            if (DS.select(Produtos.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
             //fieldProd getCampo = fieldProd.valueOf(Campo.toUpperCase());
             camposItens getCampo = camposItens.valueOf(Campo.toUpperCase());
 
@@ -73,69 +75,69 @@ public class MetodosProduto extends Produtos {
                             }
                         }
                     });
-        } else System.out.println("A tabela de produtos está vazia.");
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de produtos está vazia.";
     }
 
     public void remoProduto(Integer id) {
         if (!DS.select(Produtos.class).isEmpty()) {
-            DS.select(Produtos.class).remove(id);
-        } else {
-            System.out.println("A tabela de produtos está vazia.");
-        }
+            if (DS.select(Produtos.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+                DS.select(Produtos.class).remove(id);
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de produtos está vazia.";
     }
 
     public void findProduto(Integer id) {
         if (!DS.select(Produtos.class).isEmpty()) {
+            if (DS.select(Produtos.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
             Set<Map.Entry<Integer, Produtos>>
                     getProd = DS.select(Produtos.class).entrySet();
 
             getProd.stream()
                     .filter(setid -> setid.getKey().equals(id))
                     .forEach(x -> System.out.println("id{" + x.getKey() + "}, " + x.getValue()));
-        } else {
-            System.out.println("A tabela de produtos está vazia.");
-        }
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de produtos está vazia.";
     }
 
     public void listbyIdProduto(Integer ini_id, Integer fim_id) {
         if (!DS.select(Produtos.class).isEmpty()) {
+            if (DS.select(Produtos.class).entrySet().stream().anyMatch(x -> x.getKey().equals(ini_id))) {
             Set<Map.Entry<Integer, Produtos>>
-                    getCli = DS.select(Produtos.class).entrySet();
+                    getProd = DS.select(Produtos.class).entrySet();
 
-            getCli.stream()
+            getProd.stream()
                     .filter(id -> id.getKey() >= ini_id && id.getKey() <= fim_id)
                     .forEach(x -> System.out.println("id{" + x.getKey() + "}, " + x.getValue()));
-
-        } else {
-            System.out.println("A tabela de produtos está vazia.");
-        }
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de produtos está vazia.";
     }
 
     public void remobyIdProduto(Integer ini_id, Integer fim_id) {
         if (!DS.select(Produtos.class).isEmpty()) {
-            Set<Map.Entry<Integer, Produtos>>
-                    getCli = DS.select(Produtos.class).entrySet();
+            if (DS.select(Produtos.class).entrySet().stream().anyMatch(x -> x.getKey().equals(ini_id))) {
+                Set<Map.Entry<Integer, Produtos>>
+                    getProd = DS.select(Produtos.class).entrySet();
 
-            getCli.removeIf(id -> id.getKey() >= ini_id && id.getKey() <= fim_id);
+                getProd.removeIf(id -> id.getKey() >= ini_id && id.getKey() <= fim_id);
             //getCli.stream().forEach(x -> System.out.println("id{" + x.getKey() + "}, " + x.getValue()));
-        } else {
-            System.out.println("A tabela de cliente está vazia.");
-        }
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de produtos está vazia.";
     }
 
     public boolean PrintMapWithSet() {
         if (!DS.select(Produtos.class).isEmpty()) {
             Set<Map.Entry<Integer, Produtos>>
-                    entries = DS.select(Produtos.class).entrySet();
+                    getProd = DS.select(Produtos.class).entrySet();
 
-            for (Map.Entry<Integer, Produtos> entry : entries) {
-                Integer key = entry.getKey();
-                Produtos cli = entry.getValue();
+            for (Map.Entry<Integer, Produtos> setProd : getProd) {
+                Integer key = setProd.getKey();
+                Produtos cli = setProd.getValue();
                 System.out.println("id{" + key + "}, " + cli);
             }
             return true;
         } else {
-            System.out.println("A tabela de cliente está vazia.");
+            System.out.println("\nA tabela de produtos está vazia.");
             return false;
         }
     }
@@ -153,6 +155,18 @@ public class MetodosProduto extends Produtos {
             maxnum = 0;
         }
         return maxnum + 1;
+    }
+
+    public boolean userValid (Integer id) {
+        boolean valid = false;
+
+        if (!DS.select(Produtos.class).isEmpty()) {
+            if (DS.select(Produtos.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+                valid = true;
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de produtos está vazia.";
+
+        return valid;
     }
 
     /*

@@ -1,6 +1,10 @@
 package Cadastro.NovosDados.Areas;
 
 import Cadastro.Database.DataSet;
+import Cadastro.Database.Metodos.MetodosCliente;
+import Cadastro.Database.Metodos.MetodosFornecedor;
+import Cadastro.Database.Metodos.MetodosServico;
+import Cadastro.Database.Metodos.MetodosUsuario;
 import Raiz.Acesso.MenuPrincipal;
 import Cadastro.Database.Metodos.Interfaces.IAreaCadastro;
 import Raiz.Inicio.Cadastro;
@@ -13,15 +17,15 @@ public class AreaCadastroUsuario extends LeitorDados implements IAreaCadastro.IU
     Cadastro.AcoesUsuario ac;
     DataSet<?> banco;
 
-    public AreaCadastroUsuario(DataSet<?> DS) throws Exception {
+    public AreaCadastroUsuario(DataSet<?> DS) {
         this.mp = new MenuPrincipal(DS);
         this.cad = new Cadastro(DS);
         this.ac = cad.new AcoesUsuario();
         this.banco = DS;
     }
 
-    public void menuCadastroUsuario(Integer userId) throws Exception {
-        System.out.println("\nUsuário:");
+    public void menuCadastroUsuario(Integer userId) {
+        System.out.println("\n\u001B[34mUsuário:\u001B[0m");
         System.out.println("1 - Cadastrar Usuario");
         System.out.println("2 - Alterar Usuario");
         System.out.println("3 - Excluir Usuario");
@@ -39,11 +43,12 @@ public class AreaCadastroUsuario extends LeitorDados implements IAreaCadastro.IU
         AcoesCadastroUsuario(id, userId);
     }
 
-    public void AcoesCadastroUsuario(String id, Integer userId) throws Exception {
+    public void AcoesCadastroUsuario(String id, Integer userId) {
         boolean session = true;
         while (session) {
             switch (id) {
                 case "1":
+                    //#region Cadastrar novo usuário
                     System.out.println("\n# Cadastrar novo usuário #\n");
                     //ac.cadastrarUsuario("Keyla", "1234", "Keyla Nascimento", "Juridico");
                     Integer novoId = ac.returnNextId();
@@ -54,7 +59,9 @@ public class AreaCadastroUsuario extends LeitorDados implements IAreaCadastro.IU
                             ReadSentence("Depto.: ")
                     );
                     ac.associarPermissao(novoId, ReadText("Permissão [ADMIN(2), USER(3)]: "));
-                    System.out.println("\nCadastro concluído!");
+                    if (!(MetodosServico.message == null))
+                        System.out.println(MetodosServico.message);
+                    else System.out.println("\nCadastro concluído!");
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoCadUsr = ReadInt("\n\033[3mO que deseja?" +
@@ -75,21 +82,28 @@ public class AreaCadastroUsuario extends LeitorDados implements IAreaCadastro.IU
                         System.exit(0);
                     }
                     break;
-
+                    //#endregion
                 case "2":
+                    //#region Alterar um usuário
                     System.out.println("\n# Alterar um usuário #\n");
                     if(ac.listarUsuario()){
                         System.out.println();
 
                         int alterId = ReadInt("Id: ");
-                        String field = ReadText("Campo: ");
-                        ac.alterarUsuario(
-                                alterId,
-                                field,
-                                ReadSentence("Alteração (" + field.toUpperCase() + "): ")
-                        );
-                        ac.localizarUsuario(alterId);
-                        System.out.println("\nAlteração concluída!");
+                        if (ac.validarId(alterId)) {
+                            String field = ReadText("Campo: ");
+                            ac.alterarUsuario(
+                                    alterId,
+                                    field,
+                                    ReadSentence("Alteração (" + field.toUpperCase() + "): ")
+                            );
+                            if (!(MetodosUsuario.message == null))
+                                System.out.println(MetodosUsuario.message);
+                            else System.out.println("\nAlteração concluída!");
+                            ac.localizarUsuario(alterId);
+                        }
+                        if (!(MetodosUsuario.message == null))
+                            System.out.println(MetodosUsuario.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
@@ -111,16 +125,24 @@ public class AreaCadastroUsuario extends LeitorDados implements IAreaCadastro.IU
                         System.exit(0);
                     }
                     break;
-
+                    //#endregion
                 case "3":
+                    //#region Excluir um usuário
                     System.out.println("\n# Excluir um usuário #\n");
                     if(ac.listarUsuario()){
                         System.out.println();
 
-                        ac.excluirUsuario(
-                                ReadInt("Id: ")
-                        );
-                        System.out.println("\nExclusão concluída!");
+                        int remoId = ReadInt("Id: ");
+                        if (ac.validarId(remoId)) {
+                            ac.excluirUsuario(
+                                    remoId //ReadInt("Id: ")
+                            );
+                            if (!(MetodosUsuario.message == null))
+                                System.out.println(MetodosUsuario.message);
+                            else System.out.println("\nExclusão concluída!");
+                        }
+                        if (!(MetodosUsuario.message == null))
+                            System.out.println(MetodosUsuario.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
@@ -142,15 +164,23 @@ public class AreaCadastroUsuario extends LeitorDados implements IAreaCadastro.IU
                         System.exit(0);
                     }
                     break;
-
+                    //#endregion
                 case "4":
+                    //#region Localizar um usuário
                     System.out.println("\n# Localizar um usuário #\n");
                     if(ac.listarUsuario()){
                         System.out.println();
 
-                        ac.localizarUsuario(
-                                ReadInt("Id: ")
-                        );
+                        int findId = ReadInt("Id: ");
+                        if (ac.validarId(findId)) {
+                            ac.localizarUsuario(
+                                    findId //ReadInt("Id: ")
+                            );
+                            if (!(MetodosUsuario.message == null))
+                                System.out.println(MetodosUsuario.message);
+                        }
+                        if (!(MetodosUsuario.message == null))
+                            System.out.println(MetodosUsuario.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
@@ -172,16 +202,23 @@ public class AreaCadastroUsuario extends LeitorDados implements IAreaCadastro.IU
                         System.exit(0);
                     }
                     break;
-
+                    //#endregion
                 case "5":
+                    //#region Localizar vários usuários
                     System.out.println("\n# Localizar vários usuários #\n");
                     if(ac.listarUsuario()){
                         System.out.println();
 
-                        ac.localizarMaisUsuarios(
-                                ReadInt("Início: "),
-                                ReadInt("Fim: ")
-                        );
+                        int findId = ReadInt("Início: ");
+                        if (ac.validarId(findId)) {
+                            ac.localizarMaisUsuarios(
+                                    findId, //ReadInt("Início: "),
+                                    ReadInt("Fim: "));
+                            if (!(MetodosUsuario.message == null))
+                                System.out.println(MetodosUsuario.message);
+                        }
+                        if (!(MetodosUsuario.message == null))
+                            System.out.println(MetodosUsuario.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
@@ -203,16 +240,24 @@ public class AreaCadastroUsuario extends LeitorDados implements IAreaCadastro.IU
                         System.exit(0);
                     }
                     break;
-
+                    //#endregion
                 case "6":
+                    //#region Remover vários usuários
                     System.out.println("\n# Remover vários usuários #\n");
                     if(ac.listarUsuario()){
                         System.out.println();
 
-                        ac.removerMaisUsuarios(
-                                ReadInt("Início: "),
-                                ReadInt("Fim: ")
-                        );
+                        int remoId = ReadInt("Início: ");
+                        if (ac.validarId(remoId)) {
+                            ac.removerMaisUsuarios(
+                                    remoId, //ReadInt("Início: "),
+                                    ReadInt("Fim: ")
+                            );
+                            if (!(MetodosUsuario.message == null))
+                                System.out.println(MetodosUsuario.message);
+                        }
+                        if (!(MetodosUsuario.message == null))
+                            System.out.println(MetodosUsuario.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
@@ -234,8 +279,9 @@ public class AreaCadastroUsuario extends LeitorDados implements IAreaCadastro.IU
                         System.exit(0);
                     }
                     break;
-
+                    //#endregion
                 case "7":
+                    //#region Lista de usuários
                     System.out.println("\n# Lista de usuários #\n");
                     ac.listarUsuario();
 
@@ -258,18 +304,26 @@ public class AreaCadastroUsuario extends LeitorDados implements IAreaCadastro.IU
                         System.exit(0);
                     }
                     break;
-
+                    //#endregion
                 case "8":
+                    //#region Alteração de permissão de usuários
                     System.out.println("\n# Alteração de permissão de usuários #\n");
                     if(ac.listarUsuario()){
                         System.out.println();
 
-                        ac.alterarPermissao(
-                                userId,
-                                ReadInt("id: "),
-                                ReadText("Permissão: ")
-                        );
-                        System.out.println("\nAlteração concluída!");
+                        int alterId = ReadInt("Id: ");
+                        if (ac.validarId(userId) && ac.validarId(alterId)) {
+                            ac.alterarPermissao(
+                                    userId,
+                                    alterId,
+                                    ReadText("Permissão: ")
+                            );
+                            if (!(MetodosUsuario.message == null))
+                                System.out.println(MetodosUsuario.message);
+                            else System.out.println("\nAlteração concluída!");
+                        }
+                        if (!(MetodosUsuario.message == null))
+                            System.out.println(MetodosUsuario.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
@@ -291,16 +345,24 @@ public class AreaCadastroUsuario extends LeitorDados implements IAreaCadastro.IU
                         System.exit(0);
                     }
                     break;
-
+                    //#endregion
                 case "9":
+                    //#region Remoção de permissão de usuários
                     System.out.println("\n# Remoção de permissão de usuários #\n");
                     if(ac.listarUsuario()){
                         System.out.println();
 
-                        ac.removerPermissao(
-                                ReadInt("id: ")
-                        );
-                        System.out.println("\nExclusão concluída!");
+                        int remoId = ReadInt("Id: ");
+                        if (ac.validarId(remoId)) {
+                            ac.removerPermissao(
+                                    remoId //ReadInt("id: ")
+                            );
+                            if (!(MetodosUsuario.message == null))
+                                System.out.println(MetodosUsuario.message);
+                            else System.out.println("\nExclusão concluída!");
+                        }
+                        if (!(MetodosUsuario.message == null))
+                            System.out.println(MetodosUsuario.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
@@ -322,8 +384,9 @@ public class AreaCadastroUsuario extends LeitorDados implements IAreaCadastro.IU
                         System.exit(0);
                     }
                     break;
-
+                    //#endregion
                 case "*":
+                    //#region Retorno ao menu
                     Integer opcaoVoltar = ReadInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do usuário" +
                             "\n(2) Retornar ao menu principal" +
@@ -342,7 +405,7 @@ public class AreaCadastroUsuario extends LeitorDados implements IAreaCadastro.IU
                         System.exit(0);
                     }
                     break;
-
+                    //#endregion
                 default:
                     break;
             }

@@ -5,6 +5,8 @@ import Cadastro.NovosDados.Repositorio.Auxiliar.Propriedades.*;
 import Cadastro.NovosDados.Repositorio.Auxiliar.ValidCEP;
 import Raiz.Utils.SmartTools.GenericCollects.*;
 
+import java.util.Objects;
+
 
 public class Fornecedor extends OutrosDados {
 
@@ -110,6 +112,18 @@ public class Fornecedor extends OutrosDados {
     }
     public void setAtividades(GenericSet<Grupos> atividades) {
         this.atividades = atividades;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Fornecedor forn)) return false;
+        return Objects.equals(this.getCnpj(), forn.getCnpj());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCnpj());
     }
 
     @Override

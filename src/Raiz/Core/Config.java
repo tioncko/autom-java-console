@@ -1,5 +1,7 @@
 package Raiz.Core;
 
+import Cadastro.Database.Metodos.MetodosServico;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
@@ -27,11 +29,10 @@ public class Config {
                 default -> pr;
             };
 
-        } catch (IOException e) {
-
-            log.info("in MyClass: " + e.getMessage());
-            log.warning("a test warning: " + e.getMessage());
-            log.severe("a test warning: " + e.getMessage());
+        } catch (Exception e) {
+            //log.info("in MyClass: " + e.getMessage());
+            //log.warning("a test warning: " + e.getMessage());
+            log.severe("[" + Config.class.getSimpleName() + "] " + e.getMessage());
         }
         return pr;
     }

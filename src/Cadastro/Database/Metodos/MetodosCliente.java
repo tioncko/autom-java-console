@@ -2,16 +2,20 @@ package Cadastro.Database.Metodos;
 
 import Cadastro.Database.DataSet;
 import Cadastro.NovosDados.Repositorio.DTO.Cliente;
+import Cadastro.NovosDados.Repositorio.DTO.Fornecedor;
+import Cadastro.NovosDados.Repositorio.DTO.Servicos;
 import Cadastro.NovosDados.Repositorio.Enums.camposCliente;
 import Raiz.Utils.SmartTools;
 
 import java.util.*;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class MetodosCliente extends Cliente {
 
     //private Map<Integer, Cliente> tabCliente;
     private final DataSet<Cliente> DS;
-
+    public static String message;
     /**
      * Construtor
      */
@@ -29,8 +33,9 @@ public class MetodosCliente extends Cliente {
      */
     public void novoCliente(Integer id, Cliente cli) {
         //tabCliente.put(cli.setId(id), new Cliente(cli.getNome(), cli.getIdade(), cli.getCpf(), cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()));
-
-        DS.insert(cli.setId(id), new Cliente(cli.getNome(), cli.getIdade(), cli.getCpf(), cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()), Cliente.class);
+        if (cli.getCPF() != null) {
+            DS.insert(cli.setId(id), new Cliente(cli.getNome(), cli.getIdade(), cli.getCPF(), cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()), Cliente.class);
+        } else message = "\nNão é possível realizar o cadastro do cliente " + cli.getNome() + ". Necessário informar o seu CPF.";
     }
 
     /**
@@ -38,45 +43,45 @@ public class MetodosCliente extends Cliente {
      */
     public void alterCliente(Integer id, String Campo, String update) {
         if (!DS.select(Cliente.class).isEmpty()) {
-            //fieldCli getCampo = fieldCli.valueOf(Campo.toUpperCase());
-            camposCliente getCampo = camposCliente.valueOf(Campo.toUpperCase());
+            if (DS.select(Cliente.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+                //fieldCli getCampo = fieldCli.valueOf(Campo.toUpperCase());
+                camposCliente getCampo = camposCliente.valueOf(Campo.toUpperCase());
 
-            Set<Map.Entry<Integer, Cliente>> getCli = DS.select(Cliente.class).entrySet();
+                Set<Map.Entry<Integer, Cliente>> getCli = DS.select(Cliente.class).entrySet();
 
-            for (Map.Entry<Integer, Cliente> setCli : getCli) {
-                Cliente cli = setCli.getValue();
+                for (Map.Entry<Integer, Cliente> setCli : getCli) {
+                    Cliente cli = setCli.getValue();
 
-                if (setCli.getKey().equals(id)) {
-                    switch (getCampo) {
-                        case NOME:
-                            DS.insert(id, new Cliente(update, cli.getIdade(), cli.getCpf(), cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()), Cliente.class);
-                            break;
-                        case IDADE:
-                            DS.insert(id, new Cliente(cli.getNome(), Integer.parseInt(update), cli.getCpf(), cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()), Cliente.class);
-                            break;
-                        case CPF:
-                            DS.insert(id, new Cliente(cli.getNome(), cli.getIdade(), update, cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()), Cliente.class);
-                            break;
-                        case EMAIL:
-                            DS.insert(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCpf(), update, cli.getTelefone(), cli.getInfoCEP()), Cliente.class);
-                            break;
-                        case TELEFONE:
-                            DS.insert(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCpf(), cli.getEmail(), update, cli.getInfoCEP()), Cliente.class);
-                            break;
-                        case CEP:
-                            DS.insert(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCpf(), cli.getEmail(), cli.getTelefone(), SmartTools.CEP.ResponseCEP(update, cli.getInfoCEP().getNum())), Cliente.class);
-                            break;
-                        case NUMCASA:
-                            DS.insert(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCpf(), cli.getEmail(), cli.getTelefone(), SmartTools.CEP.ResponseCEP(cli.getInfoCEP().getCEP().replace("-", ""), Integer.parseInt(update))), Cliente.class);
-                            break;
-                        default:
-                            break;
+                    if (setCli.getKey().equals(id)) {
+                        switch (getCampo) {
+                            case NOME:
+                                DS.insert(id, new Cliente(update, cli.getIdade(), cli.getCPF(), cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()), Cliente.class);
+                                break;
+                            case IDADE:
+                                DS.insert(id, new Cliente(cli.getNome(), Integer.parseInt(update), cli.getCPF(), cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()), Cliente.class);
+                                break;
+                            case CPF:
+                                DS.insert(id, new Cliente(cli.getNome(), cli.getIdade(), update, cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()), Cliente.class);
+                                break;
+                            case EMAIL:
+                                DS.insert(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCPF(), update, cli.getTelefone(), cli.getInfoCEP()), Cliente.class);
+                                break;
+                            case TELEFONE:
+                                DS.insert(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCPF(), cli.getEmail(), update, cli.getInfoCEP()), Cliente.class);
+                                break;
+                            case CEP:
+                                DS.insert(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCPF(), cli.getEmail(), cli.getTelefone(), SmartTools.CEP.ResponseCEP(update, cli.getInfoCEP().getNum())), Cliente.class);
+                                break;
+                            case NUMCASA:
+                                DS.insert(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCPF(), cli.getEmail(), cli.getTelefone(), SmartTools.CEP.ResponseCEP(cli.getInfoCEP().getCEP().replace("-", ""), Integer.parseInt(update))), Cliente.class);
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
-            }
-        } else {
-            System.out.println("A tabela de cliente está vazia.");
-        }
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de clientes está vazia.";
     }
 
     /**
@@ -84,10 +89,10 @@ public class MetodosCliente extends Cliente {
      */
     public void remoCliente(Integer id) {
         if (!DS.select(Cliente.class).isEmpty()) {
-            DS.select(Cliente.class).remove(id);
-        } else {
-            System.out.println("A tabela de cliente está vazia.");
-        }
+            if (DS.select(Cliente.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+                DS.select(Cliente.class).remove(id);
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de clientes está vazia.";
     }
 
     /**
@@ -95,12 +100,13 @@ public class MetodosCliente extends Cliente {
      */
     public void findCliente(Integer id) {
         if (!DS.select(Cliente.class).isEmpty()) {
-            Set<Map.Entry<Integer, Cliente>> getCli = DS.select(Cliente.class).entrySet();
+            if (DS.select(Cliente.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+                Stream<Map.Entry<Integer, Cliente>>
+                        getCli = DS.select(Cliente.class).entrySet().stream().filter(setid -> setid.getKey().equals(id));
 
-            getCli.stream().filter(setid -> setid.getKey().equals(id)).forEach(x -> System.out.println("id{" + x.getKey() + "}, " + x.getValue()));
-        } else {
-            System.out.println("A tabela de cliente está vazia.");
-        }
+                getCli.forEach(x -> System.out.println("id{" + x.getKey() + "}, " + x.getValue()));
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de clientes está vazia.";
     }
 
     /**
@@ -108,13 +114,13 @@ public class MetodosCliente extends Cliente {
      */
     public void listbyIdCliente(Integer ini_id, Integer fim_id) {
         if (!DS.select(Cliente.class).isEmpty()) {
-            Set<Map.Entry<Integer, Cliente>> getCli = DS.select(Cliente.class).entrySet();
+            if (DS.select(Cliente.class).entrySet().stream().anyMatch(x -> x.getKey().equals(ini_id))) {
+                Supplier<Stream<Map.Entry<Integer, Cliente>>>
+                        getCli = () -> DS.select(Cliente.class).entrySet().stream().filter(id -> id.getKey() >= ini_id && id.getKey() <= fim_id);
 
-            getCli.stream().filter(id -> id.getKey() >= ini_id && id.getKey() <= fim_id).forEach(x -> System.out.println("id{" + x.getKey() + "}, " + x.getValue()));
-
-        } else {
-            System.out.println("A tabela de cliente está vazia.");
-        }
+                getCli.get().forEach(x -> System.out.println("id{" + x.getKey() + "}, " + x.getValue()));
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de clientes está vazia.";
     }
 
     /**
@@ -122,13 +128,14 @@ public class MetodosCliente extends Cliente {
      */
     public void remobyIdCliente(Integer ini_id, Integer fim_id) {
         if (!DS.select(Cliente.class).isEmpty()) {
-            Set<Map.Entry<Integer, Cliente>> getCli = DS.select(Cliente.class).entrySet();
+            if (DS.select(Cliente.class).entrySet().stream().anyMatch(x -> x.getKey().equals(ini_id))) {
+                Set<Map.Entry<Integer, Cliente>>
+                        getCli = DS.select(Cliente.class).entrySet();
 
-            getCli.removeIf(id -> id.getKey() >= ini_id && id.getKey() <= fim_id);
-            //getCli.stream().forEach(x -> System.out.println("id{" + x.getKey() + "}, " + x.getValue()));
-        } else {
-            System.out.println("A tabela de cliente está vazia.");
-        }
+                getCli.removeIf(id -> id.getKey() >= ini_id && id.getKey() <= fim_id);
+                //getCli.stream().forEach(x -> System.out.println("id{" + x.getKey() + "}, " + x.getValue()));
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de clientes está vazia.";
     }
 
     /**
@@ -163,7 +170,7 @@ public class MetodosCliente extends Cliente {
             }
             return true;
         } else {
-            System.out.println("A tabela de cliente está vazia.");
+            System.out.println("\nA tabela de clientes está vazia.");
             return false;
         }
     }
@@ -183,6 +190,18 @@ public class MetodosCliente extends Cliente {
             maxnum = 0;
         }
         return maxnum + 1;
+    }
+
+    public boolean userValid (Integer id) {
+        boolean valid = false;
+
+        if (!DS.select(Cliente.class).isEmpty()) {
+            if (DS.select(Cliente.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+                valid = true;
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de clientes está vazia.";
+
+        return valid;
     }
 /*
     private enum fieldCli {

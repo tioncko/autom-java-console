@@ -9,11 +9,13 @@ import Raiz.Utils.SmartTools.*;
 import Raiz.Utils.SmartTools.GenericCollects.*;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public class MetodosFornecedor extends Fornecedor {
 
     //private Map<Integer, Fornecedor> tabFornecedor;
     private final DataSet<Fornecedor> DS;
+    public static String message;
 
     /**
      * Construtor
@@ -44,7 +46,9 @@ public class MetodosFornecedor extends Fornecedor {
      */
     public void novoFornecedor(Integer id, Fornecedor forn) {
         //tabFornecedor.put(forn.setId(id), new Fornecedor(forn.getRazaoSocial(), forn.getNomeFantasia(), forn.getCnpj(), forn.getEmail(), forn.getInscEstadual(), forn.getTelefone(), forn.getInfoCEP(), forn.getAtividades()));
-        DS.insert(forn.setId(id), new Fornecedor(forn.getRazaoSocial(), forn.getNomeFantasia(), forn.getCnpj(), forn.getEmail(), forn.getInscEstadual(), forn.getTelefone(), forn.getInfoCEP(), forn.getAtividades()), Fornecedor.class);
+        if (forn.getCnpj() != null){
+            DS.insert(forn.setId(id), new Fornecedor(forn.getRazaoSocial(), forn.getNomeFantasia(), forn.getCnpj(), forn.getEmail(), forn.getInscEstadual(), forn.getTelefone(), forn.getInfoCEP(), forn.getAtividades()), Fornecedor.class);
+        } else message = "\nNão é possível realizar o cadastro do cliente " + forn.getNomeFantasia() + ". Necessário informar o seu CPF.";
     }
 
     /**
@@ -52,50 +56,57 @@ public class MetodosFornecedor extends Fornecedor {
      */
     public void alterFornecedor(Integer id, String Campo, String... update) {
         if (!DS.select(Fornecedor.class).isEmpty()) {
+            if (DS.select(Fornecedor.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
             //fieldForn getCampo = fieldForn.valueOf(Campo.toUpperCase());
-            camposForn getCampo = camposForn.valueOf(Campo.toUpperCase());
+                camposForn getCampo = camposForn.valueOf(Campo.toUpperCase());
 
-            Set<Map.Entry<Integer, Fornecedor>> getForn = DS.select(Fornecedor.class).entrySet();
-            getForn.stream().filter(x -> x.getKey().equals(id)).forEach(forn -> {
+                Set<Map.Entry<Integer, Fornecedor>> getForn = DS.select(Fornecedor.class).entrySet();
+                getForn.stream().filter(x -> x.getKey().equals(id)).forEach(forn -> {
 
-                String obj1, obj2 = "";
-                if (update.length < 2)
-                    obj1 = update[0];
-                else {
-                    obj1 = update[0];
-                    obj2 = update[1];
-                }
+                    String obj1 = "", obj2 = "";
+                    boolean nullable = (forn.getValue().getAtividades() == null);
+                    List<String> obj = new ArrayList<>();
 
-                switch (getCampo) {
-                    case RAZAOSOCIAL ->
+                    if (update.length < 2 || nullable)
+                        obj1 = update[0];
+                    if (update.length == 2) {
+                        obj1 = update[0];
+                        obj2 = update[1];
+                    }
+                    else obj.add(update[0]);
+
+                    switch (getCampo) {
+                        case RAZAOSOCIAL ->
                             DS.insert(id, new Fornecedor(obj1, forn.getValue().getNomeFantasia(), forn.getValue().getCnpj(), forn.getValue().getEmail(), forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), forn.getValue().getInfoCEP(), forn.getValue().getAtividades()), Fornecedor.class);
-                    case NOMEFANTASIA ->
+                        case NOMEFANTASIA ->
                             DS.insert(id, new Fornecedor(forn.getValue().getRazaoSocial(), obj1, forn.getValue().getCnpj(), forn.getValue().getEmail(), forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), forn.getValue().getInfoCEP(), forn.getValue().getAtividades()), Fornecedor.class);
-                    case CNPJ ->
+                        case CNPJ ->
                             DS.insert(id, new Fornecedor(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), obj1, forn.getValue().getEmail(), forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), forn.getValue().getInfoCEP(), forn.getValue().getAtividades()), Fornecedor.class);
-                    case EMAIL ->
+                        case EMAIL ->
                             DS.insert(id, new Fornecedor(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), forn.getValue().getCnpj(), obj1, forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), forn.getValue().getInfoCEP(), forn.getValue().getAtividades()), Fornecedor.class);
-                    case INSC_ESTADUAL ->
+                        case INSC_ESTADUAL ->
                             DS.insert(id, new Fornecedor(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), forn.getValue().getCnpj(), forn.getValue().getEmail(), obj1, forn.getValue().getTelefone(), forn.getValue().getInfoCEP(), forn.getValue().getAtividades()), Fornecedor.class);
-                    case TELEFONE ->
+                        case TELEFONE ->
                             DS.insert(id, new Fornecedor(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), forn.getValue().getCnpj(), forn.getValue().getEmail(), forn.getValue().getInscEstadual(), obj1, forn.getValue().getInfoCEP(), forn.getValue().getAtividades()), Fornecedor.class);
-                    case CEP ->
+                        case CEP ->
                             DS.insert(id, new Fornecedor(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), forn.getValue().getCnpj(), forn.getValue().getEmail(), forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), CEP.ResponseCEP(obj1, forn.getValue().getInfoCEP().getNum()), forn.getValue().getAtividades()), Fornecedor.class);
-                    case NUMFORN ->
+                        case NUMFORN ->
                             DS.insert(id, new Fornecedor(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), forn.getValue().getCnpj(), forn.getValue().getEmail(), forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), CEP.ResponseCEP(forn.getValue().getInfoCEP().getCEP().replace("-", ""), Integer.parseInt(obj1)), forn.getValue().getAtividades()), Fornecedor.class);
-                    case ATIVIDADES -> {
+                        case ATIVIDADES -> {
 
-                        GenericSet<Grupos> list = forn.getValue().getAtividades();
-                        GenericSet<Grupos> listAtividades = updtAtividades(obj1, obj2, list);
+                            GenericSet<Grupos> list = forn.getValue().getAtividades();
+                            GenericSet<Grupos> listAtividades = !(obj2.isEmpty())
+                                ? updtAtividades(obj1, obj2, list)
+                                : fornAtividades(String.valueOf(obj));//isrtAtividades(obj1);
 
-                        DS.insert(id, new Fornecedor(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), forn.getValue().getCnpj(), forn.getValue().getEmail(), forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), forn.getValue().getInfoCEP(), listAtividades), Fornecedor.class);
+                            DS.insert(id, new Fornecedor(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), forn.getValue().getCnpj(), forn.getValue().getEmail(), forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), forn.getValue().getInfoCEP(), listAtividades), Fornecedor.class);
+                        }
+                        default -> {
+                        }
                     }
-                    default -> {
-                    }
-                }
-            });
-        } else
-            System.out.println("A tabela de fornecedores está vazia.");
+                });
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de fornecedores está vazia.";
     }
 
     //#region processos
@@ -105,9 +116,10 @@ public class MetodosFornecedor extends Fornecedor {
      */
     public void remoFornecedor(Integer id) {
         if (!DS.select(Fornecedor.class).isEmpty()) {
-            DS.select(Fornecedor.class).remove(id);
-        } else
-            System.out.println("A tabela de fornecedores está vazia.");
+            if (DS.select(Fornecedor.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+                DS.select(Fornecedor.class).remove(id);
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de fornecedores está vazia.";
     }
 
     /**
@@ -115,21 +127,23 @@ public class MetodosFornecedor extends Fornecedor {
      */
     public void findFornecedor(Integer id) {
         if (!DS.select(Fornecedor.class).isEmpty()) {
-            Set<Map.Entry<Integer, Fornecedor>> getForn = DS.select(Fornecedor.class).entrySet();
-            getForn.stream().filter(setid -> setid.getKey().equals(id)).forEach(x -> System.out.println("id{" + x.getKey() + "}, " + x.getValue()));
+            if (DS.select(Fornecedor.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+                Set<Map.Entry<Integer, Fornecedor>> getForn = DS.select(Fornecedor.class).entrySet();
 
-        } else
-            System.out.println("A tabela de fornecedores está vazia.");
+                getForn.stream().filter(setid -> setid.getKey().equals(id)).forEach(x -> System.out.println("id{" + x.getKey() + "}, " + x.getValue()));
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de fornecedores está vazia.";
     }
 
     public Fornecedor fornecedorProd(Integer id) {
         Fornecedor forn = null;
         if (!DS.select(Fornecedor.class).isEmpty()) {
-            Set<Map.Entry<Integer, Fornecedor>> getForn = DS.select(Fornecedor.class).entrySet();
-            forn = getForn.stream().filter(setid -> setid.getKey().equals(id)).findFirst().orElseThrow().getValue();
+            if (DS.select(Fornecedor.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
 
-        } else
-            System.out.println("A tabela de fornecedores está vazia.");
+                Set<Map.Entry<Integer, Fornecedor>> getForn = DS.select(Fornecedor.class).entrySet();
+                forn = getForn.stream().filter(setid -> setid.getKey().equals(id)).findFirst().orElseThrow().getValue();
+            } else System.out.println("\nRegistro inexistente na tabela.");
+        } else System.out.println("\nA tabela de fornecedores está vazia.");
 
         return forn;
     }
@@ -145,10 +159,12 @@ public class MetodosFornecedor extends Fornecedor {
      */
     public void listbyIdFornecedor(Integer ini_id, Integer fim_id) {
         if (!DS.select(Fornecedor.class).isEmpty()) {
+            if (DS.select(Fornecedor.class).entrySet().stream().anyMatch(x -> x.getKey().equals(ini_id))) {
             Set<Map.Entry<Integer, Fornecedor>> getForn = DS.select(Fornecedor.class).entrySet();
+
             getForn.stream().filter(id -> id.getKey() >= ini_id && id.getKey() <= fim_id).forEach(x -> System.out.println("id{" + x.getKey() + "}, " + x.getValue()));
-        } else
-            System.out.println("A tabela de fornecedores está vazia.");
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de fornecedores está vazia.";
     }
 
     /**
@@ -156,10 +172,12 @@ public class MetodosFornecedor extends Fornecedor {
      */
     public void remobyIdFornecedor(Integer ini_id, Integer fim_id) {
         if (!DS.select(Fornecedor.class).isEmpty()) {
-            Set<Map.Entry<Integer, Fornecedor>> getForn = DS.select(Fornecedor.class).entrySet();
-            getForn.removeIf(id -> id.getKey() >= ini_id && id.getKey() <= fim_id);
-        } else
-            System.out.println("A tabela de fornecedores está vazia.");
+            if (DS.select(Fornecedor.class).entrySet().stream().anyMatch(x -> x.getKey().equals(ini_id))) {
+                Set<Map.Entry<Integer, Fornecedor>> getForn = DS.select(Fornecedor.class).entrySet();
+
+                getForn.removeIf(id -> id.getKey() >= ini_id && id.getKey() <= fim_id);
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de fornecedores está vazia.";
     }
 
     /**
@@ -171,7 +189,7 @@ public class MetodosFornecedor extends Fornecedor {
             getForn.forEach(x -> System.out.println("id{" + x.getKey() + "}, " + x.getValue()));
             return true;
         } else {
-            System.out.println("A tabela de fornecedores está vazia.");
+            System.out.println("\nA tabela de fornecedores está vazia.");
             return false;
         }
     }
@@ -191,16 +209,21 @@ public class MetodosFornecedor extends Fornecedor {
 
     //#endregion
 
+    public boolean returnAtividades(Integer id) {
+        Stream<Map.Entry<Integer, Fornecedor>>
+                getForn = DS.select(Fornecedor.class).entrySet().stream().filter(x -> x.getKey().equals(id));
+        return getForn.anyMatch(y -> y.getValue().getAtividades() == null);
+    }
+
     public GenericSet<Grupos> updtAtividades(String remove, String add, GenericSet<Grupos> typeforn) {
 
-        Grupos gp = null;
+        Grupos gp = new Grupos();
         for (Grupos g : typeforn) {
             if (g.getGrupo().equals(remove))
                 gp = g;
         }
         typeforn.remove(gp);
 
-        assert gp != null;
         gp.setGrupo(add);
         typeforn.add(gp);
 
@@ -217,9 +240,21 @@ public class MetodosFornecedor extends Fornecedor {
 
         assert lis != null;
         for (String x : lis) {
-            lista.add(new Grupos(x));
+            lista.add(new Grupos(x.replaceAll("\\[", "").replaceAll("]", "")));
         }
         return lista;
+    }
+
+    public boolean userValid (Integer id) {
+        boolean valid = false;
+
+        if (!DS.select(Fornecedor.class).isEmpty()) {
+            if (DS.select(Fornecedor.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+                valid = true;
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de fornecedores está vazia.";
+
+        return valid;
     }
 
 /*

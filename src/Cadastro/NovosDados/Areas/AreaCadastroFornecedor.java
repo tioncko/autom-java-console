@@ -1,6 +1,8 @@
 package Cadastro.NovosDados.Areas;
 
 import Cadastro.Database.DataSet;
+import Cadastro.Database.Metodos.MetodosCliente;
+import Cadastro.Database.Metodos.MetodosFornecedor;
 import Raiz.Acesso.MenuPrincipal;
 import Cadastro.Database.Metodos.Interfaces.IAreaCadastro;
 import Raiz.Inicio.Cadastro;
@@ -13,15 +15,15 @@ public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro
     Cadastro.AcoesFornecedor af;
     DataSet<?> banco;
 
-    public AreaCadastroFornecedor(DataSet<?> DS) throws Exception {
+    public AreaCadastroFornecedor(DataSet<?> DS) {
         this.mp = new MenuPrincipal(DS);
         this.cad = new Cadastro(DS);
         this.af = cad.new AcoesFornecedor();
         this.banco = DS;
     }
 
-    public void menuCadastroFornecedor(Integer userId) throws Exception {
-        System.out.println("\nFornecedor:");
+    public void menuCadastroFornecedor(Integer userId){
+        System.out.println("\n\u001B[34mFornecedor:\u001B[0m");
         System.out.println("1 - Cadastrar Fornecedor");
         System.out.println("2 - Alterar Fornecedor");
         System.out.println("3 - Excluir Fornecedor");
@@ -37,18 +39,19 @@ public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro
         AcoesCadastroFornecedor(id, userId);
     }
 
-    public void AcoesCadastroFornecedor(String id, Integer userId) throws Exception {
+    public void AcoesCadastroFornecedor(String id, Integer userId)  {
         boolean session = true;
         while (session) {
             switch (id) {
                 case "1":
+                    //#region Cadastrar novo fornecedor
                     System.out.println("\n# Cadastrar novo fornecedor #\n");
-//                    af.cadastrarFornecedor("Jorge", "22", "04472205484", "teste@olos.com.br", "014585445489", "2555555", "04472205", 38, String.valueOf(ReadStrList("try: ")));
+                    //af.cadastrarFornecedor("Jorge", "22", "04472205484", "teste@olos.com.br", "014585445489", "2555555", "04472205", 38, String.valueOf(ReadStrList("try: ")));
 
                     af.cadastrarFornecedor(
                             ReadSentence("Razão Social: "),
                             ReadSentence("Nome Fantasia: "),
-                            ReadText("CNPJ: "),
+                            ReadMask("CNPJ: "),
                             ReadText("E-mail: "),
                             ReadText("Inscrição Estadual: "),
                             ReadSentence("Telefone: "),
@@ -56,7 +59,9 @@ public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro
                             ReadInt("Nùmero da residência: "),
                             String.valueOf(ReadStrList("Informar atividades abaixo [para finalizar, digite SAIR] "))
                     );
-                    System.out.println("\nCadastro concluído!");
+                    if (!(MetodosFornecedor.message == null))
+                        System.out.println(MetodosFornecedor.message);
+                    else System.out.println("\nCadastro concluído!");
 
                     System.out.print("\n----------------------------------------------");
                     Integer opcaoCadForn = ReadInt("\n\033[3mO que deseja?" +
@@ -77,30 +82,75 @@ public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro
                         System.exit(0);
                     }
                     break;
-
+                //#endregion
                 case "2":
+                    //#region Alterar um fornecedor
                     System.out.println("\n# Alterar um fornecedor #\n");
                     if (af.listarFornecedores()) {
                         System.out.println();
 
                         int alterId = ReadInt("Id: ");
-                        String field = ReadText("Campo: ");
-                        if (field.equals("atividades".toUpperCase()) || field.equals("atividades".toLowerCase()) ) {
-                            af.alterarFornecedor(
-                                alterId,
-                                field,
-                                ReadSentence("Alteração dado antigo (" + field.toUpperCase() + "): "),
-                                ReadSentence("Alteração dado novo (" + field.toUpperCase() + "): ")
-                            );
-                        } else {
-                            af.alterarFornecedor(
-                                alterId,
-                                field,
-                                ReadSentence("Alteração (" + field.toUpperCase() + "): ")
-                            );
+                        if (af.validarId(alterId)) {
+                            String field = ReadText("Campo: ");
+                            boolean fieldValid = (field.equalsIgnoreCase("atividades"));
+
+                            if (fieldValid && !(af.retorno(alterId))) {
+                                af.alterarFornecedor(
+                                        alterId,
+                                        field,
+                                        ReadSentence("Alteração dado antigo (" + field.toUpperCase() + "): "),
+                                        ReadSentence("Alteração dado novo (" + field.toUpperCase() + "): ")
+                                );
+                                if (!(MetodosFornecedor.message == null))
+                                    System.out.println(MetodosFornecedor.message);
+                                else System.out.println("\nAlteração concluída!");
+                                af.localizarFornecedor(alterId);
+                            }
+
+                            if (fieldValid && af.retorno(alterId)) {
+                                af.alterarFornecedor(
+                                        alterId,
+                                        field,
+                                        String.valueOf(ReadStrList("Informar atividades abaixo [para finalizar, digite SAIR] "))
+                                );
+                                if (!(MetodosFornecedor.message == null))
+                                    System.out.println(MetodosFornecedor.message);
+                                else System.out.println("\nAlteração concluída!");
+                                af.localizarFornecedor(alterId);
+                            }
+
+                            if (!(fieldValid)) {
+                                if (field.equalsIgnoreCase("CNPJ")){
+                                    String document = ReadMask("Alteração (" + field.toUpperCase() + "): ");
+
+                                    if(document != null) {
+                                        af.alterarFornecedor(
+                                                alterId,
+                                                field,
+                                                document
+                                        );
+
+                                        if (!(MetodosFornecedor.message == null))
+                                            System.out.println(MetodosFornecedor.message);
+                                        else System.out.println("\nAlteração concluída!");
+                                        af.localizarFornecedor(alterId);
+                                    } else System.out.println("\nNão foi possível realizar a alteração solicitada.");
+                                } else {
+                                    af.alterarFornecedor(
+                                            alterId,
+                                            field,
+                                            ReadSentence("Alteração (" + field.toUpperCase() + "): ")
+                                    );
+
+                                    if (!(MetodosFornecedor.message == null))
+                                        System.out.println(MetodosFornecedor.message);
+                                    else System.out.println("\nAlteração concluída!");
+                                    af.localizarFornecedor(alterId);
+                                }
+                            }
                         }
-                        System.out.println("\nAlteração concluída!");
-                        af.localizarFornecedor(alterId);
+                        if (!(MetodosFornecedor.message == null))
+                            System.out.println(MetodosFornecedor.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
@@ -122,14 +172,24 @@ public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro
                         System.exit(0);
                     }
                     break;
-
+                    //#endregion
                 case "3":
+                    //#region Excluir um fornecedor
                     System.out.println("\n# Excluir um fornecedor #\n");
                     if (af.listarFornecedores()) {
                         System.out.println();
 
-                        af.excluirFornecedor(ReadInt("Id: "));
-                        System.out.println("\nExclusão concluída!");
+                        int remoId = ReadInt("Id: ");
+                        if (af.validarId(remoId)) {
+                            af.excluirFornecedor(
+                                    remoId //ReadInt("Id: ")
+                            );
+                            if (!(MetodosFornecedor.message == null))
+                                System.out.println(MetodosFornecedor.message);
+                            else System.out.println("\nExclusão concluída!");
+                        }
+                        if (!(MetodosFornecedor.message == null))
+                            System.out.println(MetodosFornecedor.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
@@ -151,13 +211,23 @@ public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro
                         System.exit(0);
                     }
                     break;
-
+                    //#endregion
                 case "4":
+                    //#region Localizar um fornecedor
                     System.out.println("\n# Localizar um fornecedor #\n");
                     if (af.listarFornecedores()) {
                         System.out.println();
 
-                        af.localizarFornecedor(ReadInt("Id: "));
+                        int findId = ReadInt("Id: ");
+                        if (af.validarId(findId)) {
+                            af.localizarFornecedor(
+                                    findId //ReadInt("Id: ")
+                            );
+                            if (!(MetodosFornecedor.message == null))
+                                System.out.println(MetodosFornecedor.message);
+                        }
+                        if (!(MetodosFornecedor.message == null))
+                            System.out.println(MetodosFornecedor.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
@@ -179,16 +249,23 @@ public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro
                         System.exit(0);
                     }
                     break;
-
+                    //#endregion
                 case "5":
-                    System.out.println("\n# Localizar vários fornecedor #\n");
+                    //#region Localizar vários fornecedores
+                    System.out.println("\n# Localizar vários fornecedores #\n");
                     if (af.listarFornecedores()) {
                         System.out.println();
 
-                        af.localizarMaisFornecedores(
-                            ReadInt("Início: "),
-                            ReadInt("Fim: ")
-                        );
+                        int findId = ReadInt("Início: ");
+                        if (af.validarId(findId)) {
+                            af.localizarMaisFornecedores(
+                                    findId, //ReadInt("Início: "),
+                                    ReadInt("Fim: "));
+                            if (!(MetodosFornecedor.message == null))
+                                System.out.println(MetodosFornecedor.message);
+                        }
+                        if (!(MetodosFornecedor.message == null))
+                            System.out.println(MetodosFornecedor.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
@@ -210,16 +287,24 @@ public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro
                         System.exit(0);
                     }
                     break;
-
+                    //#endregion
                 case "6":
+                    //#region Remover vários fornecedores
                     System.out.println("\n# Remover vários fornecedores #\n");
                     if (af.listarFornecedores()) {
                         System.out.println();
 
-                        af.removerMaisFornecedores(
-                            ReadInt("Início: "),
-                            ReadInt("Fim: ")
-                        );
+                        int remoId = ReadInt("Início: ");
+                        if (af.validarId(remoId)) {
+                            af.removerMaisFornecedores(
+                                    remoId, //ReadInt("Início: "),
+                                    ReadInt("Fim: ")
+                            );
+                            if (!(MetodosFornecedor.message == null))
+                                System.out.println(MetodosFornecedor.message);
+                        }
+                        if (!(MetodosFornecedor.message == null))
+                            System.out.println(MetodosFornecedor.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
@@ -241,8 +326,9 @@ public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro
                         System.exit(0);
                     }
                     break;
-
+                    //#endregion
                 case "7":
+                    //#region Lista de fornecedor
                     System.out.println("\n# Lista de fornecedor #\n");
                     af.listarFornecedores();
 
@@ -265,8 +351,10 @@ public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro
                         System.exit(0);
                     }
                     break;
-
+                    //#endregion
                 case "*":
+                    //#region Retorno ao menu
+                    System.out.print("\n----------------------------------------------");
                     Integer opcaoVoltar = ReadInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do fornecedor" +
                             "\n(2) Retornar ao menu principal" +
@@ -285,7 +373,7 @@ public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro
                         System.exit(0);
                     }
                     break;
-
+                    //#endregion
                 default:
                     break;
             }

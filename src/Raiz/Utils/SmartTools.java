@@ -1,7 +1,6 @@
 package Raiz.Utils;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
@@ -12,7 +11,6 @@ import java.util.*;
 import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import Cadastro.Database.JSON.JsonTools.JsonResponse;
 import Cadastro.NovosDados.Repositorio.Auxiliar.Criptografia;
 import Cadastro.NovosDados.Repositorio.Auxiliar.ValidCEP;
 import Cadastro.NovosDados.Repositorio.Enums.agora;
@@ -120,34 +118,39 @@ public abstract class SmartTools {
             @SuppressWarnings("unchecked") Logger log = printLog.getLogRetorno((Class<CEP>) (Object) (CEP.class));
 
             ValidCEP novoCEP = new ValidCEP();
-            try {
-                StringBuffer response = getResponse(NumCEP);
 
-                Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(response.toString())));
+            //StringBuffer response = getResponse(NumCEP);
+            String url = "https://viacep.com.br/ws/" + NumCEP + "/xml/";
+            String response = HTTPResponse.responseContent(url);
+
+            try {
+                assert response != null;
+                Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(response)));
                 NodeList errNodes = doc.getElementsByTagName("xmlcep");
+
                 if (errNodes.getLength() > 0) {
                     Element err = (Element) errNodes.item(0);
                     novoCEP.setCEP((NumCEP).strip());
-                    if (err.getElementsByTagName("complemento").item(0).getTextContent().isEmpty()) {
+
+                    if (err.getElementsByTagName("complemento").item(0).getTextContent().isEmpty())
                         novoCEP.setEndereco((err.getElementsByTagName("logradouro").item(0).getTextContent()).strip());
-                    } else {
-                        novoCEP.setEndereco((err.getElementsByTagName("logradouro").item(0).getTextContent()).strip() +
+                    else novoCEP.setEndereco((err.getElementsByTagName("logradouro").item(0).getTextContent()).strip() +
                                 " (" + (err.getElementsByTagName("complemento").item(0).getTextContent()).strip() + ")");
-                    }
+
                     novoCEP.setBairro((err.getElementsByTagName("bairro").item(0).getTextContent()).strip());
                     novoCEP.setNum(NumEndereco);
                     novoCEP.setCidade((err.getElementsByTagName("localidade").item(0).getTextContent()).strip());
                     novoCEP.setUF((err.getElementsByTagName("uf").item(0).getTextContent()).strip());
-                } else {
-                    System.out.printf("Não foi possível retornar com os dados do CEP: %s informado", NumCEP);
-                }
+                } else System.out.printf("Não foi possível retornar com os dados do CEP: %s informado", NumCEP);
             } catch (Exception e) {
                 //System.out.println(e.getMessage());
-                log.warning("[" + CEP.class.getSimpleName() + "] " + e.getMessage());
+                log.warning("[" + CEP.class.getSimpleName() + "] ["+ response + "] " + e.getMessage());
             }
             return novoCEP;
         }
 
+        //#region Old StringBuffer getResponse
+        /*
         private static StringBuffer getResponse(String NumCEP) throws Exception {
 
             ImpressaoLog.LogGenerico<CEP> printLog = new ImpressaoLog.LogGenerico<>();
@@ -172,6 +175,8 @@ public abstract class SmartTools {
             }
             return response;
         }
+        */
+        //#endregion
     }
 
     public static class DiaAtual {
@@ -281,8 +286,176 @@ public abstract class SmartTools {
             }
         }
     }
+
+    public static class validacaoDigitos {
+
+        public static String message;
+
+        public static String CPF(String doc) {
+            String nine;
+            nine = doc.substring(0, 9);
+
+            String dig1 = returnDigito(calculoDigito(0, nine, 0, 10));
+            String dig2 = returnDigito(calculoDigito(0, nine + dig1, 0, 11));
+
+            return (nine + dig1 + dig2).equals(doc) ? doc : "Documento inválido.";// - " + (nine + "-" + dig1 + dig2);
+        }
+
+        public static String CNPJ(String doc) {
+            String five, nine, six, ten;
+            five = doc.substring(0, 4);
+            nine = doc.substring(4, 12);
+            String dig1 = returnDigito(calculoDigito(0, five, 0, 5) + calculoDigito(0, nine, 0, 9));
+
+            six = doc.substring(0, 5);
+            ten = doc.substring(5, 12) + dig1;
+            String dig2 = returnDigito(calculoDigito(0, six, 0, 6) + calculoDigito(0, ten, 0, 9));
+
+            return (five + nine + dig1 + dig2).equals(doc) ? doc : "Documento inválido.";// - " + (five + nine + dig1 + dig2);;
+        }
+
+        public static int calculoDigito(int soma, String id, int max, int min) {
+
+            int dg;
+            if (min != 1) {
+                dg = Integer.parseInt(String.valueOf(id.charAt(max)));
+                soma += dg * min;
+            } else return soma;
+
+            return calculoDigito(soma, id, max + 1, min - 1);
+        }
+
+        public static String returnDigito(int dig){
+
+            int sub = dig - (11 * (dig/11));
+            if (sub < 2) return "0";
+            if (sub <= 10) return String.valueOf(11 - sub);
+            return null;
+        }
+
+//        public static void main(String[] args) {
+//            System.out.println(CPF("41707485810"));
+//            System.out.println(CNPJ("58577114000189"));
+//        }
+    }
 }
 
+//#region cnpj
+/*
+        public static void CNPJ(String doc) {
+
+            int parteUm = 5, parteDois = 9;
+            int digp1 = 0, digp2 = 0;
+            String docUm = doc.substring(0, 4);
+            String docDois = doc.substring(4, 12);
+
+            for (int i = 0; i < docUm.length(); i++) {
+                digp1 += Integer.parseInt(String.valueOf(docUm.charAt(i))) * parteUm;
+                //System.out.println(Integer.parseInt(String.valueOf(docUm.charAt(i))) +"+"+ parteUm+ "=" +digp1);
+                parteUm--;
+            }
+
+            for (int i = 0; i < docDois.length(); i++) {
+                digp2 += Integer.parseInt(String.valueOf(docDois.charAt(i))) * parteDois;
+                //System.out.println(Integer.parseInt(String.valueOf(docDois.charAt(i))) +"+"+ parteDois+ "=" +digp2);
+                parteDois--;
+            }
+
+            int div = (digp1 + digp2)/11;
+            int res = (digp1 + digp2) - (11 *div);
+
+            String fil = null;
+            if(res < 2) fil = "0";
+            if(res <= 10) System.out.println(11 - res);
+
+            //--------------
+
+            int novaparteUm = 6, novaparteDois = 9;
+            int novodigp1 = 0, novodigp2 = 0;
+            String novodocUm = doc.substring(0, 4);
+            String novodocDois = doc.substring(4, 12) + res;
+
+            for (int i = 0; i < novodocUm.length(); i++) {
+                novodigp1 += Integer.parseInt(String.valueOf(novodocUm.charAt(i))) * novaparteUm;
+                //System.out.println(Integer.parseInt(String.valueOf(novodocUm.charAt(i))) +"+"+ novaparteUm+ "=" +novodigp1);
+                novaparteUm--;
+            }
+
+            for (int i = 0; i < novodocDois.length(); i++) {
+                novodigp2 += Integer.parseInt(String.valueOf(novodocDois.charAt(i))) * novaparteDois;
+                //System.out.println(Integer.parseInt(String.valueOf(novodocDois.charAt(i))) +"+"+ novaparteDois+ "=" +novodigp2);
+                novaparteDois--;
+            }
+
+            int div2 = (novodigp1 + novodigp2) / 11;
+            int res2 = (novodigp1 + novodigp2) - (11 *div2);
+
+            if(res2 < 2) fil = "0";
+            if(res2 <= 10)
+        }
+ */
+//#endregion
+//#region cpf tips
+/*
+        public static String CPF(String doc) {
+            String nine;
+            if (doc.length() == 11) {
+                nine = doc.substring(0, 9);
+
+                String dig1 = digitoCPF(nine, 10);
+                String dig2 = digitoCPF(nine + dig1, 11);
+
+                return (nine + dig1 + dig2).equals(doc) ? doc : "documento inválido - " + (nine + "-" + dig1 + dig2);
+            } else return "quantidade de dígitos inválidos";
+        }
+
+        public static String digitoCPF(String doc, int num){
+
+            int dig = 0;
+            for (int i = 0; i < doc.length(); i++) {
+                dig += Integer.parseInt(String.valueOf(doc.charAt(i))) * num;
+                num--;
+            }
+
+            int sub = dig - (11 * (dig/11));
+            if(sub < 2) return "0";
+            if(sub <= 10) return String.valueOf(11 - sub);
+            return "";
+        }
+
+
+
+public static String CPF(String doc) {
+    String nine = null;
+    if (doc.length() == 11)  nine = doc.substring(0, 9);
+
+    assert nine != null;
+    String dig1 = returnDigito(doc(0, nine, 0, 10));
+    String dig2 = returnDigito(doc(0, nine + dig1, 0, 11));
+
+    return (nine + dig1 + dig2).equals(doc) ? doc : "documento inválido - " + (nine + "-" + dig1 + dig2);
+}
+
+public static int doc(int soma, String id, int max, int min) {
+
+    int dg;
+    if (min != 1) {
+        dg = Integer.parseInt(String.valueOf(id.charAt(max)));
+        soma += dg * min;
+    } else return soma;
+
+    return doc(soma, id, max + 1, min - 1);
+}
+
+public static String returnDigito(int dig){
+
+    int sub = dig - (11 * (dig/11));
+    if(sub < 2) return "0";
+    if(sub <= 10) return String.valueOf(11 - sub);
+    return "";
+}
+*/
+//#endregion
 //#region notes
 /*
                 System.out.println("tipo_logradouro - " + err.getElementsByTagName("tipo_logradouro").item(0).getTextContent());

@@ -49,7 +49,7 @@ public class JsonFornecedores extends JsonPerGson {
         }
     }
 
-    public Map<Integer, Fornecedor> ListaFornecedores() throws Exception {
+    public Map<Integer, Fornecedor> ListaFornecedores() {
 
         Map<Integer, Fornecedor> lista = new HashMap<>();
         String configParam = arquivoConfig.Fornecedores.getPropriedade();
@@ -66,7 +66,7 @@ public class JsonFornecedores extends JsonPerGson {
         return lista;
     }
 
-    public Fornecedor nomeForn (Integer id) throws Exception {
+    public Fornecedor nomeForn (Integer id) {
 
         Fornecedor forn;
         Set<Map.Entry<Integer, Fornecedor>> getForn = ListaFornecedores().entrySet();

@@ -14,7 +14,7 @@ public class Cadastro implements INovosDados {
     MetodosProduto novoPrd;
     MetodosServico novoSrv;
 
-    public Cadastro(DataSet<?> DS) throws Exception {
+    public Cadastro(DataSet<?> DS) {
         this.novoCli = new MetodosCliente(DS);
         this.novoUsr = new MetodosUsuario(DS);
         this.novoFrn = new MetodosFornecedor(DS);
@@ -29,7 +29,7 @@ public class Cadastro implements INovosDados {
         @Override
         public void cadastrarCliente(String nome, int idade, String cpf, String email, String telefone, String CEP, int numCasa) {
             novoCli.setNome(nome);
-            novoCli.setCpf(cpf);
+            novoCli.setCPF(cpf);
             novoCli.setIdade(idade);
             novoCli.setEmail(email);
             novoCli.setTelefone(telefone);
@@ -67,6 +67,8 @@ public class Cadastro implements INovosDados {
         public boolean listarClientes() {
             return novoCli.PrintMapWithSet();
         }
+
+        public boolean validarId(Integer id) { return novoCli.userValid(id); }
     }
 
     /**
@@ -137,6 +139,8 @@ public class Cadastro implements INovosDados {
         public void removerPermissao(Integer id) {
             novoUsr.remPermissao(id);
         }
+
+        public boolean validarId(Integer id) { return novoUsr.userValid(id); }
     }
 
     /**
@@ -186,6 +190,10 @@ public class Cadastro implements INovosDados {
         public boolean listarFornecedores() {
             return novoFrn.PrintMapWithSet();
         }
+
+        public boolean retorno(Integer id) { return novoFrn.returnAtividades(id); }
+
+        public boolean validarId(Integer id) { return novoFrn.userValid(id); }
     }
 
     /**
@@ -234,6 +242,8 @@ public class Cadastro implements INovosDados {
         public boolean listarProdutos() {
             return novoPrd.PrintMapWithSet();
         }
+
+        public boolean validarId(Integer id) { return novoPrd.userValid(id); }
     }
 
     /**
@@ -280,5 +290,7 @@ public class Cadastro implements INovosDados {
         public boolean listarServicos() {
             return novoSrv.PrintMapWithSet();
         }
+
+        public boolean validarId(Integer id) { return novoSrv.userValid(id); }
     }
 }

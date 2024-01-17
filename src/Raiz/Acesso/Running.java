@@ -10,8 +10,7 @@ public class Running {
         banco = new DataSet<>();
     }
 
-    public static void main(String[] args) throws Exception
-    {
+    public static void main(String[] args) {
         Login Start = new Login(banco);
         Start.run();
     }

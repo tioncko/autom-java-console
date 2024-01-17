@@ -45,7 +45,7 @@ class JsonDTO {
         forn.setRazaoSocial(item.get("razaoSocial").getAsString());
         forn.setNomeFantasia(item.get("nomeFantasia").getAsString());
             String cnpj = item.get("cnpj").getAsString();
-            while (cnpj.length() <= 14) {
+            while (cnpj.length() <= 13) {
                 String ret = "0";
                 cnpj = ret + cnpj;
             }

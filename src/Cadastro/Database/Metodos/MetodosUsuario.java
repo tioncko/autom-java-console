@@ -3,6 +3,8 @@ package Cadastro.Database.Metodos;
 import Cadastro.Database.DataSet;
 import Cadastro.NovosDados.Repositorio.Auxiliar.PermissaoUsuario;
 import Cadastro.NovosDados.Repositorio.DTO.Cliente;
+import Cadastro.NovosDados.Repositorio.DTO.Fornecedor;
+import Cadastro.NovosDados.Repositorio.DTO.Servicos;
 import Cadastro.NovosDados.Repositorio.DTO.Usuario;
 import Cadastro.NovosDados.Repositorio.Enums.camposUsuario;
 import Cadastro.NovosDados.Repositorio.Enums.permissao;
@@ -14,6 +16,7 @@ public class MetodosUsuario extends Usuario {
 
     private Map<Integer, Usuario> tabUsuario;
     private DataSet<Usuario> DS;
+    public static String message;
     public static int cod = 0;
 
     /**
@@ -55,38 +58,38 @@ public class MetodosUsuario extends Usuario {
         // mu.tabUsuario = this.tabUsuario;
 
         if (!DS.select(Usuario.class).isEmpty()) {
-            //fieldUser getCampo = fieldUser.valueOf(Campo.toUpperCase());
-            camposUsuario getCampo = camposUsuario.valueOf(Campo.toUpperCase());
+            if (DS.select(Usuario.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+                //fieldUser getCampo = fieldUser.valueOf(Campo.toUpperCase());
+                camposUsuario getCampo = camposUsuario.valueOf(Campo.toUpperCase());
 
-            Set<Map.Entry<Integer, Usuario>> getUser = DS.select(Usuario.class).entrySet();
-            for (Map.Entry<Integer, Usuario> setUser : getUser) {
+                Set<Map.Entry<Integer, Usuario>> getUser = DS.select(Usuario.class).entrySet();
+                for (Map.Entry<Integer, Usuario> setUser : getUser) {
 
-                Usuario user = setUser.getValue();
-                if (setUser.getKey().equals(id)) {
-                    switch (getCampo) {
-                        case LOGIN:
-                            if (!validUsuario(user.getLogin())) {
-                                DS.insert(id, new Usuario(update.toLowerCase(), user.getPassword(), user.getNome(), user.getDepto()), Usuario.class);
-                                cod = 1;
-                            } else
-                                cod = 2;
-                            break;
-                        case SENHA:
-                            DS.insert(id, new Usuario(user.getLogin(), SmartTools.Senha.Encrypt(update), user.getNome(), user.getDepto()), Usuario.class);
-                            break;
-                        case NOME:
-                            DS.insert(id, new Usuario(user.getLogin(), user.getPassword(), update, user.getDepto()), Usuario.class);
-                            break;
-                        case DEPTO:
-                            DS.insert(id, new Usuario(user.getLogin(), user.getPassword(), user.getNome(), update), Usuario.class);
-                            break;
-                        default:
-                            break;
+                    Usuario user = setUser.getValue();
+                    if (setUser.getKey().equals(id)) {
+                        switch (getCampo) {
+                            case LOGIN:
+                                if (!validUsuario(user.getLogin())) {
+                                    DS.insert(id, new Usuario(update.toLowerCase(), user.getPassword(), user.getNome(), user.getDepto()), Usuario.class);
+                                    cod = 1;
+                                } else cod = 2;
+                                break;
+                            case SENHA:
+                                DS.insert(id, new Usuario(user.getLogin(), SmartTools.Senha.Encrypt(update), user.getNome(), user.getDepto()), Usuario.class);
+                                break;
+                            case NOME:
+                                DS.insert(id, new Usuario(user.getLogin(), user.getPassword(), update, user.getDepto()), Usuario.class);
+                                break;
+                            case DEPTO:
+                                DS.insert(id, new Usuario(user.getLogin(), user.getPassword(), user.getNome(), update), Usuario.class);
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
-            }
-        } else
-            System.out.println("A tabela de usuário está vazia.");
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de usuários está vazia.";
     }
     //#region lambda
 /*
@@ -120,9 +123,10 @@ public class MetodosUsuario extends Usuario {
      */
     public void remoUsuario(Integer id) {
         if (!DS.select(Usuario.class).isEmpty()) {
-            DS.select(Usuario.class).remove(id);
-        } else
-            System.out.println("A tabela de usuário está vazia.");
+            if (DS.select(Usuario.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+                DS.select(Usuario.class).remove(id);
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de usuários está vazia.";
     }
 
     /**
@@ -130,10 +134,12 @@ public class MetodosUsuario extends Usuario {
      */
     public void findUsuario(Integer id) {
         if (!DS.select(Usuario.class).isEmpty()) {
-            Set<Map.Entry<Integer, Usuario>> getUser = DS.select(Usuario.class).entrySet();
-            getUser.stream().filter(setid -> setid.getKey().equals(id)).forEach(y -> System.out.println("id{" + y.getKey() + "}, " + y.getValue()));
-        } else
-            System.out.println("A tabela de usuário está vazia.");
+            if (DS.select(Usuario.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+                Set<Map.Entry<Integer, Usuario>> getUser = DS.select(Usuario.class).entrySet();
+
+                getUser.stream().filter(setid -> setid.getKey().equals(id)).forEach(y -> System.out.println("id{" + y.getKey() + "}, " + y.getValue()));
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de usuários está vazia.";
     }
 
     /**
@@ -141,10 +147,12 @@ public class MetodosUsuario extends Usuario {
      */
     public void listbyIdUsuario(Integer ini_id, Integer fim_id) {
         if (!DS.select(Usuario.class).isEmpty()) {
-            Set<Map.Entry<Integer, Usuario>> getUser = DS.select(Usuario.class).entrySet();
-            getUser.stream().filter(setid -> setid.getKey() >= ini_id && setid.getKey() <= fim_id).forEach(y -> System.out.println("id{" + y.getKey() + "}, " + y.getValue()));
-        } else
-            System.out.println("A tabela de usuário está vazia.");
+            if (DS.select(Usuario.class).entrySet().stream().anyMatch(x -> x.getKey().equals(ini_id))) {
+                Set<Map.Entry<Integer, Usuario>> getUser = DS.select(Usuario.class).entrySet();
+
+                getUser.stream().filter(setid -> setid.getKey() >= ini_id && setid.getKey() <= fim_id).forEach(y -> System.out.println("id{" + y.getKey() + "}, " + y.getValue()));
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de usuários está vazia.";
     }
 
     /**
@@ -152,10 +160,12 @@ public class MetodosUsuario extends Usuario {
      */
     public void remobyIdUsuario(Integer ini_id, Integer fim_id) {
         if (!DS.select(Usuario.class).isEmpty()) {
-            Set<Map.Entry<Integer, Usuario>> getUser = DS.select(Usuario.class).entrySet();
-            getUser.removeIf(setid -> setid.getKey() >= ini_id && setid.getKey() <= fim_id);
-        } else
-            System.out.println("A tabela de usuário está vazia.");
+            if (DS.select(Usuario.class).entrySet().stream().anyMatch(x -> x.getKey().equals(ini_id))) {
+                Set<Map.Entry<Integer, Usuario>> getUser = DS.select(Usuario.class).entrySet();
+
+                getUser.removeIf(setid -> setid.getKey() >= ini_id && setid.getKey() <= fim_id);
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de usuários está vazia.";
     }
 
     /**
@@ -204,7 +214,7 @@ public class MetodosUsuario extends Usuario {
                 }
             }
         } else
-            System.out.println("A tabela de usuário está vazia.");
+            System.out.println("\nA tabela de usuários está vazia.");
         return valid;
     }
 
@@ -222,7 +232,7 @@ public class MetodosUsuario extends Usuario {
             }
             return true;
         } else {
-            System.out.println("A tabela de usuário está vazia.");
+            System.out.println("\nA tabela de usuários está vazia.");
             return false;
         }
     }
@@ -250,7 +260,7 @@ public class MetodosUsuario extends Usuario {
                 }
             }
         } else
-            System.out.println("A tabela de usuário está vazia.");
+            System.out.println("\nA tabela de usuários está vazia.");
         return retrn;
     }
 
@@ -272,7 +282,7 @@ public class MetodosUsuario extends Usuario {
                 }
             }
         } else
-            System.out.println("A tabela de usuário está vazia.");
+            System.out.println("\nA tabela de usuários está vazia.");
         return access;
     }
 
@@ -281,23 +291,24 @@ public class MetodosUsuario extends Usuario {
      */
     public void rootPermissao(Integer id, String access) {
         if (!DS.select(Usuario.class).isEmpty()) {
-            Set<Map.Entry<Integer, Usuario>> getUser = DS.select(Usuario.class).entrySet();
-            for (Map.Entry<Integer, Usuario> setUser : getUser) {
+            if (DS.select(Usuario.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+                Set<Map.Entry<Integer, Usuario>> getUser = DS.select(Usuario.class).entrySet();
+                for (Map.Entry<Integer, Usuario> setUser : getUser) {
 
-                Integer kid = setUser.getKey();
-                Usuario user = setUser.getValue();
-                PermissaoUsuario root = new PermissaoUsuario(String.valueOf(permissao.ROOT));
-                if (id.equals(1) && kid.equals(id) && user.getLogin().equals("supervisor".toLowerCase()) && access.equals(String.valueOf(root))) {
+                    Integer kid = setUser.getKey();
+                    Usuario user = setUser.getValue();
+                    PermissaoUsuario root = new PermissaoUsuario(String.valueOf(permissao.ROOT));
+                    if (id.equals(1) && kid.equals(id) && user.getLogin().equals("supervisor".toLowerCase()) && access.equals(String.valueOf(root))) {
 
-                    permissao acessosup;
-                    acessosup = SmartTools.Numeros.isNumeric(access) ? permissao.getAccess(Integer.parseInt(access)) : permissao.valueOf(access.toUpperCase());
-                    PermissaoUsuario perm = new PermissaoUsuario(String.valueOf(acessosup).toUpperCase());
+                        permissao acessosup;
+                        acessosup = SmartTools.Numeros.isNumeric(access) ? permissao.getAccess(Integer.parseInt(access)) : permissao.valueOf(access.toUpperCase());
+                        PermissaoUsuario perm = new PermissaoUsuario(String.valueOf(acessosup).toUpperCase());
 
-                    DS.insert(id, new Usuario(user.getLogin(), user.getPassword(), user.getNome(), user.getDepto(), perm), Usuario.class);
+                        DS.insert(id, new Usuario(user.getLogin(), user.getPassword(), user.getNome(), user.getDepto(), perm), Usuario.class);
+                    }
                 }
-            }
-        } else
-            System.out.println("Não foi possível acessar o sistema.");
+            } else message = "\nRegistro inexistente na tabela.";
+        } else System.out.println("\nNão foi possível acessar o sistema.");
     }
 
     /**
@@ -305,23 +316,23 @@ public class MetodosUsuario extends Usuario {
      */
     public void darPermissao(Integer id, String access) {
         if (!DS.select(Usuario.class).isEmpty()) {
-            Set<Map.Entry<Integer, Usuario>> getUser = DS.select(Usuario.class).entrySet();
-            permissao acesso = SmartTools.Numeros.isNumeric(access) ? permissao.getAccess(Integer.parseInt(access)) : permissao.valueOf(access.toUpperCase());
+            if (DS.select(Usuario.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+                Set<Map.Entry<Integer, Usuario>> getUser = DS.select(Usuario.class).entrySet();
+                permissao acesso = SmartTools.Numeros.isNumeric(access) ? permissao.getAccess(Integer.parseInt(access)) : permissao.valueOf(access.toUpperCase());
 
-            if ((!access.toUpperCase().equals(String.valueOf(permissao.ROOT))) || (!String.valueOf(acesso).equals(String.valueOf(1)))) {
-                for (Map.Entry<Integer, Usuario> setUser : getUser) {
+                if ((!access.toUpperCase().equals(String.valueOf(permissao.ROOT))) || (!String.valueOf(acesso).equals(String.valueOf(1)))) {
+                    for (Map.Entry<Integer, Usuario> setUser : getUser) {
 
-                    Usuario user = setUser.getValue();
-                    if (setUser.getKey().equals(id)) {
+                        Usuario user = setUser.getValue();
+                        if (setUser.getKey().equals(id)) {
 
-                        PermissaoUsuario perm = new PermissaoUsuario(String.valueOf(acesso).toUpperCase());
-                        DS.insert(id, new Usuario(user.getLogin(), user.getPassword(), user.getNome(), user.getDepto(), perm), Usuario.class);
+                            PermissaoUsuario perm = new PermissaoUsuario(String.valueOf(acesso).toUpperCase());
+                            DS.insert(id, new Usuario(user.getLogin(), user.getPassword(), user.getNome(), user.getDepto(), perm), Usuario.class);
+                        }
                     }
-                }
-            } else
-                System.out.println("Permissão raiz indisponível.");
-        } else
-            System.out.println("A tabela de usuário está vazia.");
+                } else message = "\nPermissão raiz indisponível.";
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de usuários está vazia.";
     }
 
     /**
@@ -330,25 +341,24 @@ public class MetodosUsuario extends Usuario {
     public void altPermissao(Integer idAdm, Integer id, String access) {
 
         if (!DS.select(Usuario.class).isEmpty()) {
-            if (!access.toUpperCase().equals(String.valueOf(permissao.ROOT))) {
-                PermissaoUsuario admin = new PermissaoUsuario(String.valueOf(permissao.ADMIN));
-                PermissaoUsuario root = new PermissaoUsuario(String.valueOf(permissao.ROOT));
-                PermissaoUsuario perm = validEnumPermissao(access);
+            if (DS.select(Usuario.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id) && x.getKey().equals(idAdm))) {
+                if (!access.toUpperCase().equals(String.valueOf(permissao.ROOT))) {
+                    PermissaoUsuario admin = new PermissaoUsuario(String.valueOf(permissao.ADMIN));
+                    PermissaoUsuario root = new PermissaoUsuario(String.valueOf(permissao.ROOT));
+                    PermissaoUsuario perm = validEnumPermissao(access);
 
-                Set<Map.Entry<Integer, Usuario>> getUser = DS.select(Usuario.class).entrySet();
-                boolean valid = getUser.stream()
-                        .anyMatch(get -> get.getKey().equals(idAdm)
-                                && (Objects.equals(String.valueOf(get.getValue().getAccess()), String.valueOf(admin))) ||
-                                   (Objects.equals(String.valueOf(get.getValue().getAccess()), String.valueOf(root))));
-                if (valid) {
-                    getUser.stream()
-                            .filter(set -> set.getKey().equals(id)
-                                    && (!Objects.equals(String.valueOf(set.getValue().getAccess()), String.valueOf(root))))
-                            .forEach(user -> DS.insert(id, new Usuario(user.getValue().getLogin(), user.getValue().getPassword(), user.getValue().getNome(), user.getValue().getDepto(), perm),
-                                    Usuario.class));
-                } else System.out.println("Usuário sem permissão");
-            } else System.out.println("Permissão raiz indisponível.");
-        } else System.out.println("A tabela de usuário está vazia.");
+                    Set<Map.Entry<Integer, Usuario>> getUser = DS.select(Usuario.class).entrySet();
+                    boolean valid = getUser.stream().anyMatch(get -> get.getKey().equals(idAdm)
+                            && (Objects.equals(String.valueOf(get.getValue().getAccess()), String.valueOf(admin)))
+                            || (Objects.equals(String.valueOf(get.getValue().getAccess()), String.valueOf(root))));
+                    if (valid) {
+                        getUser.stream().filter(set -> set.getKey().equals(id) &&
+                                (!Objects.equals(String.valueOf(set.getValue().getAccess()), String.valueOf(root))))
+                                .forEach(user -> DS.insert(id, new Usuario(user.getValue().getLogin(), user.getValue().getPassword(), user.getValue().getNome(), user.getValue().getDepto(), perm), Usuario.class));
+                    } else message = "\nUsuário sem permissão";
+                } else message = "\nPermissão raiz indisponível.";
+            } else message = "\nRegistros inexistentes na tabela.";
+        } else message = "\nA tabela de usuários está vazia.";
     }
 
     protected PermissaoUsuario validEnumPermissao(String access) {
@@ -361,20 +371,32 @@ public class MetodosUsuario extends Usuario {
      */
     public void remPermissao(Integer id) {
         if (!DS.select(Usuario.class).isEmpty()) {
-            Set<Map.Entry<Integer, Usuario>> getUser = DS.select(Usuario.class).entrySet();
-            for (Map.Entry<Integer, Usuario> setUser : getUser) {
+            if (DS.select(Usuario.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+                Set<Map.Entry<Integer, Usuario>> getUser = DS.select(Usuario.class).entrySet();
+                for (Map.Entry<Integer, Usuario> setUser : getUser) {
 
-                Integer kid = setUser.getKey();
-                Usuario user = setUser.getValue();
-                PermissaoUsuario root = new PermissaoUsuario(String.valueOf(permissao.ROOT));
+                    Integer kid = setUser.getKey();
+                    Usuario user = setUser.getValue();
+                    PermissaoUsuario root = new PermissaoUsuario(String.valueOf(permissao.ROOT));
 
-                if (kid.equals(id) && (!Objects.equals(String.valueOf(user.getAccess()), String.valueOf(root)))) {
-                    DS.insert(id, new Usuario(user.getLogin(), user.getPassword(), user.getNome(), user.getDepto()), Usuario.class);
-                } else
-                    System.out.println("Não é possível retirar permissão raiz deste usuário.");
-            }
-        } else
-            System.out.println("A tabela de usuário está vazia.");
+                    if (kid.equals(id) && (!Objects.equals(String.valueOf(user.getAccess()), String.valueOf(root)))) {
+                        DS.insert(id, new Usuario(user.getLogin(), user.getPassword(), user.getNome(), user.getDepto()), Usuario.class);
+                    } else message = "\nNão é possível retirar permissão raiz deste usuário.";
+                }
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de usuários está vazia.";
+    }
+
+    public boolean userValid (Integer id) {
+        boolean valid = false;
+
+        if (!DS.select(Usuario.class).isEmpty()) {
+            if (DS.select(Usuario.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+                valid = true;
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de usuários está vazia.";
+
+        return valid;
     }
     //#region notes
 /*

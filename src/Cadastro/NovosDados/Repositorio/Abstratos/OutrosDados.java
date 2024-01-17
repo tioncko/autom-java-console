@@ -28,4 +28,5 @@ public abstract class OutrosDados {
     public void setInfoCEP(ValidCEP infoCEP) {
         this.infoCEP = infoCEP;
     }
+
 }

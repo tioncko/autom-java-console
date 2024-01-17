@@ -27,7 +27,7 @@ public class Login {
         Login.usr = usr;
     }
 
-    public void run() throws Exception {
+    public void run() {
 
         System.out.println("\n---------------------------------------------------------------------");
         System.out.println("---------------------------------------------------------------------");
