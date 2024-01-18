@@ -1,10 +1,10 @@
 package Cadastro.NovosDados.Repositorio.Auxiliar;
 
-public class PermissaoUsuario {
+public class permissaoUsuario {
 
     private final String Permissao;
 
-    public PermissaoUsuario(String permissao) {
+    public permissaoUsuario(String permissao) {
         this.Permissao = permissao;
     }
 

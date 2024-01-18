@@ -11,9 +11,9 @@ public class Usuario {
     private Criptografia password;
     private String nome;
     private String depto;
-    private PermissaoUsuario access;
+    private permissaoUsuario access;
 
-    public Usuario(String login, Criptografia password, String nome, String depto, PermissaoUsuario access) {
+    public Usuario(String login, Criptografia password, String nome, String depto, permissaoUsuario access) {
         this.login = login;
         this.password = password;
         this.nome = nome;
@@ -66,10 +66,10 @@ public class Usuario {
         this.depto = depto;
     }
 
-    public PermissaoUsuario getAccess(){
+    public permissaoUsuario getAccess(){
         return access;
     }
-    public void setAccess(PermissaoUsuario access){
+    public void setAccess(permissaoUsuario access){
         this.access = access;
     }
 

@@ -1,12 +1,12 @@
 package Cadastro.NovosDados.Repositorio.Abstratos;
 
-import Cadastro.NovosDados.Repositorio.Auxiliar.ValidCEP;
+import Cadastro.NovosDados.Repositorio.Auxiliar.validarCEP;
 
-public abstract class OutrosDados {
+public abstract class outrosDados {
 
     private String email;
     private String telefone;
-    private ValidCEP infoCEP;
+    private validarCEP infoCEP;
 
     public String getEmail() {
         return email;
@@ -22,10 +22,10 @@ public abstract class OutrosDados {
         this.telefone = telefone;
     }
 
-    public ValidCEP getInfoCEP() {
+    public validarCEP getInfoCEP() {
         return infoCEP;
     }
-    public void setInfoCEP(ValidCEP infoCEP) {
+    public void setInfoCEP(validarCEP infoCEP) {
         this.infoCEP = infoCEP;
     }
 

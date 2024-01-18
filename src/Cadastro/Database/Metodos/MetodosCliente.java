@@ -1,38 +1,31 @@
 package Cadastro.Database.Metodos;
 
-import Cadastro.Database.DataSet;
+import Cadastro.Database.dataSet;
 import Cadastro.NovosDados.Repositorio.DTO.Cliente;
-import Cadastro.NovosDados.Repositorio.DTO.Fornecedor;
-import Cadastro.NovosDados.Repositorio.DTO.Servicos;
 import Cadastro.NovosDados.Repositorio.Enums.camposCliente;
-import Raiz.Utils.SmartTools;
+import Raiz.Utils.smartTools;
 
 import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-public class MetodosCliente extends Cliente {
+public class metodosCliente extends Cliente {
 
-    //private Map<Integer, Cliente> tabCliente;
-    private final DataSet<Cliente> DS;
+    private final dataSet<Cliente> DS;
     public static String message;
+
     /**
      * Construtor
      */
-    //public MetodosCliente() {
-        //this.tabCliente = new HashMap<>();
-    //}
-
     @SuppressWarnings("unchecked")
-    public MetodosCliente(DataSet<?> banco) {
-        this.DS = (DataSet<Cliente>) banco;
+    public metodosCliente(dataSet<?> banco) {
+        this.DS = (dataSet<Cliente>) banco;
     }
 
     /**
      * Inserir novo cliente
      */
     public void novoCliente(Integer id, Cliente cli) {
-        //tabCliente.put(cli.setId(id), new Cliente(cli.getNome(), cli.getIdade(), cli.getCpf(), cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()));
         if (cli.getCPF() != null) {
             DS.insert(cli.setId(id), new Cliente(cli.getNome(), cli.getIdade(), cli.getCPF(), cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()), Cliente.class);
         } else message = "\nNão é possível realizar o cadastro do cliente " + cli.getNome() + ". Necessário informar o seu CPF.";
@@ -44,7 +37,6 @@ public class MetodosCliente extends Cliente {
     public void alterCliente(Integer id, String Campo, String update) {
         if (!DS.select(Cliente.class).isEmpty()) {
             if (DS.select(Cliente.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
-                //fieldCli getCampo = fieldCli.valueOf(Campo.toUpperCase());
                 camposCliente getCampo = camposCliente.valueOf(Campo.toUpperCase());
 
                 Set<Map.Entry<Integer, Cliente>> getCli = DS.select(Cliente.class).entrySet();
@@ -70,10 +62,10 @@ public class MetodosCliente extends Cliente {
                                 DS.insert(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCPF(), cli.getEmail(), update, cli.getInfoCEP()), Cliente.class);
                                 break;
                             case CEP:
-                                DS.insert(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCPF(), cli.getEmail(), cli.getTelefone(), SmartTools.CEP.ResponseCEP(update, cli.getInfoCEP().getNum())), Cliente.class);
+                                DS.insert(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCPF(), cli.getEmail(), cli.getTelefone(), smartTools.CEP.responseCEP(update, cli.getInfoCEP().getNum())), Cliente.class);
                                 break;
                             case NUMCASA:
-                                DS.insert(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCPF(), cli.getEmail(), cli.getTelefone(), SmartTools.CEP.ResponseCEP(cli.getInfoCEP().getCEP().replace("-", ""), Integer.parseInt(update))), Cliente.class);
+                                DS.insert(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCPF(), cli.getEmail(), cli.getTelefone(), smartTools.CEP.responseCEP(cli.getInfoCEP().getCEP().replace("-", ""), Integer.parseInt(update))), Cliente.class);
                                 break;
                             default:
                                 break;
@@ -141,31 +133,13 @@ public class MetodosCliente extends Cliente {
     /**
      * Imprimir clientes que estão na lista no momento
      */
-    /*
-    public boolean PrintMapWithSet() {
-        if (!tabCliente.isEmpty()) {
-            Set<Map.Entry<Integer, Cliente>>
-                    entries = tabCliente.entrySet();
-
-            for (Map.Entry<Integer, Cliente> entry : entries) {
-                Integer key = entry.getKey();
-                Cliente cli = entry.getValue();
-                System.out.println("id{" + key + "}, " + cli);
-            }
-            return true;
-        } else {
-            System.out.println("A tabela de cliente está vazia.");
-            return false;
-        }
-    }
-     */
-    public boolean PrintMapWithSet() {
+    public boolean printMapWithSet() {
         if (!DS.select(Cliente.class).isEmpty()) {
-            Set<Map.Entry<Integer, Cliente>> entries = DS.select(Cliente.class).entrySet();
+            Set<Map.Entry<Integer, Cliente>> getCli = DS.select(Cliente.class).entrySet();
 
-            for (Map.Entry<Integer, Cliente> entry : entries) {
-                Integer key = entry.getKey();
-                Cliente cli = entry.getValue();
+            for (Map.Entry<Integer, Cliente> setCli : getCli) {
+                Integer key = setCli.getKey();
+                Cliente cli = setCli.getValue();
                 System.out.println("id{" + key + "}, " + cli);
             }
             return true;
@@ -192,6 +166,9 @@ public class MetodosCliente extends Cliente {
         return maxnum + 1;
     }
 
+    /**
+     * Valida se o id existe
+     */
     public boolean userValid (Integer id) {
         boolean valid = false;
 
@@ -203,18 +180,44 @@ public class MetodosCliente extends Cliente {
 
         return valid;
     }
-/*
+
+    //#region rascunho
+    /*
+
+        //tabCliente.put(cli.setId(id), new Cliente(cli.getNome(), cli.getIdade(), cli.getCpf(), cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()));
+
     private enum fieldCli {
         NOME, IDADE, CPF, EMAIL, TELEFONE, CEP, NUMCASA;
     }
- */
-    //#region notes
-/*
+                //fieldCli getCampo = fieldCli.valueOf(Campo.toUpperCase());
+
+
+
+    //private Map<Integer, Cliente> tabCliente;
+    //public metodosCliente() {
+        //this.tabCliente = new HashMap<>();
+    //}
+    public boolean PrintMapWithSet() {
+        if (!tabCliente.isEmpty()) {
+            Set<Map.Entry<Integer, Cliente>>
+                    entries = tabCliente.entrySet();
+
+            for (Map.Entry<Integer, Cliente> entry : entries) {
+                Integer key = entry.getKey();
+                Cliente cli = entry.getValue();
+                System.out.println("id{" + key + "}, " + cli);
+            }
+            return true;
+        } else {
+            System.out.println("A tabela de cliente está vazia.");
+            return false;
+        }
+    }
     public static void main(String[] args) {
 
         //Cliente cli = new Cliente();
-        MetodosCliente mcli = new MetodosCliente();
-        //SmartTools.CEP CEP = new SmartTools();
+        metodosCliente mcli = new metodosCliente();
+        //smartTools.CEP CEP = new smartTools();
 
         System.out.println("# Lista de clientes #");
         mcli.setNome("Jorge");
@@ -222,9 +225,9 @@ public class MetodosCliente extends Cliente {
         mcli.setIdade(00);
         mcli.setEmail("teste@gmail.com");
         mcli.setTelefone("00000000000");
-        mcli.setInfoCEP(SmartTools.CEP.ResponseCEP("04472205", 47));
+        mcli.setInfoCEP(smartTools.CEP.ResponseCEP("04472205", 47));
         mcli.novoCliente(1, mcli);
-        //System.out.println(SmartTools.ResponseCEP("04472205", 47).toString());
+        //System.out.println(smartTools.ResponseCEP("04472205", 47).toString());
 
         mcli.setNome("Pedro");
         mcli.setCpf("0000000000000");
@@ -233,7 +236,7 @@ public class MetodosCliente extends Cliente {
         mcli.setTelefone("00000000000");
         mcli.setInfoCEP(CEP.ResponseCEP("04915020", 47));
         mcli.novoCliente(2, mcli);
-        //System.out.println(SmartTools.ResponseCEP("04915020", 47).toString());
+        //System.out.println(smartTools.ResponseCEP("04915020", 47).toString());
 
         mcli.setNome("Deise");
         mcli.setCpf("0000000000000");
@@ -242,7 +245,7 @@ public class MetodosCliente extends Cliente {
         mcli.setTelefone("00000000000");
         mcli.setInfoCEP(CEP.ResponseCEP("09910060", 47));
         mcli.novoCliente(3, mcli);
-        //System.out.println(SmartTools.ResponseCEP("09910060", 47).toString());
+        //System.out.println(smartTools.ResponseCEP("09910060", 47).toString());
 
         mcli.setNome("Carla");
         mcli.setCpf("0000000000000");
@@ -251,7 +254,7 @@ public class MetodosCliente extends Cliente {
         mcli.setTelefone("00000000000");
         mcli.setInfoCEP(CEP.ResponseCEP("04472205", 47));
         mcli.novoCliente(4, mcli);
-        //System.out.println(SmartTools.ResponseCEP("09910060", 47).toString());
+        //System.out.println(smartTools.ResponseCEP("09910060", 47).toString());
 
         mcli.setNome("Keyla");
         mcli.setCpf("0000000000000");
@@ -260,7 +263,7 @@ public class MetodosCliente extends Cliente {
         mcli.setTelefone("00000000000");
         mcli.setInfoCEP(CEP.ResponseCEP("09910250", 47));
         mcli.novoCliente(5, mcli);
-        //System.out.println(SmartTools.ResponseCEP("09910060", 47).toString());
+        //System.out.println(smartTools.ResponseCEP("09910060", 47).toString());
 
         mcli.PrintMapWithSet();
         System.out.println();
@@ -297,14 +300,6 @@ public class MetodosCliente extends Cliente {
 
         System.out.println(mcli.nextId());
     }
-*/
-
-    //#endregion
-
-}
-
-//#region notes
-/*
 
     public void PrintMapInLine(){
         System.out.println(tabCliente);
@@ -313,7 +308,7 @@ public class MetodosCliente extends Cliente {
     public static void main(String[] args) {
 
         Cliente cli = new Cliente();
-        MetodosCliente mcli = new MetodosCliente();
+        metodosCliente mcli = new metodosCliente();
 
         cli.setId(1);
         cli.setNome("Jorge");
@@ -351,4 +346,5 @@ public class MetodosCliente extends Cliente {
     }
 */
 //#endregion
+}
 

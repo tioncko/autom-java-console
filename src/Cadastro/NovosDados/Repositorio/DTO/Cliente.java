@@ -1,21 +1,25 @@
 package Cadastro.NovosDados.Repositorio.DTO;
 
-import Cadastro.NovosDados.Repositorio.Abstratos.OutrosDados;
-import Cadastro.NovosDados.Repositorio.Auxiliar.ValidCEP;
+import Cadastro.NovosDados.Repositorio.Abstratos.outrosDados;
+import Cadastro.NovosDados.Repositorio.Auxiliar.validarCEP;
 
 import java.util.Objects;
 
-public class Cliente extends OutrosDados {
+public class Cliente extends outrosDados {
 
     private int id;
     private String nome;
     private int idade;
     private String cpf;
-    //private String email;
-    //private String telefone;
-    //private ValidCEP infoCEP;
 
-    public Cliente(String nome, int idade, String cpf, String email, String telefone, ValidCEP infoCEP) {
+    //#region rascunho
+    /* private String email;
+    //private String telefone;
+    //private validarCEP infoCEP;
+     */
+    //#endregion
+
+    public Cliente(String nome, int idade, String cpf, String email, String telefone, validarCEP infoCEP) {
         this.nome = nome;
         this.idade = idade;
         this.cpf = cpf;
@@ -56,6 +60,7 @@ public class Cliente extends OutrosDados {
         this.cpf = cpf;
     }
 
+    //#region rascunho
 /*
     public String getEmail() {
         return email;
@@ -73,14 +78,15 @@ public class Cliente extends OutrosDados {
         this.telefone = telefone;
     }
 
-    public ValidCEP getInfoCEP() {
+    public validarCEP getInfoCEP() {
         return infoCEP;
     }
 
-    public void setInfoCEP(ValidCEP infoCEP) {
+    public void setInfoCEP(validarCEP infoCEP) {
         this.infoCEP = infoCEP;
     }
 */
+//#endregion
 
     @Override
     public boolean equals(Object obj) {
@@ -106,8 +112,7 @@ public class Cliente extends OutrosDados {
                 '}';
     }
 }
-
-//#region notes
+    //#region rascunho
     /*
     public static void main(String[] args) {
 

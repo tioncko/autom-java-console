@@ -1,24 +1,22 @@
 package Cadastro.NovosDados.Areas;
 
-import Cadastro.Database.DataSet;
-import Cadastro.Database.Metodos.MetodosCliente;
-import Cadastro.Database.Metodos.MetodosFornecedor;
-import Cadastro.Database.Metodos.MetodosServico;
-import Cadastro.Database.Metodos.MetodosUsuario;
-import Raiz.Acesso.MenuPrincipal;
+import Cadastro.Database.dataSet;
+import Cadastro.Database.Metodos.metodosServico;
+import Cadastro.Database.Metodos.metodosUsuario;
+import Raiz.Acesso.menuPrincipal;
 import Cadastro.Database.Metodos.Interfaces.IAreaCadastro;
 import Raiz.Inicio.Cadastro;
-import Raiz.Utils.LeitorDados;
+import Raiz.Utils.leitorDados;
 
-public class AreaCadastroUsuario extends LeitorDados implements IAreaCadastro.IUsuarios {
+public class areaCadastroUsuario extends leitorDados implements IAreaCadastro.IUsuarios {
 
-    MenuPrincipal mp;
+    menuPrincipal mp;
     Cadastro cad;
     Cadastro.AcoesUsuario ac;
-    DataSet<?> banco;
+    dataSet<?> banco;
 
-    public AreaCadastroUsuario(DataSet<?> DS) {
-        this.mp = new MenuPrincipal(DS);
+    public areaCadastroUsuario(dataSet<?> DS) {
+        this.mp = new menuPrincipal(DS);
         this.cad = new Cadastro(DS);
         this.ac = cad.new AcoesUsuario();
         this.banco = DS;
@@ -38,12 +36,12 @@ public class AreaCadastroUsuario extends LeitorDados implements IAreaCadastro.IU
         System.out.println("* - Mais");
 
         System.out.print("\n-----------------------------------------");
-        String id = ReadText("\n\033[3mDigite código do menu para suas ações: \033[0m");
+        String id = readText("\n\033[3mDigite código do menu para suas ações: \033[0m");
         System.out.println("-----------------------------------------");
-        AcoesCadastroUsuario(id, userId);
+        acoesCadastroUsuario(id, userId);
     }
 
-    public void AcoesCadastroUsuario(String id, Integer userId) {
+    public void acoesCadastroUsuario(String id, Integer userId) {
         boolean session = true;
         while (session) {
             switch (id) {
@@ -53,18 +51,18 @@ public class AreaCadastroUsuario extends LeitorDados implements IAreaCadastro.IU
                     //ac.cadastrarUsuario("Keyla", "1234", "Keyla Nascimento", "Juridico");
                     Integer novoId = ac.returnNextId();
                     ac.cadastrarUsuario(
-                            ReadText("Login: "),
-                            ReadText("Senha: "),
-                            ReadSentence("Nome: "),
-                            ReadSentence("Depto.: ")
+                            readText("Login: "),
+                            readText("Senha: "),
+                            readSentence("Nome: "),
+                            readSentence("Depto.: ")
                     );
-                    ac.associarPermissao(novoId, ReadText("Permissão [ADMIN(2), USER(3)]: "));
-                    if (!(MetodosServico.message == null))
-                        System.out.println(MetodosServico.message);
+                    ac.associarPermissao(novoId, readText("Permissão [ADMIN(2), USER(3)]: "));
+                    if (!(metodosServico.message == null))
+                        System.out.println(metodosServico.message);
                     else System.out.println("\nCadastro concluído!");
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoCadUsr = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoCadUsr = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do usuário" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -89,25 +87,25 @@ public class AreaCadastroUsuario extends LeitorDados implements IAreaCadastro.IU
                     if(ac.listarUsuario()){
                         System.out.println();
 
-                        int alterId = ReadInt("Id: ");
+                        int alterId = readInt("Id: ");
                         if (ac.validarId(alterId)) {
-                            String field = ReadText("Campo: ");
+                            String field = readText("Campo: ");
                             ac.alterarUsuario(
                                     alterId,
                                     field,
-                                    ReadSentence("Alteração (" + field.toUpperCase() + "): ")
+                                    readSentence("Alteração (" + field.toUpperCase() + "): ")
                             );
-                            if (!(MetodosUsuario.message == null))
-                                System.out.println(MetodosUsuario.message);
+                            if (!(metodosUsuario.message == null))
+                                System.out.println(metodosUsuario.message);
                             else System.out.println("\nAlteração concluída!");
                             ac.localizarUsuario(alterId);
                         }
-                        if (!(MetodosUsuario.message == null))
-                            System.out.println(MetodosUsuario.message);
+                        if (!(metodosUsuario.message == null))
+                            System.out.println(metodosUsuario.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoAltUsr = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoAltUsr = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do usuário" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -132,21 +130,21 @@ public class AreaCadastroUsuario extends LeitorDados implements IAreaCadastro.IU
                     if(ac.listarUsuario()){
                         System.out.println();
 
-                        int remoId = ReadInt("Id: ");
+                        int remoId = readInt("Id: ");
                         if (ac.validarId(remoId)) {
                             ac.excluirUsuario(
                                     remoId //ReadInt("Id: ")
                             );
-                            if (!(MetodosUsuario.message == null))
-                                System.out.println(MetodosUsuario.message);
+                            if (!(metodosUsuario.message == null))
+                                System.out.println(metodosUsuario.message);
                             else System.out.println("\nExclusão concluída!");
                         }
-                        if (!(MetodosUsuario.message == null))
-                            System.out.println(MetodosUsuario.message);
+                        if (!(metodosUsuario.message == null))
+                            System.out.println(metodosUsuario.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoExcUsr = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoExcUsr = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do usuário" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -171,20 +169,20 @@ public class AreaCadastroUsuario extends LeitorDados implements IAreaCadastro.IU
                     if(ac.listarUsuario()){
                         System.out.println();
 
-                        int findId = ReadInt("Id: ");
+                        int findId = readInt("Id: ");
                         if (ac.validarId(findId)) {
                             ac.localizarUsuario(
                                     findId //ReadInt("Id: ")
                             );
-                            if (!(MetodosUsuario.message == null))
-                                System.out.println(MetodosUsuario.message);
+                            if (!(metodosUsuario.message == null))
+                                System.out.println(metodosUsuario.message);
                         }
-                        if (!(MetodosUsuario.message == null))
-                            System.out.println(MetodosUsuario.message);
+                        if (!(metodosUsuario.message == null))
+                            System.out.println(metodosUsuario.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoLocUsr = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoLocUsr = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do usuário" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -209,20 +207,20 @@ public class AreaCadastroUsuario extends LeitorDados implements IAreaCadastro.IU
                     if(ac.listarUsuario()){
                         System.out.println();
 
-                        int findId = ReadInt("Início: ");
+                        int findId = readInt("Início: ");
                         if (ac.validarId(findId)) {
                             ac.localizarMaisUsuarios(
                                     findId, //ReadInt("Início: "),
-                                    ReadInt("Fim: "));
-                            if (!(MetodosUsuario.message == null))
-                                System.out.println(MetodosUsuario.message);
+                                    readInt("Fim: "));
+                            if (!(metodosUsuario.message == null))
+                                System.out.println(metodosUsuario.message);
                         }
-                        if (!(MetodosUsuario.message == null))
-                            System.out.println(MetodosUsuario.message);
+                        if (!(metodosUsuario.message == null))
+                            System.out.println(metodosUsuario.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoLocMUsr = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoLocMUsr = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do usuário" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -247,21 +245,21 @@ public class AreaCadastroUsuario extends LeitorDados implements IAreaCadastro.IU
                     if(ac.listarUsuario()){
                         System.out.println();
 
-                        int remoId = ReadInt("Início: ");
+                        int remoId = readInt("Início: ");
                         if (ac.validarId(remoId)) {
                             ac.removerMaisUsuarios(
                                     remoId, //ReadInt("Início: "),
-                                    ReadInt("Fim: ")
+                                    readInt("Fim: ")
                             );
-                            if (!(MetodosUsuario.message == null))
-                                System.out.println(MetodosUsuario.message);
+                            if (!(metodosUsuario.message == null))
+                                System.out.println(metodosUsuario.message);
                         }
-                        if (!(MetodosUsuario.message == null))
-                            System.out.println(MetodosUsuario.message);
+                        if (!(metodosUsuario.message == null))
+                            System.out.println(metodosUsuario.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoRemMUsr = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoRemMUsr = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do usuário" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -286,7 +284,7 @@ public class AreaCadastroUsuario extends LeitorDados implements IAreaCadastro.IU
                     ac.listarUsuario();
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoListUsr = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoListUsr = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do usuário" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -311,23 +309,23 @@ public class AreaCadastroUsuario extends LeitorDados implements IAreaCadastro.IU
                     if(ac.listarUsuario()){
                         System.out.println();
 
-                        int alterId = ReadInt("Id: ");
+                        int alterId = readInt("Id: ");
                         if (ac.validarId(userId) && ac.validarId(alterId)) {
                             ac.alterarPermissao(
                                     userId,
                                     alterId,
-                                    ReadText("Permissão: ")
+                                    readText("Permissão: ")
                             );
-                            if (!(MetodosUsuario.message == null))
-                                System.out.println(MetodosUsuario.message);
+                            if (!(metodosUsuario.message == null))
+                                System.out.println(metodosUsuario.message);
                             else System.out.println("\nAlteração concluída!");
                         }
-                        if (!(MetodosUsuario.message == null))
-                            System.out.println(MetodosUsuario.message);
+                        if (!(metodosUsuario.message == null))
+                            System.out.println(metodosUsuario.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoAltPerm = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoAltPerm = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do usuário" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -352,21 +350,21 @@ public class AreaCadastroUsuario extends LeitorDados implements IAreaCadastro.IU
                     if(ac.listarUsuario()){
                         System.out.println();
 
-                        int remoId = ReadInt("Id: ");
+                        int remoId = readInt("Id: ");
                         if (ac.validarId(remoId)) {
                             ac.removerPermissao(
                                     remoId //ReadInt("id: ")
                             );
-                            if (!(MetodosUsuario.message == null))
-                                System.out.println(MetodosUsuario.message);
+                            if (!(metodosUsuario.message == null))
+                                System.out.println(metodosUsuario.message);
                             else System.out.println("\nExclusão concluída!");
                         }
-                        if (!(MetodosUsuario.message == null))
-                            System.out.println(MetodosUsuario.message);
+                        if (!(metodosUsuario.message == null))
+                            System.out.println(metodosUsuario.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoRemPerm = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoRemPerm = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do usuário" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -387,7 +385,7 @@ public class AreaCadastroUsuario extends LeitorDados implements IAreaCadastro.IU
                     //#endregion
                 case "*":
                     //#region Retorno ao menu
-                    Integer opcaoVoltar = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoVoltar = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do usuário" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +

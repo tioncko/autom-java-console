@@ -6,9 +6,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.*;
 
-public class ImpressaoLog {
+public class impressaoLog {
 
-    public static class LogGenerico <T> {
+    /**
+     * Método que retorna os logs de erro de forma customizada
+     */
+    public static class logGenerico<T> {
 
         protected Logger log;
         public Logger getLogRetorno(Class<T> classe) {
@@ -20,7 +23,7 @@ public class ImpressaoLog {
             log.setUseParentHandlers(false);
 
             ConsoleHandler handler = new ConsoleHandler();
-            Formatter logformatter = new LogFormatter();
+            Formatter logformatter = new logFormatter();
             handler.setFormatter(logformatter);
 
             log.addHandler(handler);
@@ -28,7 +31,9 @@ public class ImpressaoLog {
         }
     }
 
-    public static class LogFormatter extends Formatter {
+    public static class logFormatter extends Formatter {
+
+        //#region rascunho
 /*
         private enum ANSI_Levels {
             ANSI_RESET("\u001B[0m"),
@@ -48,7 +53,11 @@ public class ImpressaoLog {
             public String getLevel() { return level; }
         }
  */
+        //#endregion
 
+        /**
+         * Método sobrescrito que formata o log do console
+         */
         @Override
         public String format(LogRecord record) {
 
@@ -95,6 +104,9 @@ public class ImpressaoLog {
             return sb.toString();
         }
 
+        /**
+         * Método que formata a data apresentada no console
+         */
         private String DateFormat (long mm) {
             SimpleDateFormat dtFormat  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date dtResult = new Date(mm);

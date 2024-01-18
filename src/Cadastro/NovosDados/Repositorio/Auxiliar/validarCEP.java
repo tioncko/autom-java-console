@@ -1,6 +1,6 @@
 package Cadastro.NovosDados.Repositorio.Auxiliar;
 
-public class ValidCEP {
+public class validarCEP {
 
     private String CEP;
     private String endereco;

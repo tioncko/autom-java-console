@@ -1,7 +1,7 @@
 package Lab.ItWorked;
 
 import Cadastro.NovosDados.Repositorio.Enums.arquivoConfig;
-import Cadastro.Database.JSON.JsonTools.JsonResponse;
+import Cadastro.Database.JSON.JsonTools.jsonResponse;
 import Cadastro.NovosDados.Repositorio.Abstratos.Gondola;
 import Cadastro.NovosDados.Repositorio.Auxiliar.Propriedades;
 import Cadastro.NovosDados.Repositorio.DTO.Produtos;
@@ -44,9 +44,9 @@ public class FunctionAPI {
         }
 
         public List<T> getListItens(Class<T> classe) throws Exception {
-            JsonResponse.JsonGenericObjects<T> x = new JsonResponse.JsonGenericObjects<>();
+            jsonResponse.jsonGenericObjects<T> x = new jsonResponse.jsonGenericObjects<>();
             String fileParam = arquivoConfig.Loja.getPropriedade();
-            List<T> lp = x.JsonReturn(createInstance(classe), fileParam);
+            List<T> lp = x.jsonReturn(createInstance(classe), fileParam);
 
             Predicate<T> Products = c -> (!c.toString().contains("Servicos Automotivos"));
             Predicate<T> Services = c -> (c.toString().contains("Servicos Automotivos"));

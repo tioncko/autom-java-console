@@ -1,13 +1,11 @@
 package Cadastro.Database.Metodos;
 
-import Cadastro.Database.DataSet;
-import Cadastro.Database.JSON.JsonTools.JsonExtraction.*;
-import Cadastro.Database.JSON.JsonTools.JsonResponse;
-import Cadastro.NovosDados.Repositorio.DTO.Fornecedor;
+import Cadastro.Database.dataSet;
+import Cadastro.Database.JSON.JsonTools.jsonExtraction.*;
 import Cadastro.NovosDados.Repositorio.DTO.Produtos;
 import Cadastro.NovosDados.Repositorio.DTO.Servicos;
 import Cadastro.NovosDados.Repositorio.Enums.camposItens;
-import Raiz.Core.ImpressaoLog;
+import Raiz.Core.impressaoLog;
 
 import java.util.Map;
 import java.util.Set;
@@ -15,24 +13,33 @@ import java.util.function.Supplier;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
-public class MetodosServico extends Servicos{
+public class metodosServico extends Servicos {
 
-    private final ColetaJsonDados loja = new ColetaJsonDados();
-    private final DataSet<Servicos> DS;
+    private final coletaJsonDados loja = new coletaJsonDados();
+    private final dataSet<Servicos> DS;
     public static String message;
 
-    ImpressaoLog.LogGenerico<MetodosServico> printLog = new ImpressaoLog.LogGenerico<>();
-    @SuppressWarnings("unchecked") Logger log = printLog.getLogRetorno((Class<MetodosServico>) (Object) (MetodosServico.class));
+    impressaoLog.logGenerico<metodosServico> printLog = new impressaoLog.logGenerico<>();
+    @SuppressWarnings("unchecked") Logger log = printLog.getLogRetorno((Class<metodosServico>) (Object) (metodosServico.class));
 
+    /**
+     * Construtor
+     */
     @SuppressWarnings("unchecked")
-    public MetodosServico(DataSet<?> banco) {
-        this.DS = (DataSet<Servicos>) banco;
+    public metodosServico(dataSet<?> banco) {
+        this.DS = (dataSet<Servicos>) banco;
     }
 
+    /**
+     * Inserir novo servico
+     */
     public void novoServico(Integer id, Servicos serv) {
         DS.insert(serv.setId(id), new Servicos(serv.getNomeServ(), serv.getPreco(), serv.getCategoria(), serv.getGrupo()), Servicos.class);
     }
 
+    /**
+     * Alterar um servico
+     */
     public void alterServico(Integer id, String Campo, String update) {
         if(!DS.select(Servicos.class).isEmpty()){
             if (DS.select(Servicos.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
@@ -49,7 +56,7 @@ public class MetodosServico extends Servicos{
                                     DS.insert(id, new Servicos(serv.getValue().getNomeServ(), serv.getValue().getPreco(), loja.nomeCategoria(Integer.parseInt(update), Produtos.class), serv.getValue().getGrupo()), Servicos.class);
                                 } catch (Exception e) {
                                     //System.out.println(e.getMessage());
-                                    log.warning("[" + MetodosServico.class.getSimpleName() + "] " + e.getMessage());
+                                    log.warning("[" + metodosServico.class.getSimpleName() + "] " + e.getMessage());
                                 }
                             }
                             case GRUPO      -> {
@@ -57,7 +64,7 @@ public class MetodosServico extends Servicos{
                                     DS.insert(id, new Servicos(serv.getValue().getNomeServ(), serv.getValue().getPreco(), serv.getValue().getCategoria(), loja.nomeGrupo(Integer.parseInt(update), Produtos.class)), Servicos.class);
                                 } catch (Exception e) {
                                     //System.out.println(e.getMessage());
-                                    log.warning("[" + MetodosServico.class.getSimpleName() + "] " + e.getMessage());
+                                    log.warning("[" + metodosServico.class.getSimpleName() + "] " + e.getMessage());
                                 }
                             }
                         }
@@ -66,6 +73,9 @@ public class MetodosServico extends Servicos{
         } else message = "\nA tabela de serviços está vazia.";
     }
 
+    /**
+     * Remover um servico
+     */
     public void remoServico(Integer id) {
         if (!DS.select(Servicos.class).isEmpty()) {
             if (DS.select(Servicos.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
@@ -74,6 +84,9 @@ public class MetodosServico extends Servicos{
         } else message = "\nA tabela de serviços está vazia.";
     }
 
+    /**
+     * Localizar um servico
+     */
     public void findServico(Integer id) {
         if (!DS.select(Servicos.class).isEmpty()) {
             if (DS.select(Servicos.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
@@ -85,6 +98,9 @@ public class MetodosServico extends Servicos{
         } else message = "\nA tabela de serviços está vazia.";
     }
 
+    /**
+     * Listar servicos por ids
+     */
     public void listbyIdServico(Integer ini_id, Integer fim_id) {
         if (!DS.select(Servicos.class).isEmpty()) {
             if (DS.select(Servicos.class).entrySet().stream().anyMatch(x -> x.getKey().equals(ini_id))) {
@@ -98,6 +114,9 @@ public class MetodosServico extends Servicos{
         } else message = "\nA tabela de serviços está vazia.";
     }
 
+    /**
+     * Remover servicos por ids
+     */
     public void remobyIdServico(Integer ini_id, Integer fim_id) {
         if (!DS.select(Servicos.class).isEmpty()) {
             if (DS.select(Servicos.class).entrySet().stream().anyMatch(x -> x.getKey().equals(ini_id))) {
@@ -110,6 +129,9 @@ public class MetodosServico extends Servicos{
         } else message = "\nA tabela de serviços está vazia.";
     }
 
+    /**
+     * Retorna um novo id unico
+     */
     public Integer nextId() {
         Integer maxnum = null;
         if (!DS.select(Servicos.class).isEmpty()) {
@@ -119,6 +141,9 @@ public class MetodosServico extends Servicos{
         return maxnum + 1;
     }
 
+    /**
+     * Imprimir servicos que estão na lista no momento
+     */
     public boolean PrintMapWithSet() {
         if (!DS.select(Servicos.class).isEmpty()) {
             Stream<Map.Entry<Integer, Servicos>> getServ = DS.select(Servicos.class).entrySet().stream();
@@ -130,6 +155,9 @@ public class MetodosServico extends Servicos{
         }
     }
 
+    /**
+     * Valida se o id existe
+     */
     public boolean userValid (Integer id) {
         boolean valid = false;
 

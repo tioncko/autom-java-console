@@ -1,13 +1,13 @@
 package Raiz.Acesso;
 
-import Cadastro.Database.DataSet;
+import Cadastro.Database.dataSet;
 
 public class Running {
 
-    private static final DataSet<?> banco;
+    private static final dataSet<?> banco;
 
     static {
-        banco = new DataSet<>();
+        banco = new dataSet<>();
     }
 
     public static void main(String[] args) {

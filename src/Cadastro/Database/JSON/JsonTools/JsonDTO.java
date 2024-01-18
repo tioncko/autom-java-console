@@ -4,11 +4,14 @@ import Cadastro.NovosDados.Repositorio.Auxiliar.Propriedades;
 import Cadastro.NovosDados.Repositorio.DTO.Fornecedor;
 import Cadastro.NovosDados.Repositorio.DTO.Produtos;
 import Cadastro.NovosDados.Repositorio.DTO.Servicos;
-import Raiz.Utils.SmartTools;
+import Raiz.Utils.smartTools;
 import com.google.gson.JsonObject;
 
-class JsonDTO {
+class jsonDTO {
 
+    /**
+     * Método que recebe um objeto Json que retorna um objeto Produtos
+     */
     protected static Produtos getProdutos(JsonObject item) {
         Produtos prod = new Produtos();
         prod.setnomeProd(item.get("Nome").getAsString());
@@ -25,6 +28,9 @@ class JsonDTO {
         return prod;
     }
 
+    /**
+     * Método que recebe um objeto Json que retorna um objeto Servicos
+     */
     protected static Servicos getServicos(JsonObject item) {
         Servicos serv = new Servicos();
         serv.setNomeServ(item.get("Nome").getAsString());
@@ -40,6 +46,9 @@ class JsonDTO {
         return serv;
     }
 
+    /**
+     * Método que recebe um objeto Json que retorna um objeto Fornecedor
+     */
     protected static Fornecedor getFornecedor(JsonObject item) {
         Fornecedor forn = new Fornecedor();
         forn.setRazaoSocial(item.get("razaoSocial").getAsString());
@@ -59,7 +68,7 @@ class JsonDTO {
                 CEP = ret + CEP;
             }
             int numLocal = item.get("numLocal").getAsInt();
-        forn.setInfoCEP(SmartTools.CEP.ResponseCEP(CEP, numLocal));
+        forn.setInfoCEP(smartTools.CEP.responseCEP(CEP, numLocal));
         return forn;
     }
 }

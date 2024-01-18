@@ -4,7 +4,7 @@ import Cadastro.NovosDados.Repositorio.DTO.Fornecedor;
 import Cadastro.NovosDados.Repositorio.DTO.Produtos;
 import Cadastro.NovosDados.Repositorio.DTO.Servicos;
 import Raiz.Core.Config;
-import Raiz.Core.ImpressaoLog;
+import Raiz.Core.impressaoLog;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -18,31 +18,37 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class JsonResponse extends JsonDTO {
+public class jsonResponse extends jsonDTO {
 
-    public static class JsonGenericObjects<T> {
+    public static class jsonGenericObjects<T> {
 
         private final List<T> itens;
 
-        public JsonGenericObjects() {
+        public jsonGenericObjects() {
             this.itens = new ArrayList<>();
         }
 
+        /**
+         * Método que recebe um parâmetro genérico e retorna a lista genérica utilizada no método jsonReturn
+         */
         protected List<T> adicionarItemALista(T item) {
             itens.add(item);
             return itens;
         }
 
+        /**
+         * Método que recebe um parâmetro genérico e um enum que identifica o tipo de propriedade definido no config
+         * e retorna uma lista genérica deserializada
+         */
         @SuppressWarnings("unchecked")
-        public List<T> JsonReturn(T classe, String fileParam) {
-
-            ImpressaoLog.LogGenerico<JsonGenericObjects<T>> printLog = new ImpressaoLog.LogGenerico<>();
-            @SuppressWarnings("unchecked") Logger log = printLog.getLogRetorno((Class<JsonGenericObjects<T>>) (Object) (JsonGenericObjects.class));
+        public List<T> jsonReturn(T classe, String fileParam) {
+            impressaoLog.logGenerico<jsonGenericObjects<T>> printLog = new impressaoLog.logGenerico<>();
+            @SuppressWarnings("unchecked") Logger log = printLog.getLogRetorno((Class<jsonGenericObjects<T>>) (Object) (jsonGenericObjects.class));
 
             String fileName = Config.getProperties(fileParam);
             Path path = Paths.get(fileName);
 
-            JsonGenericObjects<T> itensGen = new JsonGenericObjects<>();
+            jsonGenericObjects<T> itensGen = new jsonGenericObjects<>();
             List<T> listaGen = new ArrayList<>();
 
             try (Reader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
@@ -55,16 +61,19 @@ public class JsonResponse extends JsonDTO {
 
                         JsonObject item = element.getAsJsonObject();
 
+                        //#region rascunho
                         /*
                         if (loja instanceof Produtos) {
-                            Produtos prod = JsonDTO.getProdutos(item);
+                            Produtos prod = jsonDTO.getProdutos(item);
                             listaLoja = itensLoja.adicionarItemALista((T) prod);
                         }
                         if (loja instanceof Servicos) {
-                            Servicos serv = JsonDTO.getServicos(item);
+                            Servicos serv = jsonDTO.getServicos(item);
                             listaLoja = itensLoja.adicionarItemALista((T) serv);
                         }
                         */
+                        //#endregion
+
                         listaGen = switch (classe.getClass().getSimpleName()){
                             case "Produtos" -> {
                                 Produtos prod = getProdutos(item);
@@ -84,10 +93,12 @@ public class JsonResponse extends JsonDTO {
                     }
                 }
             } catch (Exception e) {
-                log.warning("[" + JsonGenericObjects.class.getSimpleName() + "] " + e.getMessage());
+                log.warning("[" + jsonGenericObjects.class.getSimpleName() + "] " + e.getMessage());
             }
             return listaGen;
         }
+
+        //#region rascunho
     /*
         private static Produtos getProdutos(JsonObject item) {
             Produtos prod = new Produtos();
@@ -120,5 +131,6 @@ public class JsonResponse extends JsonDTO {
             return serv;
         }
  */
+        //#endregion
     }
 }

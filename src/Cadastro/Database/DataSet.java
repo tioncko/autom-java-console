@@ -1,19 +1,23 @@
 package Cadastro.Database;
 
-import Cadastro.Database.JSON.JsonTools.JsonExtraction;
-import Cadastro.Database.JSON.JsonTools.JsonResponse;
+import Cadastro.Database.JSON.JsonTools.jsonExtraction;
 import Cadastro.NovosDados.Repositorio.DTO.*;
-import Raiz.Core.ImpressaoLog;
-import Raiz.Utils.LeitorDados;
+import Raiz.Core.impressaoLog;
+import Raiz.Utils.leitorDados;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class DataSet<T> extends LeitorDados {
+public class dataSet<T> extends leitorDados {
+
+    impressaoLog.logGenerico<dataSet<T>> printLog = new impressaoLog.logGenerico<>();
+    @SuppressWarnings("unchecked") Logger log = printLog.getLogRetorno((Class<dataSet<T>>) (Object) (dataSet.class));
+
+    //#region rascunho
     /*
     private final Map<Integer, T> tabValue;
-    public DataSet() { this.tabValue = new HashMap<>();
+    public dataSet() { this.tabValue = new HashMap<>();
     }
 
     public void addNewItem(Integer id, T value) {
@@ -24,6 +28,7 @@ public class DataSet<T> extends LeitorDados {
         return tabValue;
     }
      */
+    //#endregion
 
     private final Map<Integer, Cliente> tabCliente;
     private final Map<Integer, Fornecedor> tabForn;
@@ -31,21 +36,21 @@ public class DataSet<T> extends LeitorDados {
     private final Map<Integer, Produtos> tabProduto;
     private final Map<Integer, Servicos> tabServico;
 
-    public DataSet() {
+    public dataSet() {
         this.tabCliente = new HashMap<>();
 
-        AdminAccess ac = new AdminAccess();
+        rootAccess ac = new rootAccess();
         this.tabUsuario = new HashMap<>(ac.givePermission());//new HashMap<>();
 
-        JsonExtraction.ColetaJsonDados json = new JsonExtraction.ColetaJsonDados();
-        this.tabForn = new HashMap<>(json.MapForn());
-        this.tabProduto = new HashMap<>(json.MapProd());//new HashMap<>();
-        this.tabServico = new HashMap<>(json.MapServ());
+        jsonExtraction.coletaJsonDados json = new jsonExtraction.coletaJsonDados();
+        this.tabForn = new HashMap<>(json.mapForn());
+        this.tabProduto = new HashMap<>(json.mapProd());//new HashMap<>();
+        this.tabServico = new HashMap<>(json.mapServ());
     }
 
-    ImpressaoLog.LogGenerico<DataSet<T>> printLog = new ImpressaoLog.LogGenerico<>();
-    @SuppressWarnings("unchecked") Logger log = printLog.getLogRetorno((Class<DataSet<T>>) (Object) (DataSet.class));
-
+    /**
+     * Insere os dados no banco de dados
+     */
     public void insert(Integer id, T value, Class<T> classe) {
         try {
             T instance = getClassNewInstance(classe);
@@ -67,11 +72,13 @@ public class DataSet<T> extends LeitorDados {
                     break;
             }
         } catch (Exception e) {
-            //System.out.println(e.getMessage());
-            log.warning("[" + DataSet.class.getSimpleName() + "] " + e.getMessage());
+            log.warning("[" + dataSet.class.getSimpleName() + "] " + e.getMessage());
         }
     }
 
+    /**
+     * Retorna os dados para manipulação das classes deste projeto
+     */
     @SuppressWarnings("unchecked")
     public Map<Integer, T> select(Class<T> classe) {
         try {
@@ -85,8 +92,7 @@ public class DataSet<T> extends LeitorDados {
                 default -> null;
             };
         } catch (Exception e) {
-            //System.out.println(e.getMessage());
-            log.warning("[" + DataSet.class.getSimpleName() + "] " + e.getMessage());
+            log.warning("[" + dataSet.class.getSimpleName() + "] " + e.getMessage());
         }
         return new HashMap<>();
     }

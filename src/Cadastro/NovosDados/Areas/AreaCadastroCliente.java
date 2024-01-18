@@ -1,29 +1,27 @@
 package Cadastro.NovosDados.Areas;
 
-import Cadastro.Database.DataSet;
-import Cadastro.Database.Metodos.MetodosCliente;
-import Cadastro.Database.Metodos.MetodosFornecedor;
-import Cadastro.Database.Metodos.MetodosServico;
-import Raiz.Acesso.MenuPrincipal;
+import Cadastro.Database.dataSet;
+import Cadastro.Database.Metodos.metodosCliente;
+import Raiz.Acesso.menuPrincipal;
 import Cadastro.Database.Metodos.Interfaces.IAreaCadastro;
 import Raiz.Inicio.Cadastro;
-import Raiz.Utils.LeitorDados;
+import Raiz.Utils.leitorDados;
 
-public class AreaCadastroCliente extends LeitorDados implements IAreaCadastro.IClientes {
+public class areaCadastroCliente extends leitorDados implements IAreaCadastro.IClientes {
 
-    MenuPrincipal mp;
+    menuPrincipal mp;
     Cadastro cad;
     Cadastro.AcoesCliente ac;
-    DataSet<?> banco;
+    dataSet<?> banco;
 
-    public AreaCadastroCliente(DataSet<?> DS) {
-        this.mp = new MenuPrincipal(DS);
+    public areaCadastroCliente(dataSet<?> DS) {
+        this.mp = new menuPrincipal(DS);
         this.cad = new Cadastro(DS);
         this.ac = cad.new AcoesCliente();
         this.banco = DS;
     }
 
-    public void menuCadastroCliente(Integer userId)  {
+    public void menuCadastroCliente(Integer userId) {
         System.out.println("\n\u001B[34mCliente:\u001B[0m");
         System.out.println("1 - Cadastrar Cliente");
         System.out.println("2 - Alterar Cliente");
@@ -35,12 +33,12 @@ public class AreaCadastroCliente extends LeitorDados implements IAreaCadastro.IC
         System.out.println("* - Mais");
 
         System.out.print("\n-----------------------------------------");
-        String id = ReadText("\n\033[3mDigite código do menu para suas ações: \033[0m");
+        String id = readText("\n\033[3mDigite código do menu para suas ações: \033[0m");
         System.out.println("-----------------------------------------");
-        AcoesCadastroCliente(id, userId);
+        acoesCadastroCliente(id, userId);
     }
 
-    public void AcoesCadastroCliente(String id, Integer userId) {
+    public void acoesCadastroCliente(String id, Integer userId) {
         boolean session = true;
         while (session) {
             switch (id) {
@@ -49,20 +47,20 @@ public class AreaCadastroCliente extends LeitorDados implements IAreaCadastro.IC
                     System.out.println("\n# Cadastrar novo cliente #\n");
                     //ac.cadastrarCliente("Jorge", 22, "04472205484", "teste@olos.com.br", "014585445489", "04472205", 38);
                     ac.cadastrarCliente(
-                            ReadSentence("Nome: "),
-                            ReadInt("Idade: "),
-                            ReadMask("CPF: "),
-                            ReadText("E-mail: "),
-                            ReadSentence("Telefone: "),
-                            ReadText("CEP: ").replace("-",""),
-                            ReadInt("Nùmero da residência: ")
+                            readSentence("Nome: "),
+                            readInt("Idade: "),
+                            readMask("CPF: "),
+                            readText("E-mail: "),
+                            readSentence("Telefone: "),
+                            readText("CEP: ").replace("-",""),
+                            readInt("Nùmero da residência: ")
                     );
-                    if (!(MetodosCliente.message == null))
-                    System.out.println(MetodosCliente.message);
+                    if (!(metodosCliente.message == null))
+                    System.out.println(metodosCliente.message);
                     else System.out.println("\nCadastro concluído!");
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoCadCli = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoCadCli = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do cliente" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -87,12 +85,12 @@ public class AreaCadastroCliente extends LeitorDados implements IAreaCadastro.IC
                     if(ac.listarClientes()){
                         System.out.println();
 
-                        int alterId = ReadInt("Id: ");
+                        int alterId = readInt("Id: ");
                         if (ac.validarId(alterId)) {
-                            String field = ReadText("Campo: ");
+                            String field = readText("Campo: ");
 
                             if (field.equalsIgnoreCase("CPF")){
-                                String document = ReadMask("Alteração (" + field.toUpperCase() + "): ");
+                                String document = readMask("Alteração (" + field.toUpperCase() + "): ");
 
                                 if(document != null) {
                                     ac.alterarCliente(
@@ -101,8 +99,8 @@ public class AreaCadastroCliente extends LeitorDados implements IAreaCadastro.IC
                                             document
                                     );
 
-                                    if (!(MetodosCliente.message == null))
-                                        System.out.println(MetodosCliente.message);
+                                    if (!(metodosCliente.message == null))
+                                        System.out.println(metodosCliente.message);
                                     else System.out.println("\nAlteração concluída!");
                                     ac.localizarCliente(alterId);
                                 }
@@ -111,21 +109,21 @@ public class AreaCadastroCliente extends LeitorDados implements IAreaCadastro.IC
                                 ac.alterarCliente(
                                         alterId,
                                         field,
-                                        ReadSentence("Alteração (" + field.toUpperCase() + "): ")
+                                        readSentence("Alteração (" + field.toUpperCase() + "): ")
                                 );
 
-                                if (!(MetodosCliente.message == null))
-                                    System.out.println(MetodosCliente.message);
+                                if (!(metodosCliente.message == null))
+                                    System.out.println(metodosCliente.message);
                                 else System.out.println("\nAlteração concluída!");
                                 ac.localizarCliente(alterId);
                             }
                         }
-                        if (!(MetodosCliente.message == null))
-                            System.out.println(MetodosCliente.message);
+                        if (!(metodosCliente.message == null))
+                            System.out.println(metodosCliente.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoAltCli = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoAltCli = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do cliente" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral?" +
@@ -150,21 +148,21 @@ public class AreaCadastroCliente extends LeitorDados implements IAreaCadastro.IC
                     if(ac.listarClientes()) {
                         System.out.println();
 
-                        int remoId = ReadInt("Id: ");
+                        int remoId = readInt("Id: ");
                         if (ac.validarId(remoId)) {
                             ac.excluirCliente(
                                     remoId //ReadInt("Id: ")
                             );
-                            if (!(MetodosCliente.message == null))
-                                System.out.println(MetodosCliente.message);
+                            if (!(metodosCliente.message == null))
+                                System.out.println(metodosCliente.message);
                             else System.out.println("\nExclusão concluída!");
                         }
-                        if (!(MetodosCliente.message == null))
-                            System.out.println(MetodosCliente.message);
+                        if (!(metodosCliente.message == null))
+                            System.out.println(metodosCliente.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoExcCli = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoExcCli = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do cliente" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -189,20 +187,20 @@ public class AreaCadastroCliente extends LeitorDados implements IAreaCadastro.IC
                     if(ac.listarClientes()){
                         System.out.println();
 
-                        int findId = ReadInt("Id: ");
+                        int findId = readInt("Id: ");
                         if (ac.validarId(findId)) {
                             ac.localizarCliente(
                                     findId //ReadInt("Id: ")
                             );
-                            if (!(MetodosCliente.message == null))
-                                System.out.println(MetodosCliente.message);
+                            if (!(metodosCliente.message == null))
+                                System.out.println(metodosCliente.message);
                         }
-                        if (!(MetodosCliente.message == null))
-                            System.out.println(MetodosCliente.message);
+                        if (!(metodosCliente.message == null))
+                            System.out.println(metodosCliente.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoLocCli = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoLocCli = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do cliente" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -227,20 +225,20 @@ public class AreaCadastroCliente extends LeitorDados implements IAreaCadastro.IC
                     if(ac.listarClientes()){
                         System.out.println();
 
-                        int findId = ReadInt("Início: ");
+                        int findId = readInt("Início: ");
                         if (ac.validarId(findId)) {
                             ac.localizarMaisClientes(
                                     findId, //ReadInt("Início: "),
-                                    ReadInt("Fim: "));
-                            if (!(MetodosCliente.message == null))
-                                System.out.println(MetodosCliente.message);
+                                    readInt("Fim: "));
+                            if (!(metodosCliente.message == null))
+                                System.out.println(metodosCliente.message);
                         }
-                        if (!(MetodosCliente.message == null))
-                            System.out.println(MetodosCliente.message);
+                        if (!(metodosCliente.message == null))
+                            System.out.println(metodosCliente.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoLocMCli = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoLocMCli = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do cliente" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -265,21 +263,21 @@ public class AreaCadastroCliente extends LeitorDados implements IAreaCadastro.IC
                     if(ac.listarClientes()){
                         System.out.println();
 
-                        int remoId = ReadInt("Início: ");
+                        int remoId = readInt("Início: ");
                         if (ac.validarId(remoId)) {
                             ac.removerMaisClientes(
                                     remoId, //ReadInt("Início: "),
-                                    ReadInt("Fim: ")
+                                    readInt("Fim: ")
                             );
-                            if (!(MetodosCliente.message == null))
-                                System.out.println(MetodosCliente.message);
+                            if (!(metodosCliente.message == null))
+                                System.out.println(metodosCliente.message);
                         }
-                        if (!(MetodosCliente.message == null))
-                            System.out.println(MetodosCliente.message);
+                        if (!(metodosCliente.message == null))
+                            System.out.println(metodosCliente.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoRemMCli = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoRemMCli = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do cliente" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -304,7 +302,7 @@ public class AreaCadastroCliente extends LeitorDados implements IAreaCadastro.IC
                     ac.listarClientes();
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoListUsr = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoListUsr = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do cliente" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -325,7 +323,7 @@ public class AreaCadastroCliente extends LeitorDados implements IAreaCadastro.IC
                     //#endregion
                 case "*":
                     //#region Retorno ao menu
-                    Integer opcaoVoltar = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoVoltar = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do cliente" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +

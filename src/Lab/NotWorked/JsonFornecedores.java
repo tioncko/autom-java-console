@@ -3,8 +3,8 @@ package Lab.NotWorked;
 import Cadastro.NovosDados.Repositorio.Enums.arquivoConfig;
 import Raiz.Core.Config;
 import Cadastro.NovosDados.Repositorio.DTO.Fornecedor;
-import Raiz.Utils.JsonPerGson;
-import Raiz.Utils.SmartTools;
+import Raiz.Utils.jsonPerGson;
+import Raiz.Utils.smartTools;
 import com.google.gson.*;
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class JsonFornecedores extends JsonPerGson {
+public class JsonFornecedores extends jsonPerGson {
 
     private static class DeserializeFornecedores {
         protected Fornecedor getJsonFornecedor(JsonObject object) {
@@ -33,7 +33,7 @@ public class JsonFornecedores extends JsonPerGson {
             forn.setEmail(email);
             forn.setInscEstadual(inscEstadual);
             forn.setTelefone(telefone);
-            forn.setInfoCEP(SmartTools.CEP.ResponseCEP(infoCEP, numLocal));
+            forn.setInfoCEP(smartTools.CEP.responseCEP(infoCEP, numLocal));
             return forn;
         }
     }

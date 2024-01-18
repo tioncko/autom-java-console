@@ -1,26 +1,25 @@
 package Cadastro.NovosDados.Areas;
 
-import Cadastro.Database.DataSet;
-import Cadastro.Database.Metodos.MetodosCliente;
-import Cadastro.Database.Metodos.MetodosProduto;
-import Cadastro.Database.Metodos.MetodosServico;
-import Raiz.Acesso.MenuPrincipal;
-import Cadastro.Database.JSON.JsonTools.JsonExtraction;
+import Cadastro.Database.dataSet;
+import Cadastro.Database.Metodos.metodosProduto;
+import Cadastro.Database.Metodos.metodosServico;
+import Cadastro.Database.Metodos.metodosFornecedor;
+import Raiz.Acesso.menuPrincipal;
+import Cadastro.Database.JSON.JsonTools.jsonExtraction;
 import Cadastro.Database.Metodos.Interfaces.IAreaCadastro;
-import Cadastro.Database.Metodos.MetodosFornecedor;
 import Cadastro.NovosDados.Repositorio.DTO.Produtos;
 import Raiz.Inicio.Cadastro;
-import Raiz.Utils.LeitorDados;
+import Raiz.Utils.leitorDados;
 
-public class AreaCadastroProduto extends LeitorDados implements IAreaCadastro.IProdutos {
+public class areaCadastroProduto extends leitorDados implements IAreaCadastro.IProdutos {
 
-    MenuPrincipal mp;
+    menuPrincipal mp;
     Cadastro cad;
     Cadastro.AcoesProdutos ap;
-    DataSet<?> banco;
+    dataSet<?> banco;
 
-    public AreaCadastroProduto(DataSet<?> DS)  {
-        this.mp = new MenuPrincipal(DS);
+    public areaCadastroProduto(dataSet<?> DS)  {
+        this.mp = new menuPrincipal(DS);
         this.cad = new Cadastro(DS);
         this.ap = cad.new AcoesProdutos();
         this.banco = DS;
@@ -38,15 +37,15 @@ public class AreaCadastroProduto extends LeitorDados implements IAreaCadastro.IP
         System.out.println("* - Mais");
 
         System.out.print("\n-----------------------------------------");
-        String id = ReadText("\n\033[3mDigite código do menu para suas ações: \033[0m");
+        String id = readText("\n\033[3mDigite código do menu para suas ações: \033[0m");
         System.out.println("-----------------------------------------");
-        AcoesCadastroProduto(id, userId);
+        acoesCadastroProduto(id, userId);
     }
 
-    public void AcoesCadastroProduto(String id, Integer userId)  {
+    public void acoesCadastroProduto(String id, Integer userId)  {
         boolean session = true;
-        JsonExtraction.ColetaJsonDados cjd = new JsonExtraction.ColetaJsonDados();
-        MetodosFornecedor forn = new MetodosFornecedor(banco);//cjd.DTForn());
+        jsonExtraction.coletaJsonDados cjd = new jsonExtraction.coletaJsonDados();
+        metodosFornecedor forn = new metodosFornecedor(banco);//cjd.DTForn());
 
         while (session) {
             switch (id) {
@@ -56,17 +55,17 @@ public class AreaCadastroProduto extends LeitorDados implements IAreaCadastro.IP
                     //af.cadastrarFornecedor("Jorge", "22", "04472205484", "teste@olos.com.br", "014585445489", "2555555", "04472205", 38, String.valueOf(ReadStrList("try: ")));
 
                     ap.cadastrarProduto(
-                            ReadSentence("Nome do produto: "),
-                            ReadDbl("Preco: "),
-                            ReadInt("Quantidade: "),
-                            forn.fornecedorProd(ReadInt("Fornecedor: ")).getNomeFantasia(),
-                            cjd.nomeCategoria(ReadInt("Categoria: "), Produtos.class),
-                            cjd.nomeGrupo(ReadInt("Grupo: "), Produtos.class)
+                            readSentence("Nome do produto: "),
+                            readDbl("Preco: "),
+                            readInt("Quantidade: "),
+                            forn.fornecedorProd(readInt("Fornecedor: ")).getNomeFantasia(),
+                            cjd.nomeCategoria(readInt("Categoria: "), Produtos.class),
+                            cjd.nomeGrupo(readInt("Grupo: "), Produtos.class)
                     );
                     System.out.println("\nCadastro concluído!");
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoCadProd = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoCadProd = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do produto" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -91,33 +90,33 @@ public class AreaCadastroProduto extends LeitorDados implements IAreaCadastro.IP
                     if (ap.listarProdutos()) {
                         System.out.println();
 
-                        int alterId = ReadInt("Id: ");
+                        int alterId = readInt("Id: ");
                         if (ap.validarId(alterId)) {
-                            String field = ReadText("Campo: ").toUpperCase();
+                            String field = readText("Campo: ").toUpperCase();
                             if (field.equals("fornecedor".toUpperCase())) {
                                 ap.alterarProduto(
                                     alterId,
                                     field,
-                                    forn.fornecedorProd(ReadInt("Alteração (" + field.toUpperCase() + "): ")).getNomeFantasia()
+                                    forn.fornecedorProd(readInt("Alteração (" + field.toUpperCase() + "): ")).getNomeFantasia()
                                 );
                             } else {
                                 ap.alterarProduto(
                                     alterId,
                                     field,
-                                    ReadSentence("Alteração (" + field.toUpperCase() + "): ")
+                                    readSentence("Alteração (" + field.toUpperCase() + "): ")
                                 );
                             }
-                            if (!(MetodosProduto.message == null))
-                                System.out.println(MetodosProduto.message);
+                            if (!(metodosProduto.message == null))
+                                System.out.println(metodosProduto.message);
                             else System.out.println("\nAlteração concluída!");
                             ap.localizarProduto(alterId);
                         }
-                        if (!(MetodosProduto.message == null))
-                            System.out.println(MetodosProduto.message);
+                        if (!(metodosProduto.message == null))
+                            System.out.println(metodosProduto.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoAltProd = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoAltProd = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do produto" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral?" +
@@ -142,21 +141,21 @@ public class AreaCadastroProduto extends LeitorDados implements IAreaCadastro.IP
                     if(ap.listarProdutos()) {
                         System.out.println();
 
-                        int remoId = ReadInt("Id: ");
+                        int remoId = readInt("Id: ");
                         if (ap.validarId(remoId)) {
                             ap.excluirProduto(
                                     remoId //ReadInt("Id: ")
                             );
-                            if (!(MetodosServico.message == null))
-                                System.out.println(MetodosProduto.message);
+                            if (!(metodosServico.message == null))
+                                System.out.println(metodosProduto.message);
                             else System.out.println("\nExclusão concluída!");
                         }
-                        if (!(MetodosFornecedor.message == null))
-                            System.out.println(MetodosFornecedor.message);
+                        if (!(metodosFornecedor.message == null))
+                            System.out.println(metodosFornecedor.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoExcProd = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoExcProd = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do produto" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -181,20 +180,20 @@ public class AreaCadastroProduto extends LeitorDados implements IAreaCadastro.IP
                     if(ap.listarProdutos()){
                         System.out.println();
 
-                        int findId = ReadInt("Id: ");
+                        int findId = readInt("Id: ");
                         if (ap.validarId(findId)) {
                             ap.localizarProduto(
                                     findId //ReadInt("Id: ")
                             );
-                            if (!(MetodosProduto.message == null))
-                                System.out.println(MetodosProduto.message);
+                            if (!(metodosProduto.message == null))
+                                System.out.println(metodosProduto.message);
                         }
-                        if (!(MetodosProduto.message == null))
-                            System.out.println(MetodosProduto.message);
+                        if (!(metodosProduto.message == null))
+                            System.out.println(metodosProduto.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoLocProd = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoLocProd = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do produto" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -219,21 +218,21 @@ public class AreaCadastroProduto extends LeitorDados implements IAreaCadastro.IP
                     if(ap.listarProdutos()){
                         System.out.println();
 
-                        int findId = ReadInt("Início: ");
+                        int findId = readInt("Início: ");
                         if (ap.validarId(findId)) {
                             ap.localizarMaisProdutos(
                                 findId, //ReadInt("Início: "),
-                                ReadInt("Fim: ")
+                                readInt("Fim: ")
                             );
-                            if (!(MetodosProduto.message == null))
-                                System.out.println(MetodosProduto.message);
+                            if (!(metodosProduto.message == null))
+                                System.out.println(metodosProduto.message);
                         }
-                        if (!(MetodosProduto.message == null))
-                            System.out.println(MetodosProduto.message);
+                        if (!(metodosProduto.message == null))
+                            System.out.println(metodosProduto.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoLocMProd = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoLocMProd = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do produto" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -258,21 +257,21 @@ public class AreaCadastroProduto extends LeitorDados implements IAreaCadastro.IP
                     if(ap.listarProdutos()){
                         System.out.println();
 
-                        int remoId = ReadInt("Início: ");
+                        int remoId = readInt("Início: ");
                         if (ap.validarId(remoId)) {
                             ap.removerMaisProdutos(
                                 remoId, //ReadInt("Início: "),
-                                ReadInt("Fim: ")
+                                readInt("Fim: ")
                             );
-                            if (!(MetodosProduto.message == null))
-                                System.out.println(MetodosProduto.message);
+                            if (!(metodosProduto.message == null))
+                                System.out.println(metodosProduto.message);
                         }
-                        if (!(MetodosProduto.message == null))
-                            System.out.println(MetodosProduto.message);
+                        if (!(metodosProduto.message == null))
+                            System.out.println(metodosProduto.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoRemMProd = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoRemMProd = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do produto" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -297,7 +296,7 @@ public class AreaCadastroProduto extends LeitorDados implements IAreaCadastro.IP
                     ap.listarProdutos();
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoListProd = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoListProd = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do produto" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -319,7 +318,7 @@ public class AreaCadastroProduto extends LeitorDados implements IAreaCadastro.IP
                 case "*":
                     //#region Retorno ao menu
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoVoltar = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoVoltar = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do produto" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +

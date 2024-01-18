@@ -8,13 +8,16 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class JsonPerGson extends HTTPResponse {
+public abstract class jsonPerGson extends httpResponse {
 
-    private static final class ListParameterizedType implements ParameterizedType {
+    /**
+     * Classe que parametriza o tipo do objeto recebido (caso receba uma lista, essa classe define que será uma lista no final do processo)
+     */
+    private static final class listParameterizedType implements ParameterizedType {
 
         private final Type type;
 
-        private ListParameterizedType(Type type) {
+        private listParameterizedType(Type type) {
             this.type = type;
         }
 
@@ -34,11 +37,14 @@ public abstract class JsonPerGson extends HTTPResponse {
         }
     }
 
+    /**
+     * Método que faz a requisição do json via Gson, deserializa, e transforma em lista
+     */
     public static <T, R> List<T> requestJson(String uri, Class<T> objClass, R JsonDeserializerObject)  {
 
         String content = responseContent(uri);
         Gson gson = new GsonBuilder().registerTypeAdapter(objClass, JsonDeserializerObject).serializeNulls().create();
-        Type type = new ListParameterizedType(objClass);
+        Type type = new listParameterizedType(objClass);
         List<T> list = gson.fromJson(content, type);
 
         assert list != null;

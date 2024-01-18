@@ -25,7 +25,7 @@ public class LoggerAPI {
 
             //ConsoleHandler handler = new ConsoleHandler();
 
-            //Formatter formatter = new LogFormatter();
+            //Formatter formatter = new logFormatter();
            // handler.setFormatter(formatter);
 
            // logger.addHandler(handler);

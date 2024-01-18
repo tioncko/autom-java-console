@@ -1,10 +1,6 @@
 package Raiz.Utils;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.StringReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.*;
 import java.util.*;
@@ -12,25 +8,28 @@ import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import Cadastro.NovosDados.Repositorio.Auxiliar.Criptografia;
-import Cadastro.NovosDados.Repositorio.Auxiliar.ValidCEP;
+import Cadastro.NovosDados.Repositorio.Auxiliar.validarCEP;
 import Cadastro.NovosDados.Repositorio.Enums.agora;
 import Cadastro.NovosDados.Repositorio.Enums.operacao;
-import Raiz.Core.ImpressaoLog;
+import Raiz.Core.impressaoLog;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-public abstract class SmartTools {
+public abstract class smartTools {
 
     public static class Senha {
-        public static Criptografia Encrypt(String password) {
 
+        /**
+         * Efetua a criptografia da senha recebida via parâmetro
+         */
+        public static Criptografia Encrypt(String password) {
             Base64.Encoder encrypt = Base64.getEncoder();
             byte[] request = (password.strip()).getBytes(StandardCharsets.ISO_8859_1);
             String encoded = encrypt.encodeToString(request);
             //StringBuilder Char_byte = new StringBuilder(CharLength(encoded, Operation.ENCRYPT));
-            StringBuilder Char_byte = new StringBuilder(CharLength(encoded, operacao.ENCRYPT));
+            StringBuilder Char_byte = new StringBuilder(charLength(encoded, operacao.ENCRYPT));
 
             String HEX = asciiToHex(new String(Char_byte));
 
@@ -43,15 +42,17 @@ public abstract class SmartTools {
             return hashcode;
         }
 
+        /**
+         * Reverte a criptografia da senha recebida via parâmetro
+         */
         private static String Decrypt(String hex) {
-
             Base64.Decoder decryptHEX = Base64.getDecoder();
             byte[] responseHEX = decryptHEX.decode(new String(hex));
             String decodedHEX = new String(responseHEX, StandardCharsets.ISO_8859_1);
             //--
             Base64.Decoder decrypt = Base64.getDecoder();
             String password = hexToASCII(decodedHEX);
-            StringBuilder Char_byte = new StringBuilder(CharLength(password, operacao.DECRYPT));
+            StringBuilder Char_byte = new StringBuilder(charLength(password, operacao.DECRYPT));
 
             byte[] response = decrypt.decode(new String(Char_byte));
             String decoded;
@@ -60,6 +61,9 @@ public abstract class SmartTools {
             return decoded;
         }
 
+        /**
+         * Efetua a conversão de ascii para hexadecimal via parâmetro
+         */
         private static String asciiToHex(String asciiValue) {
 
             StringBuilder hex = new StringBuilder();
@@ -72,6 +76,9 @@ public abstract class SmartTools {
             return hex.toString();
         }
 
+        /**
+         * Efetua a conversão de ascii para hexadecimal via parâmetro
+         */
         private static String hexToASCII(String hexValue) {
 
             StringBuilder output = new StringBuilder();
@@ -84,7 +91,10 @@ public abstract class SmartTools {
             return output.toString();
         }
 
-        private static String CharLength(String password, operacao operation) {
+        /**
+         * Efetua o tratamento de cada dígito da senha criptografada
+         */
+        private static String charLength(String password, operacao operation) {
 
             StringBuilder charStr = new StringBuilder();
 
@@ -104,24 +114,23 @@ public abstract class SmartTools {
 
             return new String(charStr);
         }
-/*
-        private enum Operation {
-            ENCRYPT, DECRYPT;
-        }
-*/
     }
 
     public static class CEP {
-        public static ValidCEP ResponseCEP(String NumCEP, int NumEndereco) {
 
-            ImpressaoLog.LogGenerico<CEP> printLog = new ImpressaoLog.LogGenerico<>();
+        /**
+         * Retorna o objeto CEP
+         */
+        public static validarCEP responseCEP(String NumCEP, int NumEndereco) {
+
+            impressaoLog.logGenerico<CEP> printLog = new impressaoLog.logGenerico<>();
             @SuppressWarnings("unchecked") Logger log = printLog.getLogRetorno((Class<CEP>) (Object) (CEP.class));
 
-            ValidCEP novoCEP = new ValidCEP();
+            validarCEP novoCEP = new validarCEP();
 
             //StringBuffer response = getResponse(NumCEP);
             String url = "https://viacep.com.br/ws/" + NumCEP + "/xml/";
-            String response = HTTPResponse.responseContent(url);
+            String response = httpResponse.responseContent(url);
 
             try {
                 assert response != null;
@@ -148,38 +157,13 @@ public abstract class SmartTools {
             }
             return novoCEP;
         }
-
-        //#region Old StringBuffer getResponse
-        /*
-        private static StringBuffer getResponse(String NumCEP) throws Exception {
-
-            ImpressaoLog.LogGenerico<CEP> printLog = new ImpressaoLog.LogGenerico<>();
-            @SuppressWarnings("unchecked") Logger log = printLog.getLogRetorno((Class<CEP>) (Object) (CEP.class));
-
-            String url = "https://viacep.com.br/ws/" + NumCEP + "/xml/";
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-            int responseCode = con.getResponseCode();
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8));//"ISO-8859-1"));
-            StringBuffer response = new StringBuffer();
-            try {
-                String inputLine;
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine.replace('\u00A0', ' '));
-                }
-                in.close();
-            } catch (Exception e) {
-                //throw new RuntimeException(e.getMessage());
-                log.warning("[" + CEP.class.getSimpleName() + "] " + e.getMessage());
-            }
-            return response;
-        }
-        */
-        //#endregion
     }
 
     public static class DiaAtual {
+
+        /**
+         *Retorna a período do dia
+         */
         public static String Daily() {
 
             String period = null;
@@ -207,24 +191,13 @@ public abstract class SmartTools {
 
             return period;
         }
-/*
-        public enum Current {
-            morning("Bom dia"), afternoon("Boa tarde"), evening("Boa noite");
-
-            private final String day;
-
-            Current(String value) {
-                this.day = value;
-            }
-
-            public String getDay() {
-                return day;
-            }
-        }
- */
     }
 
     public static class Numeros {
+
+        /**
+         * Efetua a validação do valor recebido via parâmetro se é ou não um número
+         */
         public static boolean isNumeric(String value){
 
             if(value == null || value.isEmpty()) return false;
@@ -238,11 +211,15 @@ public abstract class SmartTools {
         }
     }
 
-    public static class GenericCollects {
-        public static class GenericList<E> extends ArrayList<E> {
+    public static class genericCollects {
+
+        /**
+         * Classe responsável por retornar um objeto genérico em forma de lista
+         */
+        public static class genericList<E> extends ArrayList<E> {
 
             protected List<E> list;
-            public GenericList() {
+            public genericList() {
                 this.list = new ArrayList<>();
             }
 
@@ -262,10 +239,13 @@ public abstract class SmartTools {
             }
         }
 
-        public static class GenericSet<E> extends TreeSet<E> {
+        /**
+         * Classe responsável por retornar um objeto genérico em forma de Set
+         */
+        public static class genericSet<E> extends TreeSet<E> {
 
             protected Set<E> list;
-            public GenericSet() {
+            public genericSet() {
                 this.list = new TreeSet<>();
                 //super(l);
             }
@@ -291,6 +271,9 @@ public abstract class SmartTools {
 
         public static String message;
 
+        /**
+         * Classe responsável por validar os dígitos do CPF
+         */
         public static String CPF(String doc) {
             String nine;
             nine = doc.substring(0, 9);
@@ -301,6 +284,9 @@ public abstract class SmartTools {
             return (nine + dig1 + dig2).equals(doc) ? doc : "Documento inválido.";// - " + (nine + "-" + dig1 + dig2);
         }
 
+        /**
+         * Classe responsável por validar os dígitos do CNPJ
+         */
         public static String CNPJ(String doc) {
             String five, nine, six, ten;
             five = doc.substring(0, 4);
@@ -314,6 +300,9 @@ public abstract class SmartTools {
             return (five + nine + dig1 + dig2).equals(doc) ? doc : "Documento inválido.";// - " + (five + nine + dig1 + dig2);;
         }
 
+        /**
+         * Calculo para validação do documento informado
+         */
         public static int calculoDigito(int soma, String id, int max, int min) {
 
             int dg;
@@ -325,6 +314,9 @@ public abstract class SmartTools {
             return calculoDigito(soma, id, max + 1, min - 1);
         }
 
+        /**
+         * Retorna os dígitos verificadores dos documentos informados
+         */
         public static String returnDigito(int dig){
 
             int sub = dig - (11 * (dig/11));
@@ -332,11 +324,6 @@ public abstract class SmartTools {
             if (sub <= 10) return String.valueOf(11 - sub);
             return null;
         }
-
-//        public static void main(String[] args) {
-//            System.out.println(CPF("41707485810"));
-//            System.out.println(CNPJ("58577114000189"));
-//        }
     }
 }
 
@@ -456,8 +443,60 @@ public static String returnDigito(int dig){
 }
 */
 //#endregion
-//#region notes
-/*
+//#region Old StringBuffer getResponse
+        /*
+        private static StringBuffer getResponse(String NumCEP) throws Exception {
+
+            impressaoLog.logGenerico<CEP> printLog = new impressaoLog.logGenerico<>();
+            @SuppressWarnings("unchecked") Logger log = printLog.getLogRetorno((Class<CEP>) (Object) (CEP.class));
+
+            String url = "https://viacep.com.br/ws/" + NumCEP + "/xml/";
+            URL obj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            int responseCode = con.getResponseCode();
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8));//"ISO-8859-1"));
+            StringBuffer response = new StringBuffer();
+            try {
+                String inputLine;
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine.replace('\u00A0', ' '));
+                }
+                in.close();
+            } catch (Exception e) {
+                //throw new RuntimeException(e.getMessage());
+                log.warning("[" + CEP.class.getSimpleName() + "] " + e.getMessage());
+            }
+            return response;
+        }
+        */
+//#endregion
+//#region rascunho
+
+
+        /*
+                private enum Operation {
+                    ENCRYPT, DECRYPT;
+                }
+        public enum Current {
+            morning("Bom dia"), afternoon("Boa tarde"), evening("Boa noite");
+
+            private final String day;
+
+            Current(String value) {
+                this.day = value;
+            }
+
+            public String getDay() {
+                return day;
+            }
+        }
+
+ //        public static void main(String[] args) {
+//            System.out.println(CPF("41707485810"));
+//            System.out.println(CNPJ("58577114000189"));
+//        }
+
                 System.out.println("tipo_logradouro - " + err.getElementsByTagName("tipo_logradouro").item(0).getTextContent());
                 System.out.println("logradouro - " + err.getElementsByTagName("logradouro").item(0).getTextContent());
                 System.out.println("bairro - " + err.getElementsByTagName("bairro").item(0).getTextContent());

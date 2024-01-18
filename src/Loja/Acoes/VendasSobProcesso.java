@@ -1,4 +1,4 @@
 package Loja.Acoes;
 
-public class VendasSobProcesso {
+public class vendasSobProcesso {
 }

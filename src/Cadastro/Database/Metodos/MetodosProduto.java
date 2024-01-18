@@ -2,50 +2,42 @@ package Cadastro.Database.Metodos;
 import java.util.*;
 import java.util.logging.Logger;
 
-import Cadastro.Database.DataSet;
-import Cadastro.Database.JSON.JsonTools.JsonExtraction.*;
-import Cadastro.Database.JSON.JsonTools.JsonResponse;
+import Cadastro.Database.dataSet;
+import Cadastro.Database.JSON.JsonTools.jsonExtraction.*;
 import Cadastro.NovosDados.Repositorio.DTO.*;
 import Cadastro.NovosDados.Repositorio.Enums.camposItens;
-import Raiz.Core.ImpressaoLog;
+import Raiz.Core.impressaoLog;
 
-public class MetodosProduto extends Produtos {
+public class metodosProduto extends Produtos {
 
-    //private Map<Integer, Produtos> tabProdutos;
-    private final ColetaJsonDados loja = new ColetaJsonDados();
-    private final DataSet<Produtos> DS;
+    private final coletaJsonDados loja = new coletaJsonDados();
+    private final dataSet<Produtos> DS;
     public static String message;
 
-    ImpressaoLog.LogGenerico<MetodosProduto> printLog = new ImpressaoLog.LogGenerico<>();
-    @SuppressWarnings("unchecked") Logger log = printLog.getLogRetorno((Class<MetodosProduto>) (Object) (MetodosProduto.class));
-    /*
-    public MetodosProduto() {
-       this.tabProdutos = new HashMap<>();
-    }
-    public MetodosProduto(MetodosProduto prod) {
-       this.tabProdutos = prod.tabProdutos;
-    }
+    impressaoLog.logGenerico<metodosProduto> printLog = new impressaoLog.logGenerico<>();
+    @SuppressWarnings("unchecked") Logger log = printLog.getLogRetorno((Class<metodosProduto>) (Object) (metodosProduto.class));
+
+    /**
+     * Construtor
      */
     @SuppressWarnings("unchecked")
-    public MetodosProduto(DataSet<?> banco) {
-        this.DS = (DataSet<Produtos>) banco;
+    public metodosProduto(dataSet<?> banco) {
+        this.DS = (dataSet<Produtos>) banco;
     }
 
-    /*
-    private enum fieldProd {
-        DESCRICAO, PRECO, QTD, FORNECEDOR, CATEGORIA, GRUPO
-    }
-    */
-
+    /**
+     * Inserir novo produto
+     */
     public void novoProduto(Integer id, Produtos prod) {
-        //tabProdutos.put(prod.setId(id), new Produtos(prod.getnomeProd(), prod.getPreco(), prod.getQtd(), prod.getForn(), prod.getCategoria(), prod.getGrupo()));
         DS.insert(prod.setId(id), new Produtos(prod.getnomeProd(), prod.getPreco(), prod.getQtd(), prod.getForn(), prod.getCategoria(), prod.getGrupo()), Produtos.class);
     }
 
+    /**
+     * Alterar um produto
+     */
     public void alterProduto(Integer id, String Campo, String update) {
         if(!DS.select(Produtos.class).isEmpty()){
             if (DS.select(Produtos.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
-            //fieldProd getCampo = fieldProd.valueOf(Campo.toUpperCase());
             camposItens getCampo = camposItens.valueOf(Campo.toUpperCase());
 
             Set<Map.Entry<Integer, Produtos>> getProd = DS.select(Produtos.class).entrySet();
@@ -61,16 +53,14 @@ public class MetodosProduto extends Produtos {
                                 try {
                                     DS.insert(id, new Produtos(prod.getValue().getnomeProd(), prod.getValue().getPreco(), prod.getValue().getQtd(), prod.getValue().getForn(), loja.nomeCategoria(Integer.parseInt(update), Produtos.class), prod.getValue().getGrupo()), Produtos.class);
                                 } catch (Exception e) {
-                                    //System.out.println(e.getMessage());
-                                    log.warning("[" + MetodosProduto.class.getSimpleName() + "] " + e.getMessage());
+                                    log.warning("[" + metodosProduto.class.getSimpleName() + "] " + e.getMessage());
                                 }
                             }
                             case GRUPO      -> {
                                 try {
                                     DS.insert(id, new Produtos(prod.getValue().getnomeProd(), prod.getValue().getPreco(), prod.getValue().getQtd(), prod.getValue().getForn(), prod.getValue().getCategoria(), loja.nomeGrupo(Integer.parseInt(update), Produtos.class)), Produtos.class);
                                 } catch (Exception e) {
-                                    //System.out.println(e.getMessage());
-                                    log.warning("[" + MetodosProduto.class.getSimpleName() + "] " + e.getMessage());
+                                    log.warning("[" + metodosProduto.class.getSimpleName() + "] " + e.getMessage());
                                 }
                             }
                         }
@@ -79,6 +69,9 @@ public class MetodosProduto extends Produtos {
         } else message = "\nA tabela de produtos está vazia.";
     }
 
+    /**
+     * Remover um produto
+     */
     public void remoProduto(Integer id) {
         if (!DS.select(Produtos.class).isEmpty()) {
             if (DS.select(Produtos.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
@@ -87,6 +80,9 @@ public class MetodosProduto extends Produtos {
         } else message = "\nA tabela de produtos está vazia.";
     }
 
+    /**
+     * Localizar um produto
+     */
     public void findProduto(Integer id) {
         if (!DS.select(Produtos.class).isEmpty()) {
             if (DS.select(Produtos.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
@@ -100,6 +96,9 @@ public class MetodosProduto extends Produtos {
         } else message = "\nA tabela de produtos está vazia.";
     }
 
+    /**
+     * Listar produtos por ids
+     */
     public void listbyIdProduto(Integer ini_id, Integer fim_id) {
         if (!DS.select(Produtos.class).isEmpty()) {
             if (DS.select(Produtos.class).entrySet().stream().anyMatch(x -> x.getKey().equals(ini_id))) {
@@ -113,6 +112,9 @@ public class MetodosProduto extends Produtos {
         } else message = "\nA tabela de produtos está vazia.";
     }
 
+    /**
+     * Remover produtos por ids
+     */
     public void remobyIdProduto(Integer ini_id, Integer fim_id) {
         if (!DS.select(Produtos.class).isEmpty()) {
             if (DS.select(Produtos.class).entrySet().stream().anyMatch(x -> x.getKey().equals(ini_id))) {
@@ -125,7 +127,10 @@ public class MetodosProduto extends Produtos {
         } else message = "\nA tabela de produtos está vazia.";
     }
 
-    public boolean PrintMapWithSet() {
+    /**
+     * Imprimir produtos que estão na lista no momento
+     */
+    public boolean printMapWithSet() {
         if (!DS.select(Produtos.class).isEmpty()) {
             Set<Map.Entry<Integer, Produtos>>
                     getProd = DS.select(Produtos.class).entrySet();
@@ -142,8 +147,10 @@ public class MetodosProduto extends Produtos {
         }
     }
 
+    /**
+     * Retorna um novo id unico
+     */
     public Integer nextId() {
-
         Integer maxnum = null;
         if (!DS.select(Produtos.class).isEmpty()) {
             Set<Map.Entry<Integer, Produtos>>
@@ -157,11 +164,14 @@ public class MetodosProduto extends Produtos {
         return maxnum + 1;
     }
 
+    /**
+     * Valida se o id existe
+     */
     public boolean userValid (Integer id) {
         boolean valid = false;
-
         if (!DS.select(Produtos.class).isEmpty()) {
             if (DS.select(Produtos.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+
                 valid = true;
             } else message = "\nRegistro inexistente na tabela.";
         } else message = "\nA tabela de produtos está vazia.";
@@ -169,13 +179,28 @@ public class MetodosProduto extends Produtos {
         return valid;
     }
 
+    //#region rascunho
     /*
+//private Map<Integer, Produtos> tabProdutos;
+public metodosProduto() {
+   this.tabProdutos = new HashMap<>();
+}
+public metodosProduto(metodosProduto prod) {
+   this.tabProdutos = prod.tabProdutos;
+}
+
+    private enum fieldProd {
+    DESCRICAO, PRECO, QTD, FORNECEDOR, CATEGORIA, GRUPO
+}
+
+        //tabProdutos.put(prod.setId(id), new Produtos(prod.getnomeProd(), prod.getPreco(), prod.getQtd(), prod.getForn(), prod.getCategoria(), prod.getGrupo()));
+
     public static void main(String[] args) throws Exception {
 
-        MetodosFornecedor forn = new MetodosFornecedor();
-        MetodosProduto prod = new MetodosProduto();
+        metodosFornecedor forn = new metodosFornecedor();
+        metodosProduto prod = new metodosProduto();
 
-        ColetaJsonDados<Produtos> cat = new ColetaJsonDados<>();
+        coletaJsonDados<Produtos> cat = new coletaJsonDados<>();
 
         forn.setNomeFantasia("Motul");
         forn.novoFornecedor(forn.setId(1), forn);
@@ -194,4 +219,5 @@ public class MetodosProduto extends Produtos {
         //System.out.println(cat.nomeCategoria(1, Produtos.class));
     }
     */
+    //#endregion
 }

@@ -3,7 +3,7 @@ package Lab.ItWorked;
 import Cadastro.NovosDados.Repositorio.Enums.arquivoConfig;
 import Raiz.Core.Config;
 import Cadastro.NovosDados.Repositorio.Auxiliar.Marcas;
-import Raiz.Utils.HTTPResponse;
+import Raiz.Utils.httpResponse;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.lang.reflect.ParameterizedType;
 
-public class DadosJSON extends HTTPResponse {
+public class DadosJSON extends httpResponse {
 
     private static final class ListParameterizedType implements ParameterizedType {
 
@@ -60,7 +60,7 @@ public class DadosJSON extends HTTPResponse {
 
     public <T, R> List<T> requestJson(String uri, Class<T> objClass, R JsonDeserializerObject) throws Exception {
 
-        //HTTPResponse resp = new HTTPResponse();
+        //httpResponse resp = new httpResponse();
         String content = responseContent(uri);
         Gson gson = new GsonBuilder().registerTypeAdapter(objClass, JsonDeserializerObject).serializeNulls().create();
         Type type = new ListParameterizedType(objClass);

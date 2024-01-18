@@ -3,7 +3,7 @@ package Cadastro.Database.Metodos.Deserializers;
 import Cadastro.NovosDados.Repositorio.Enums.arquivoConfig;
 import Raiz.Core.Config;
 import Cadastro.NovosDados.Repositorio.Auxiliar.Marcas;
-import Raiz.Utils.JsonPerGson;
+import Raiz.Utils.jsonPerGson;
 import com.google.gson.*;
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -11,9 +11,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class JsonMarcas extends JsonPerGson {
+public class jsonMarcas extends jsonPerGson {
 
-    private static class DeserializeMarcas {
+    private static class deserializeMarcas {
+
+        /**
+         * Método que retorna um objeto Marca a partir de um json deserializado
+         */
         protected Marcas getJsonMarcas(JsonObject object) {
 
             String nome = object.get("nome").getAsString();
@@ -24,17 +28,23 @@ public class JsonMarcas extends JsonPerGson {
         }
     }
 
-    private static class JsonDeserializerMarcas implements JsonDeserializer<Marcas> {
+    private static class jsonDeserializerMarcas implements JsonDeserializer<Marcas> {
 
+        /**
+         * Método que utiliza a biblioteca Gson para deserializar um objeto Json que esteja em algum endpoint
+         */
         @Override
         public Marcas deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 
-            DeserializeMarcas dm = new DeserializeMarcas();
+            deserializeMarcas dm = new deserializeMarcas();
             JsonObject getObj = json.getAsJsonObject();
             return dm.getJsonMarcas(getObj);
         }
     }
 
+    /**
+     * Método responsável por retornar uma lista de Marcas por meio do método requestJson
+     */
     public Map<Integer, Marcas> ListaMarcas()  {
 
         Map<Integer, Marcas> lista = new HashMap<>();
@@ -42,7 +52,7 @@ public class JsonMarcas extends JsonPerGson {
         String configParam = arquivoConfig.Marcas.getPropriedade();
         String endpointJson = Config.getProperties(configParam);
 
-        JsonDeserializerMarcas json = new JsonDeserializerMarcas();
+        jsonDeserializerMarcas json = new jsonDeserializerMarcas();
         List<Marcas> marcas = requestJson(endpointJson, Marcas.class, json);
 
         Integer i = 1;
@@ -54,6 +64,9 @@ public class JsonMarcas extends JsonPerGson {
         return lista;
     }
 
+    /**
+     * Método responsável por retornar uma Marca por meio de um parâmetro Id
+     */
     public Marcas nomeMarca (Integer id) {
 
         Marcas mar;
@@ -66,6 +79,7 @@ public class JsonMarcas extends JsonPerGson {
     }
 }
 
+//#region rascunho
 /*
 
     public static void main(String[] args) throws Exception {
@@ -77,7 +91,7 @@ public class JsonMarcas extends JsonPerGson {
         //List<Marcas> pp = requestJson(endpointJson, Marcas.class, json);
         //pp.forEach(p -> System.out.println(p.getMarca().toUpperCase()));
 
-        JsonMarcas k = new JsonMarcas();
+        jsonMarcas k = new jsonMarcas();
         k.ListaMarcas().forEach((K, V)
                 -> System.out.println("Marcas{id=" + K + ", Nome='" + V + "'}"));
 
@@ -85,5 +99,5 @@ public class JsonMarcas extends JsonPerGson {
         //pp.forEach(System.out::println);
         System.out.println(k.nomeMarca(1));
     }
-
 */
+//#endregion

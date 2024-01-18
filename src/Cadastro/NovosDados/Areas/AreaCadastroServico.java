@@ -1,26 +1,23 @@
 package Cadastro.NovosDados.Areas;
 
-import Cadastro.Database.DataSet;
-import Cadastro.Database.JSON.JsonTools.JsonExtraction;
+import Cadastro.Database.dataSet;
+import Cadastro.Database.JSON.JsonTools.jsonExtraction;
 import Cadastro.Database.Metodos.Interfaces.IAreaCadastro;
-import Cadastro.Database.Metodos.MetodosCliente;
-import Cadastro.Database.Metodos.MetodosFornecedor;
-import Cadastro.Database.Metodos.MetodosServico;
-import Cadastro.NovosDados.Repositorio.DTO.Produtos;
+import Cadastro.Database.Metodos.metodosServico;
 import Cadastro.NovosDados.Repositorio.DTO.Servicos;
-import Raiz.Acesso.MenuPrincipal;
+import Raiz.Acesso.menuPrincipal;
 import Raiz.Inicio.Cadastro;
-import Raiz.Utils.LeitorDados;
+import Raiz.Utils.leitorDados;
 
-public class AreaCadastroServico extends LeitorDados implements IAreaCadastro.IServicos {
+public class areaCadastroServico extends leitorDados implements IAreaCadastro.IServicos {
 
-    MenuPrincipal mp;
+    menuPrincipal mp;
     Cadastro cad;
     Cadastro.AcoesServicos as;
-    DataSet<?> banco;
+    dataSet<?> banco;
 
-    public AreaCadastroServico(DataSet<?> DS) {
-        this.mp = new MenuPrincipal(DS);
+    public areaCadastroServico(dataSet<?> DS) {
+        this.mp = new menuPrincipal(DS);
         this.cad = new Cadastro(DS);
         this.as = cad.new AcoesServicos();
         this.banco = DS;
@@ -39,15 +36,15 @@ public class AreaCadastroServico extends LeitorDados implements IAreaCadastro.IS
         System.out.println("* - Mais");
 
         System.out.print("\n-----------------------------------------");
-        String id = ReadText("\n\033[3mDigite código do menu para suas ações: \033[0m");
+        String id = readText("\n\033[3mDigite código do menu para suas ações: \033[0m");
         System.out.println("-----------------------------------------");
-        AcoesCadastroServico(id, userId);
+        acoesCadastroServico(id, userId);
     }
 
     @Override
-    public void AcoesCadastroServico(String id, Integer userId) {
+    public void acoesCadastroServico(String id, Integer userId) {
         boolean session = true;
-        JsonExtraction.ColetaJsonDados cjd = new JsonExtraction.ColetaJsonDados();
+        jsonExtraction.coletaJsonDados cjd = new jsonExtraction.coletaJsonDados();
 
         while (session) {
             switch (id) {
@@ -57,14 +54,14 @@ public class AreaCadastroServico extends LeitorDados implements IAreaCadastro.IS
                     //as.cadastrarServico("Jorge", "22", "04472205484", "teste@olos.com.br", "014585445489", "2555555", "04472205", 38, String.valueOf(ReadStrList("try: ")));
 
                     as.cadastrarServico(
-                            ReadSentence("Nome do serviço: "),
-                            ReadDbl("Preco: "),
-                            cjd.nomeCategoria(ReadInt("Categoria: "), Servicos.class),
-                            cjd.nomeGrupo(ReadInt("Grupo: "), Servicos.class));
+                            readSentence("Nome do serviço: "),
+                            readDbl("Preco: "),
+                            cjd.nomeCategoria(readInt("Categoria: "), Servicos.class),
+                            cjd.nomeGrupo(readInt("Grupo: "), Servicos.class));
                     System.out.println("\nCadastro concluído!");
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoCadProd = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoCadProd = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do serviço" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -89,25 +86,25 @@ public class AreaCadastroServico extends LeitorDados implements IAreaCadastro.IS
                     if (as.listarServicos()) {
                         System.out.println();
 
-                        int alterId = ReadInt("Id: ");
+                        int alterId = readInt("Id: ");
                         if (as.validarId(alterId)) {
-                            String field = ReadText("Campo: ");
+                            String field = readText("Campo: ");
                             as.alterarServico(
                                     alterId,
                                     field,
-                                    ReadSentence("Alteração (" + field.toUpperCase() + "): "));
+                                    readSentence("Alteração (" + field.toUpperCase() + "): "));
 
-                            if (!(MetodosServico.message == null))
-                                System.out.println(MetodosServico.message);
+                            if (!(metodosServico.message == null))
+                                System.out.println(metodosServico.message);
                             else System.out.println("\nAlteração concluída!");
                             as.localizarServico(alterId);
                         }
-                        if (!(MetodosServico.message == null))
-                            System.out.println(MetodosServico.message);
+                        if (!(metodosServico.message == null))
+                            System.out.println(metodosServico.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoAltProd = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoAltProd = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do serviço" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral?" +
@@ -132,21 +129,21 @@ public class AreaCadastroServico extends LeitorDados implements IAreaCadastro.IS
                     if(as.listarServicos()) {
                         System.out.println();
 
-                        int remoId = ReadInt("Id: ");
+                        int remoId = readInt("Id: ");
                         if (as.validarId(remoId)) {
                             as.excluirServico(
                                     remoId //ReadInt("Id: ")
                             );
-                            if (!(MetodosServico.message == null))
-                                System.out.println(MetodosServico.message);
+                            if (!(metodosServico.message == null))
+                                System.out.println(metodosServico.message);
                             else System.out.println("\nExclusão concluída!");
                         }
-                        if (!(MetodosServico.message == null))
-                            System.out.println(MetodosServico.message);
+                        if (!(metodosServico.message == null))
+                            System.out.println(metodosServico.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoExcProd = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoExcProd = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do serviço" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -171,20 +168,20 @@ public class AreaCadastroServico extends LeitorDados implements IAreaCadastro.IS
                     if(as.listarServicos()){
                         System.out.println();
 
-                        int findId = ReadInt("Id: ");
+                        int findId = readInt("Id: ");
                         if (as.validarId(findId)) {
                             as.localizarServico(
                                     findId //ReadInt("Id: ")
                             );
-                            if (!(MetodosServico.message == null))
-                                System.out.println(MetodosServico.message);
+                            if (!(metodosServico.message == null))
+                                System.out.println(metodosServico.message);
                         }
-                        if (!(MetodosServico.message == null))
-                            System.out.println(MetodosServico.message);
+                        if (!(metodosServico.message == null))
+                            System.out.println(metodosServico.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoLocProd = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoLocProd = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do serviço" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -209,20 +206,20 @@ public class AreaCadastroServico extends LeitorDados implements IAreaCadastro.IS
                     if(as.listarServicos()){
                         System.out.println();
 
-                        int findId = ReadInt("Início: ");
+                        int findId = readInt("Início: ");
                         if (as.validarId(findId)) {
                             as.localizarMaisServicos(
                                     findId, //ReadInt("Início: "),
-                                    ReadInt("Fim: "));
-                            if (!(MetodosServico.message == null))
-                                System.out.println(MetodosServico.message);
+                                    readInt("Fim: "));
+                            if (!(metodosServico.message == null))
+                                System.out.println(metodosServico.message);
                         }
-                        if (!(MetodosServico.message == null))
-                            System.out.println(MetodosServico.message);
+                        if (!(metodosServico.message == null))
+                            System.out.println(metodosServico.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoLocMProd = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoLocMProd = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do serviço" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -247,20 +244,20 @@ public class AreaCadastroServico extends LeitorDados implements IAreaCadastro.IS
                     if(as.listarServicos()){
                         System.out.println();
 
-                        int remoId = ReadInt("Início: ");
+                        int remoId = readInt("Início: ");
                         if (as.validarId(remoId)) {
                             as.removerMaisServicos(
                                     remoId, //ReadInt("Início: "),
-                                    ReadInt("Fim: "));
-                            if (!(MetodosServico.message == null))
-                                System.out.println(MetodosServico.message);
+                                    readInt("Fim: "));
+                            if (!(metodosServico.message == null))
+                                System.out.println(metodosServico.message);
                         }
-                        if (!(MetodosServico.message == null))
-                            System.out.println(MetodosServico.message);
+                        if (!(metodosServico.message == null))
+                            System.out.println(metodosServico.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoRemMProd = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoRemMProd = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do serviço" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -285,7 +282,7 @@ public class AreaCadastroServico extends LeitorDados implements IAreaCadastro.IS
                     as.listarServicos();
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoListProd = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoListProd = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do serviço" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -307,7 +304,7 @@ public class AreaCadastroServico extends LeitorDados implements IAreaCadastro.IS
                 case "*":
                     //#region Retorno ao menu
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoVoltar = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoVoltar = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do serviço" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +

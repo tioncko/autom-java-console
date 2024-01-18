@@ -1,10 +1,10 @@
 package Lab;
 
-import Cadastro.NovosDados.Repositorio.Auxiliar.PermissaoUsuario;
+import Cadastro.NovosDados.Repositorio.Auxiliar.permissaoUsuario;
 import Cadastro.NovosDados.Repositorio.DTO.Usuario;
 import Cadastro.NovosDados.Repositorio.Enums.camposUsuario;
 import Cadastro.NovosDados.Repositorio.Enums.permissao;
-import Raiz.Utils.SmartTools;
+import Raiz.Utils.smartTools;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,7 +62,7 @@ public class BKP_MetodosUsuario extends Usuario {
                             } else cod = 2;
                             break;
                         case SENHA:
-                            tabUsuario.put(id, new Usuario(user.getLogin(), SmartTools.Senha.Encrypt(update), user.getNome(), user.getDepto()));
+                            tabUsuario.put(id, new Usuario(user.getLogin(), smartTools.Senha.Encrypt(update), user.getNome(), user.getDepto()));
                             break;
                         case NOME:
                             tabUsuario.put(id, new Usuario(user.getLogin(), user.getPassword(), update, user.getDepto()));
@@ -181,7 +181,7 @@ public class BKP_MetodosUsuario extends Usuario {
         this.tabUsuario = dt.tabUsuario;
 
         if (!tabUsuario.isEmpty()) {
-            String encrypt = String.valueOf(SmartTools.Senha.Encrypt(pass));
+            String encrypt = String.valueOf(smartTools.Senha.Encrypt(pass));
             Set<Map.Entry<Integer, Usuario>> getUser = tabUsuario.entrySet();
             for (Map.Entry<Integer, Usuario> setUser : getUser) {
 
@@ -244,8 +244,8 @@ public class BKP_MetodosUsuario extends Usuario {
     /**
      * Validando permissão de acesso ao usuario
      */
-    public PermissaoUsuario validPermissao(String login, BKP_MetodosUsuario dt){
-        PermissaoUsuario access = null;
+    public permissaoUsuario validPermissao(String login, BKP_MetodosUsuario dt){
+        permissaoUsuario access = null;
         this.tabUsuario = dt.tabUsuario;
 
         if (!tabUsuario.isEmpty()) {
@@ -272,12 +272,12 @@ public class BKP_MetodosUsuario extends Usuario {
 
                 Integer kid = setUser.getKey();
                 Usuario user = setUser.getValue();
-                PermissaoUsuario root = new PermissaoUsuario(String.valueOf(permissao.ROOT));
+                permissaoUsuario root = new permissaoUsuario(String.valueOf(permissao.ROOT));
                 if (id.equals(1) && kid.equals(id) && user.getLogin().equals("supervisor".toLowerCase()) && access.equals(String.valueOf(root))) {
 
                     permissao acessosup;
-                    acessosup = SmartTools.Numeros.isNumeric(access) ? permissao.getAccess(Integer.parseInt(access)) : permissao.valueOf(access.toUpperCase());
-                    PermissaoUsuario perm = new PermissaoUsuario(String.valueOf(acessosup).toUpperCase());
+                    acessosup = smartTools.Numeros.isNumeric(access) ? permissao.getAccess(Integer.parseInt(access)) : permissao.valueOf(access.toUpperCase());
+                    permissaoUsuario perm = new permissaoUsuario(String.valueOf(acessosup).toUpperCase());
 
                     tabUsuario.put(id, new Usuario(user.getLogin(), user.getPassword(), user.getNome(), user.getDepto(), perm));
                 }
@@ -291,7 +291,7 @@ public class BKP_MetodosUsuario extends Usuario {
     public void darPermissao(Integer id, String access) {
         if (!tabUsuario.isEmpty()) {
             Set<Map.Entry<Integer, Usuario>> getUser = tabUsuario.entrySet();
-            permissao acesso = SmartTools.Numeros.isNumeric(access) ? permissao.getAccess(Integer.parseInt(access)) : permissao.valueOf(access.toUpperCase());
+            permissao acesso = smartTools.Numeros.isNumeric(access) ? permissao.getAccess(Integer.parseInt(access)) : permissao.valueOf(access.toUpperCase());
 
             if ((!access.toUpperCase().equals(String.valueOf(permissao.ROOT))) || (!String.valueOf(acesso).equals(String.valueOf(1)))) {
                 for (Map.Entry<Integer, Usuario> setUser : getUser) {
@@ -299,7 +299,7 @@ public class BKP_MetodosUsuario extends Usuario {
                     Usuario user = setUser.getValue();
                     if (setUser.getKey().equals(id)) {
 
-                        PermissaoUsuario perm = new PermissaoUsuario(String.valueOf(acesso).toUpperCase());
+                        permissaoUsuario perm = new permissaoUsuario(String.valueOf(acesso).toUpperCase());
                         tabUsuario.put(id, new Usuario(user.getLogin(), user.getPassword(), user.getNome(), user.getDepto(), perm));
                     }
                 }
@@ -316,10 +316,10 @@ public class BKP_MetodosUsuario extends Usuario {
 
         if (!tabUsuario.isEmpty()) {
             if(!access.toUpperCase().equals(String.valueOf(permissao.ROOT))) {
-                PermissaoUsuario admin = new PermissaoUsuario(String.valueOf(permissao.ADMIN));
-                PermissaoUsuario root = new PermissaoUsuario(String.valueOf(permissao.ROOT));
-                permissao acesso = SmartTools.Numeros.isNumeric(access) ? permissao.getAccess(Integer.parseInt(access)) : permissao.valueOf(access.toUpperCase());
-                PermissaoUsuario perm = new PermissaoUsuario(String.valueOf(acesso).toUpperCase());
+                permissaoUsuario admin = new permissaoUsuario(String.valueOf(permissao.ADMIN));
+                permissaoUsuario root = new permissaoUsuario(String.valueOf(permissao.ROOT));
+                permissao acesso = smartTools.Numeros.isNumeric(access) ? permissao.getAccess(Integer.parseInt(access)) : permissao.valueOf(access.toUpperCase());
+                permissaoUsuario perm = new permissaoUsuario(String.valueOf(acesso).toUpperCase());
 
                 Set<Map.Entry<Integer, Usuario>> getUser = tabUsuario.entrySet();
                 getUser.stream()
@@ -343,7 +343,7 @@ public class BKP_MetodosUsuario extends Usuario {
 
                 Integer kid = setUser.getKey();
                 Usuario user = setUser.getValue();
-                PermissaoUsuario root = new PermissaoUsuario(String.valueOf(permissao.ROOT));
+                permissaoUsuario root = new permissaoUsuario(String.valueOf(permissao.ROOT));
 
                 if (kid.equals(id) && (!Objects.equals(String.valueOf(user.getAccess()), String.valueOf(root)))) {
                     tabUsuario.put(id, new Usuario(user.getLogin(), user.getPassword(), user.getNome(), user.getDepto()));
@@ -353,14 +353,14 @@ public class BKP_MetodosUsuario extends Usuario {
     }
 /*
     public void altPermissaoV2(Integer idAdm, Integer id, String access) {
-        //var mu = new MetodosUsuario();
+        //var mu = new metodosUsuario();
         //mu.tabUsuario = this.tabUsuario;
 
         if (!DS.select(Usuario.class).isEmpty()) {
             if (!access.toUpperCase().equals(String.valueOf(permissao.ROOT))) {
-                PermissaoUsuario admin = new PermissaoUsuario(String.valueOf(permissao.ADMIN));
-                PermissaoUsuario root = new PermissaoUsuario(String.valueOf(permissao.ROOT));
-                PermissaoUsuario perm = validEnumPermissao(access);
+                permissaoUsuario admin = new permissaoUsuario(String.valueOf(permissao.ADMIN));
+                permissaoUsuario root = new permissaoUsuario(String.valueOf(permissao.ROOT));
+                permissaoUsuario perm = validEnumPermissao(access);
                 boolean valid = false;
 
                 Set<Map.Entry<Integer, Usuario>> getUser = DS.select(Usuario.class).entrySet();
@@ -395,36 +395,36 @@ public class BKP_MetodosUsuario extends Usuario {
 /*
     public static void main(String[] args) throws Exception {
 
-        MetodosUsuario musr = new MetodosUsuario();
+        metodosUsuario musr = new metodosUsuario();
 
         System.out.println("# Lista de clientes #");
 
         musr.setLogin("Keyla");
-        musr.setPassword(SmartTools.Senha.Encrypt("1234"));
+        musr.setPassword(smartTools.Senha.Encrypt("1234"));
         musr.setNome("Keyla Nascimento");
         musr.setDepto("Juridico");
         musr.novoUsuario(1, musr);
 
         musr.setLogin("Paula");
-        musr.setPassword(SmartTools.Senha.Encrypt("5845"));
+        musr.setPassword(smartTools.Senha.Encrypt("5845"));
         musr.setNome("Paula Matos");
         musr.setDepto("TI");
         musr.novoUsuario(2, musr);
 
         musr.setLogin("Rose");
-        musr.setPassword(SmartTools.Senha.Encrypt("8754"));
+        musr.setPassword(smartTools.Senha.Encrypt("8754"));
         musr.setNome("Rose Barros");
         musr.setDepto("TI");
         musr.novoUsuario(3, musr);
 
         musr.setLogin("Tabata");
-        musr.setPassword(SmartTools.Senha.Encrypt("9687"));
+        musr.setPassword(smartTools.Senha.Encrypt("9687"));
         musr.setNome("Tabata Amaral");
         musr.setDepto("Governança");
         musr.novoUsuario(4, musr);
 
         musr.setLogin("supervisor");
-        musr.setPassword(SmartTools.Senha.Encrypt("5474"));
+        musr.setPassword(smartTools.Senha.Encrypt("5474"));
         musr.setNome("Perola Pardo");
         musr.setDepto("Business");
         musr.novoUsuario(5, musr);

@@ -7,12 +7,12 @@ import java.util.List;
 public interface INovosDados {
 
     public interface IReader {
-        public String ReadText(String str);
-        public Integer ReadInt(String str);
-        public String ReadSentence(String str);
-        public Double ReadDbl(String str);
-        public List<String> ReadStrList(String str);
-        public String ReadMask(String str);
+        public String readText(String str);
+        public Integer readInt(String str);
+        public String readSentence(String str);
+        public Double readDbl(String str);
+        public List<String> readStrList(String str);
+        public String readMask(String str);
     }
 
     public interface ICustomer {
@@ -23,6 +23,7 @@ public interface INovosDados {
         public void localizarMaisClientes(Integer ini, Integer fim);
         public void removerMaisClientes(Integer ini, Integer fim);
         public boolean listarClientes();
+        public boolean validarId(Integer id);
     }
 
     public interface IUsers {
@@ -33,6 +34,7 @@ public interface INovosDados {
         public void localizarMaisUsuarios(Integer ini, Integer fim);
         public void removerMaisUsuarios(Integer ini, Integer fim);
         public boolean listarUsuario();
+        public boolean validarId(Integer id);
     }
 
     public interface IPermissions {
@@ -50,6 +52,7 @@ public interface INovosDados {
         public void localizarMaisFornecedores(Integer ini, Integer fim);
         public void removerMaisFornecedores(Integer ini, Integer fim);
         public boolean listarFornecedores();
+        public boolean validarId(Integer id);
     }
 
     public interface IProducts {
@@ -60,6 +63,7 @@ public interface INovosDados {
         public void localizarMaisProdutos(Integer ini, Integer fim);
         public void removerMaisProdutos(Integer ini, Integer fim);
         public boolean listarProdutos();
+        public boolean validarId(Integer id);
     }
 
     public interface IServices {
@@ -70,6 +74,6 @@ public interface INovosDados {
         public void localizarMaisServicos(Integer ini, Integer fim);
         public void removerMaisServicos(Integer ini, Integer fim);
         public boolean listarServicos();
-
+        public boolean validarId(Integer id);
     }
 }

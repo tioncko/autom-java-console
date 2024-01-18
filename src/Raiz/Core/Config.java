@@ -1,19 +1,18 @@
 package Raiz.Core;
 
-import Cadastro.Database.Metodos.MetodosServico;
-
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.*;
 import java.util.logging.Logger;
 
 public class Config {
 
-    static ImpressaoLog.LogGenerico<Config> printLog = new ImpressaoLog.LogGenerico<>();
+    static impressaoLog.logGenerico<Config> printLog = new impressaoLog.logGenerico<>();
     static Logger log = printLog.getLogRetorno(Config.class);
 
+    /**
+     * Método que coleta as propriedades informadas no .properties e disponibiliza para as classes do prpjeto
+     */
     public static String getProperties(String param) {
-
         String pr = null;
         try {
             String configFilePath = "src/config.properties";
@@ -36,6 +35,7 @@ public class Config {
         }
         return pr;
     }
+    //#region rascunho
 /*
     public enum NameSettings {
         Loja("store_class"),
@@ -53,4 +53,5 @@ public class Config {
         }
     }
  */
+    //#endregion
 }

@@ -1,19 +1,18 @@
 package Raiz.Utils;
 
-import Cadastro.Database.JSON.JsonTools.JsonResponse;
 import Cadastro.Database.Metodos.Interfaces.INovosDados;
-import Raiz.Core.ImpressaoLog;
-import Raiz.Utils.SmartTools.GenericCollects.*;
+import Raiz.Core.impressaoLog;
+import Raiz.Utils.smartTools.genericCollects.*;
 import java.util.*;
 import java.util.logging.Logger;
 
-import static Raiz.Utils.SmartTools.validacaoDigitos.*;
+import static Raiz.Utils.smartTools.validacaoDigitos.*;
 
-public abstract class LeitorDados implements INovosDados.IReader {
+public abstract class leitorDados implements INovosDados.IReader {
 
-    ImpressaoLog.LogGenerico<LeitorDados> printLog = new ImpressaoLog.LogGenerico<>();
+    impressaoLog.logGenerico<leitorDados> printLog = new impressaoLog.logGenerico<>();
     @SuppressWarnings("unchecked")
-    Logger log = printLog.getLogRetorno((Class<LeitorDados>) (Object) (LeitorDados.class));
+    Logger log = printLog.getLogRetorno((Class<leitorDados>) (Object) (leitorDados.class));
 
     private static final Scanner txt;
 
@@ -21,12 +20,18 @@ public abstract class LeitorDados implements INovosDados.IReader {
         txt = new Scanner(System.in);
     }
 
-    public String ReadText(String str){
+    /**
+     * Leitura via Scanner de uma String
+     */
+    public String readText(String str){
         System.out.print(str);
         return txt.next();
     }
 
-    public String ReadSentence(String str) {
+    /**
+     * Leitura via Scanner de uma String permitindo ser uma frase com espaços
+     */
+    public String readSentence(String str) {
         System.out.print(str);
 
         StringBuilder ret = new StringBuilder();
@@ -42,9 +47,12 @@ public abstract class LeitorDados implements INovosDados.IReader {
         return ret.toString();
     }
 
-    public GenericList<String> ReadStrList(String str) {
+    /**
+     * Leitura via Scanner de várias Strings e armazena em uma lista
+     */
+    public genericList<String> readStrList(String str) {
         System.out.println(str);
-        GenericList<String> numbers = new GenericList<>();
+        genericList<String> numbers = new genericList<>();
         while (txt.hasNextLine()){
             String value = txt.nextLine();
             if(value.trim().isEmpty()) continue;
@@ -56,6 +64,9 @@ public abstract class LeitorDados implements INovosDados.IReader {
         return numbers;
     }
 
+    /**
+     * Leitura via Scanner de várias Strings (sem uso até o momento)
+     */
     public List<String> StrList(String str) {
         System.out.println(str);
         List<String> numbers = new ArrayList<>();
@@ -71,11 +82,13 @@ public abstract class LeitorDados implements INovosDados.IReader {
         return numbers;
     }
 
-
+    /**
+     * Leitura via Scanner de várias Strings e armazena em uma lista Set
+     */
     @SuppressWarnings("unchecked")
-    public <T, R> GenericSet<T> ReadStrSet(R str) {
+    public <T, R> genericSet<T> ReadStrSet(R str) {
         System.out.println(str);
-        GenericSet<T> numbers = new GenericSet<>();
+        genericSet<T> numbers = new genericSet<>();
         while (txt.hasNextLine()){
             String value = txt.nextLine();
             if(value.trim().isEmpty()) continue;
@@ -87,18 +100,26 @@ public abstract class LeitorDados implements INovosDados.IReader {
         return numbers;
     }
 
-    public Integer ReadInt(String str){
+    /**
+     * Leitura via Scanner de um inteiro
+     */
+    public Integer readInt(String str){
         System.out.print(str);
         return txt.nextInt();
     }
 
-    public Double ReadDbl(String str){
+    /**
+     * Leitura via Scanner de um double
+     */
+    public Double readDbl(String str){
         System.out.print(str);
         return txt.nextDouble();
     }
 
-
-    public String ReadMask(String str){
+    /**
+     * Leitura via Scanner de uma String delimitada por regra de CPF e CNPJ
+     */
+    public String readMask(String str){
         String doc = null;
         boolean auth = false;
         if (str.toUpperCase().contains("CPF")) {
@@ -165,7 +186,9 @@ public abstract class LeitorDados implements INovosDados.IReader {
         return doc;
     }
 
-
+    /**
+     * Retorna o tipo de instância passada via parâmetro
+     */
     protected <T> T getClassNewInstance(Class<T> classe) throws Exception {
         return classe.getDeclaredConstructor().newInstance();
     }

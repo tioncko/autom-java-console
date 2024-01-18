@@ -1,22 +1,21 @@
 package Cadastro.NovosDados.Areas;
 
-import Cadastro.Database.DataSet;
-import Cadastro.Database.Metodos.MetodosCliente;
-import Cadastro.Database.Metodos.MetodosFornecedor;
-import Raiz.Acesso.MenuPrincipal;
+import Cadastro.Database.dataSet;
+import Cadastro.Database.Metodos.metodosFornecedor;
+import Raiz.Acesso.menuPrincipal;
 import Cadastro.Database.Metodos.Interfaces.IAreaCadastro;
 import Raiz.Inicio.Cadastro;
-import Raiz.Utils.LeitorDados;
+import Raiz.Utils.leitorDados;
 
-public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro.IFornecedores {
+public class areaCadastroFornecedor extends leitorDados implements IAreaCadastro.IFornecedores {
 
-    MenuPrincipal mp;
+    menuPrincipal mp;
     Cadastro cad;
     Cadastro.AcoesFornecedor af;
-    DataSet<?> banco;
+    dataSet<?> banco;
 
-    public AreaCadastroFornecedor(DataSet<?> DS) {
-        this.mp = new MenuPrincipal(DS);
+    public areaCadastroFornecedor(dataSet<?> DS) {
+        this.mp = new menuPrincipal(DS);
         this.cad = new Cadastro(DS);
         this.af = cad.new AcoesFornecedor();
         this.banco = DS;
@@ -34,12 +33,12 @@ public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro
         System.out.println("* - Mais");
 
         System.out.print("\n-----------------------------------------");
-        String id = ReadText("\n\033[3mDigite código do menu para suas ações: \033[0m");
+        String id = readText("\n\033[3mDigite código do menu para suas ações: \033[0m");
         System.out.println("-----------------------------------------");
-        AcoesCadastroFornecedor(id, userId);
+        acoesCadastroFornecedor(id, userId);
     }
 
-    public void AcoesCadastroFornecedor(String id, Integer userId)  {
+    public void acoesCadastroFornecedor(String id, Integer userId)  {
         boolean session = true;
         while (session) {
             switch (id) {
@@ -49,22 +48,22 @@ public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro
                     //af.cadastrarFornecedor("Jorge", "22", "04472205484", "teste@olos.com.br", "014585445489", "2555555", "04472205", 38, String.valueOf(ReadStrList("try: ")));
 
                     af.cadastrarFornecedor(
-                            ReadSentence("Razão Social: "),
-                            ReadSentence("Nome Fantasia: "),
-                            ReadMask("CNPJ: "),
-                            ReadText("E-mail: "),
-                            ReadText("Inscrição Estadual: "),
-                            ReadSentence("Telefone: "),
-                            ReadText("CEP: ").replace("-",""),
-                            ReadInt("Nùmero da residência: "),
-                            String.valueOf(ReadStrList("Informar atividades abaixo [para finalizar, digite SAIR] "))
+                            readSentence("Razão Social: "),
+                            readSentence("Nome Fantasia: "),
+                            readMask("CNPJ: "),
+                            readText("E-mail: "),
+                            readText("Inscrição Estadual: "),
+                            readSentence("Telefone: "),
+                            readText("CEP: ").replace("-",""),
+                            readInt("Nùmero da residência: "),
+                            String.valueOf(readStrList("Informar atividades abaixo [para finalizar, digite SAIR] "))
                     );
-                    if (!(MetodosFornecedor.message == null))
-                        System.out.println(MetodosFornecedor.message);
+                    if (!(metodosFornecedor.message == null))
+                        System.out.println(metodosFornecedor.message);
                     else System.out.println("\nCadastro concluído!");
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoCadForn = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoCadForn = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do fornecedor" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -89,20 +88,20 @@ public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro
                     if (af.listarFornecedores()) {
                         System.out.println();
 
-                        int alterId = ReadInt("Id: ");
+                        int alterId = readInt("Id: ");
                         if (af.validarId(alterId)) {
-                            String field = ReadText("Campo: ");
+                            String field = readText("Campo: ");
                             boolean fieldValid = (field.equalsIgnoreCase("atividades"));
 
                             if (fieldValid && !(af.retorno(alterId))) {
                                 af.alterarFornecedor(
                                         alterId,
                                         field,
-                                        ReadSentence("Alteração dado antigo (" + field.toUpperCase() + "): "),
-                                        ReadSentence("Alteração dado novo (" + field.toUpperCase() + "): ")
+                                        readSentence("Alteração dado antigo (" + field.toUpperCase() + "): "),
+                                        readSentence("Alteração dado novo (" + field.toUpperCase() + "): ")
                                 );
-                                if (!(MetodosFornecedor.message == null))
-                                    System.out.println(MetodosFornecedor.message);
+                                if (!(metodosFornecedor.message == null))
+                                    System.out.println(metodosFornecedor.message);
                                 else System.out.println("\nAlteração concluída!");
                                 af.localizarFornecedor(alterId);
                             }
@@ -111,17 +110,17 @@ public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro
                                 af.alterarFornecedor(
                                         alterId,
                                         field,
-                                        String.valueOf(ReadStrList("Informar atividades abaixo [para finalizar, digite SAIR] "))
+                                        String.valueOf(readStrList("Informar atividades abaixo [para finalizar, digite SAIR] "))
                                 );
-                                if (!(MetodosFornecedor.message == null))
-                                    System.out.println(MetodosFornecedor.message);
+                                if (!(metodosFornecedor.message == null))
+                                    System.out.println(metodosFornecedor.message);
                                 else System.out.println("\nAlteração concluída!");
                                 af.localizarFornecedor(alterId);
                             }
 
                             if (!(fieldValid)) {
                                 if (field.equalsIgnoreCase("CNPJ")){
-                                    String document = ReadMask("Alteração (" + field.toUpperCase() + "): ");
+                                    String document = readMask("Alteração (" + field.toUpperCase() + "): ");
 
                                     if(document != null) {
                                         af.alterarFornecedor(
@@ -130,8 +129,8 @@ public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro
                                                 document
                                         );
 
-                                        if (!(MetodosFornecedor.message == null))
-                                            System.out.println(MetodosFornecedor.message);
+                                        if (!(metodosFornecedor.message == null))
+                                            System.out.println(metodosFornecedor.message);
                                         else System.out.println("\nAlteração concluída!");
                                         af.localizarFornecedor(alterId);
                                     } else System.out.println("\nNão foi possível realizar a alteração solicitada.");
@@ -139,22 +138,22 @@ public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro
                                     af.alterarFornecedor(
                                             alterId,
                                             field,
-                                            ReadSentence("Alteração (" + field.toUpperCase() + "): ")
+                                            readSentence("Alteração (" + field.toUpperCase() + "): ")
                                     );
 
-                                    if (!(MetodosFornecedor.message == null))
-                                        System.out.println(MetodosFornecedor.message);
+                                    if (!(metodosFornecedor.message == null))
+                                        System.out.println(metodosFornecedor.message);
                                     else System.out.println("\nAlteração concluída!");
                                     af.localizarFornecedor(alterId);
                                 }
                             }
                         }
-                        if (!(MetodosFornecedor.message == null))
-                            System.out.println(MetodosFornecedor.message);
+                        if (!(metodosFornecedor.message == null))
+                            System.out.println(metodosFornecedor.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoAltForn = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoAltForn = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do fornecedor" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral?" +
@@ -179,21 +178,21 @@ public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro
                     if (af.listarFornecedores()) {
                         System.out.println();
 
-                        int remoId = ReadInt("Id: ");
+                        int remoId = readInt("Id: ");
                         if (af.validarId(remoId)) {
                             af.excluirFornecedor(
                                     remoId //ReadInt("Id: ")
                             );
-                            if (!(MetodosFornecedor.message == null))
-                                System.out.println(MetodosFornecedor.message);
+                            if (!(metodosFornecedor.message == null))
+                                System.out.println(metodosFornecedor.message);
                             else System.out.println("\nExclusão concluída!");
                         }
-                        if (!(MetodosFornecedor.message == null))
-                            System.out.println(MetodosFornecedor.message);
+                        if (!(metodosFornecedor.message == null))
+                            System.out.println(metodosFornecedor.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoExcForn = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoExcForn = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do fornecedor" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -218,20 +217,20 @@ public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro
                     if (af.listarFornecedores()) {
                         System.out.println();
 
-                        int findId = ReadInt("Id: ");
+                        int findId = readInt("Id: ");
                         if (af.validarId(findId)) {
                             af.localizarFornecedor(
                                     findId //ReadInt("Id: ")
                             );
-                            if (!(MetodosFornecedor.message == null))
-                                System.out.println(MetodosFornecedor.message);
+                            if (!(metodosFornecedor.message == null))
+                                System.out.println(metodosFornecedor.message);
                         }
-                        if (!(MetodosFornecedor.message == null))
-                            System.out.println(MetodosFornecedor.message);
+                        if (!(metodosFornecedor.message == null))
+                            System.out.println(metodosFornecedor.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoLocForn = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoLocForn = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do fornecedor" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -256,20 +255,20 @@ public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro
                     if (af.listarFornecedores()) {
                         System.out.println();
 
-                        int findId = ReadInt("Início: ");
+                        int findId = readInt("Início: ");
                         if (af.validarId(findId)) {
                             af.localizarMaisFornecedores(
                                     findId, //ReadInt("Início: "),
-                                    ReadInt("Fim: "));
-                            if (!(MetodosFornecedor.message == null))
-                                System.out.println(MetodosFornecedor.message);
+                                    readInt("Fim: "));
+                            if (!(metodosFornecedor.message == null))
+                                System.out.println(metodosFornecedor.message);
                         }
-                        if (!(MetodosFornecedor.message == null))
-                            System.out.println(MetodosFornecedor.message);
+                        if (!(metodosFornecedor.message == null))
+                            System.out.println(metodosFornecedor.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoLocMForn = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoLocMForn = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do fornecedor" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -294,21 +293,21 @@ public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro
                     if (af.listarFornecedores()) {
                         System.out.println();
 
-                        int remoId = ReadInt("Início: ");
+                        int remoId = readInt("Início: ");
                         if (af.validarId(remoId)) {
                             af.removerMaisFornecedores(
                                     remoId, //ReadInt("Início: "),
-                                    ReadInt("Fim: ")
+                                    readInt("Fim: ")
                             );
-                            if (!(MetodosFornecedor.message == null))
-                                System.out.println(MetodosFornecedor.message);
+                            if (!(metodosFornecedor.message == null))
+                                System.out.println(metodosFornecedor.message);
                         }
-                        if (!(MetodosFornecedor.message == null))
-                            System.out.println(MetodosFornecedor.message);
+                        if (!(metodosFornecedor.message == null))
+                            System.out.println(metodosFornecedor.message);
                     }
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoRemMForn = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoRemMForn = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do fornecedor" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -333,7 +332,7 @@ public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro
                     af.listarFornecedores();
 
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoListFornr = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoListFornr = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do fornecedor" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -355,7 +354,7 @@ public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro
                 case "*":
                     //#region Retorno ao menu
                     System.out.print("\n----------------------------------------------");
-                    Integer opcaoVoltar = ReadInt("\n\033[3mO que deseja?" +
+                    Integer opcaoVoltar = readInt("\n\033[3mO que deseja?" +
                             "\n(1) Permanecer na tela de cadastro do fornecedor" +
                             "\n(2) Retornar ao menu principal" +
                             "\n(3) Ir para o menu de cadastro geral" +
@@ -379,6 +378,7 @@ public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro
             }
         }
 
+        //#region rascunho
         /*
 
         boolean session = true;
@@ -589,5 +589,6 @@ public class AreaCadastroFornecedor extends LeitorDados implements IAreaCadastro
             }
         }
     */
+        //#endregion
     }
 }

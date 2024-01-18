@@ -1,4 +1,4 @@
 package Loja.Acoes;
 
-public class FecharVenda {
+public class fecharVenda {
 }

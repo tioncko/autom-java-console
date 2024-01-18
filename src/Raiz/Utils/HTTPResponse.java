@@ -1,6 +1,6 @@
 package Raiz.Utils;
 
-import Raiz.Core.ImpressaoLog;
+import Raiz.Core.impressaoLog;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -9,12 +9,15 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
-public abstract class HTTPResponse {
+public abstract class httpResponse {
 
+    /**
+     * Método que retorna o response do endpoint informado no parâmetro uri
+     */
     public static String responseContent(String uri) {
 
-        ImpressaoLog.LogGenerico<HTTPResponse> printLog = new ImpressaoLog.LogGenerico<>();
-        @SuppressWarnings("unchecked") Logger log = printLog.getLogRetorno((Class<HTTPResponse>) (Object) (HTTPResponse.class));
+        impressaoLog.logGenerico<httpResponse> printLog = new impressaoLog.logGenerico<>();
+        @SuppressWarnings("unchecked") Logger log = printLog.getLogRetorno((Class<httpResponse>) (Object) (httpResponse.class));
         StringBuilder response = new StringBuilder();
         int responseCode = 0;
 
@@ -37,7 +40,7 @@ public abstract class HTTPResponse {
                 return response.toString();
             } else return responseCode + "_Status_Code";
         } catch (Exception e) {
-            log.warning("[" + HTTPResponse.class.getSimpleName() + "] ["+ responseCode + "_Status_Code" + "]" + e.getMessage());
+            log.warning("[" + httpResponse.class.getSimpleName() + "] ["+ responseCode + "_Status_Code" + "]" + e.getMessage());
         }
         return null;
     }

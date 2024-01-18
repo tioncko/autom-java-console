@@ -1,4 +1,4 @@
 package Loja.Acoes;
 
-public class FormaPgto {
+public class formaPgto {
 }

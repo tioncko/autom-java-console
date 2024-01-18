@@ -3,28 +3,28 @@ package Cadastro.Database.Metodos.Interfaces;
 public interface IAreaCadastro {
 
     public interface IClientes {
-        public void menuCadastroCliente(Integer userId) throws Exception;
-        public void AcoesCadastroCliente(String id, Integer userId) throws Exception;
+        public void menuCadastroCliente(Integer userId);
+        public void acoesCadastroCliente(String id, Integer userId);
     }
 
     public interface IFornecedores {
-        public void menuCadastroFornecedor(Integer userId) throws Exception;
-        public void AcoesCadastroFornecedor(String id, Integer userId) throws Exception;
+        public void menuCadastroFornecedor(Integer userId);
+        public void acoesCadastroFornecedor(String id, Integer userId);
     }
 
     public interface IUsuarios {
-        public void menuCadastroUsuario(Integer userId) throws Exception;
-        public void AcoesCadastroUsuario(String id, Integer userId) throws Exception;
+        public void menuCadastroUsuario(Integer userId);
+        public void acoesCadastroUsuario(String id, Integer userId);
     }
 
     public interface IProdutos {
-        public void menuCadastroProduto(Integer userId) throws Exception;
-        public void AcoesCadastroProduto(String id, Integer userId) throws Exception;
+        public void menuCadastroProduto(Integer userId);
+        public void acoesCadastroProduto(String id, Integer userId);
     }
 
     public interface IServicos {
-        public void menuCadastroServico(Integer userId) throws Exception;
-        public void AcoesCadastroServico(String id, Integer userId) throws Exception;
+        public void menuCadastroServico(Integer userId);
+        public void acoesCadastroServico(String id, Integer userId);
     }
 
 }

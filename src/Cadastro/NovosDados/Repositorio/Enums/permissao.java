@@ -31,9 +31,8 @@ public enum permissao {
         return ENUM_MAP.get(id);
     }
 }
-
+    //#region rascunho
 /*
-
 public class EnumDemo {
 
    public static void main(String args[]) {
@@ -55,3 +54,4 @@ ADMIN costs 2 dollars
 USER costs 3 dollars
 Selected : ROOT
 */
+//#endregion

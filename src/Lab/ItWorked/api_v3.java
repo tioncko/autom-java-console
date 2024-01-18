@@ -2,7 +2,7 @@ package Lab.ItWorked;
 
 import Cadastro.NovosDados.Repositorio.Enums.arquivoConfig;
 import Raiz.Core.Config;
-import Raiz.Core.ImpressaoLog;
+import Raiz.Core.impressaoLog;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -120,7 +120,7 @@ public class api_v3{
             //LoggerAPI.tried<api_v3> x = new LoggerAPI.tried<>();
             //Logger logg = x.retorno(api_v3.class);
 
-            ImpressaoLog.LogGenerico<api_v3> x = new ImpressaoLog.LogGenerico<>();
+            impressaoLog.logGenerico<api_v3> x = new impressaoLog.logGenerico<>();
             Logger logg = x.getLogRetorno(api_v3.class);
 
             logg.info("in MyClass: " + e.getMessage());

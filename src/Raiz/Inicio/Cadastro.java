@@ -2,24 +2,24 @@ package Raiz.Inicio;
 
 import Cadastro.Database.Metodos.*;
 import Cadastro.Database.Metodos.Interfaces.INovosDados;
-import Cadastro.Database.DataSet;
+import Cadastro.Database.dataSet;
 import Cadastro.NovosDados.Repositorio.Auxiliar.Propriedades;
-import Raiz.Utils.SmartTools;
+import Raiz.Utils.smartTools;
 
 public class Cadastro implements INovosDados {
 
-    MetodosCliente novoCli;
-    MetodosUsuario novoUsr;
-    MetodosFornecedor novoFrn;
-    MetodosProduto novoPrd;
-    MetodosServico novoSrv;
+    metodosCliente novoCli;
+    metodosUsuario novoUsr;
+    metodosFornecedor novoFrn;
+    metodosProduto novoPrd;
+    metodosServico novoSrv;
 
-    public Cadastro(DataSet<?> DS) {
-        this.novoCli = new MetodosCliente(DS);
-        this.novoUsr = new MetodosUsuario(DS);
-        this.novoFrn = new MetodosFornecedor(DS);
-        this.novoPrd = new MetodosProduto(DS);
-        this.novoSrv = new MetodosServico(DS);
+    public Cadastro(dataSet<?> DS) {
+        this.novoCli = new metodosCliente(DS);
+        this.novoUsr = new metodosUsuario(DS);
+        this.novoFrn = new metodosFornecedor(DS);
+        this.novoPrd = new metodosProduto(DS);
+        this.novoSrv = new metodosServico(DS);
     }
 
     /**
@@ -33,7 +33,7 @@ public class Cadastro implements INovosDados {
             novoCli.setIdade(idade);
             novoCli.setEmail(email);
             novoCli.setTelefone(telefone);
-            novoCli.setInfoCEP(SmartTools.CEP.ResponseCEP(CEP, numCasa));
+            novoCli.setInfoCEP(smartTools.CEP.responseCEP(CEP, numCasa));
 
             novoCli.novoCliente(novoCli.nextId(), novoCli);
         }
@@ -65,7 +65,7 @@ public class Cadastro implements INovosDados {
 
         @Override
         public boolean listarClientes() {
-            return novoCli.PrintMapWithSet();
+            return novoCli.printMapWithSet();
         }
 
         public boolean validarId(Integer id) { return novoCli.userValid(id); }
@@ -78,7 +78,7 @@ public class Cadastro implements INovosDados {
         @Override
         public void cadastrarUsuario(String login, String pass, String nome, String depto){
             novoUsr.setLogin(login);
-            novoUsr.setPassword(SmartTools.Senha.Encrypt(pass));
+            novoUsr.setPassword(smartTools.Senha.Encrypt(pass));
             novoUsr.setNome(nome);
             novoUsr.setDepto(depto);
 
@@ -88,7 +88,7 @@ public class Cadastro implements INovosDados {
         @Override
         public void alterarUsuario(Integer id, String campo, String update){
             novoUsr.alterUsuario(id, campo, update);
-            System.out.println(MetodosUsuario.cod == 1 ? "\nUsuário alterado" : "\nNão foi possível alterar este usuário");
+            System.out.println(metodosUsuario.cod == 1 ? "\nUsuário alterado" : "\nNão foi possível alterar este usuário");
         }
 
         @Override
@@ -113,7 +113,7 @@ public class Cadastro implements INovosDados {
 
         @Override
         public boolean listarUsuario() {
-            return novoUsr.PrintMapWithSet();
+            return novoUsr.printMapWithSet();
         }
 
         @Override
@@ -124,14 +124,14 @@ public class Cadastro implements INovosDados {
         @Override
         public void associarPermissao(Integer id, String access) {
             novoUsr.darPermissao(id, access);
-            //System.out.print(MetodosUsuario.cod == 1 ? "\nUsuário inserido" : "\nUsuario existente");
+            //System.out.print(metodosUsuario.cod == 1 ? "\nUsuário inserido" : "\nUsuario existente");
             System.out.println("\nUsuário inserido");
         }
 
         @Override
         public void alterarPermissao(Integer idAdm, Integer id, String access) {
             novoUsr.altPermissao(idAdm, id, access);
-            //System.out.println(MetodosUsuario.cod == 1 ? "\nUsuário alterado" : "\nNão foi possível alterar este usuário");
+            //System.out.println(metodosUsuario.cod == 1 ? "\nUsuário alterado" : "\nNão foi possível alterar este usuário");
             System.out.println("\nUsuário alterado");
         }
 
@@ -155,7 +155,7 @@ public class Cadastro implements INovosDados {
             novoFrn.setEmail(email);
             novoFrn.setInscEstadual(inscEstadual);
             novoFrn.setTelefone(telefone);
-            novoFrn.setInfoCEP(SmartTools.CEP.ResponseCEP(CEP, numCasa));
+            novoFrn.setInfoCEP(smartTools.CEP.responseCEP(CEP, numCasa));
             novoFrn.setAtividades(novoFrn.fornAtividades(atividade));
 
             novoFrn.novoFornecedor(novoFrn.nextId(), novoFrn);
@@ -188,7 +188,7 @@ public class Cadastro implements INovosDados {
 
         @Override
         public boolean listarFornecedores() {
-            return novoFrn.PrintMapWithSet();
+            return novoFrn.printMapWithSet();
         }
 
         public boolean retorno(Integer id) { return novoFrn.returnAtividades(id); }
@@ -240,7 +240,7 @@ public class Cadastro implements INovosDados {
 
         @Override
         public boolean listarProdutos() {
-            return novoPrd.PrintMapWithSet();
+            return novoPrd.printMapWithSet();
         }
 
         public boolean validarId(Integer id) { return novoPrd.userValid(id); }

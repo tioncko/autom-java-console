@@ -1,9 +1,9 @@
 package Cadastro.NovosDados.Repositorio.DTO;
 
-import Cadastro.NovosDados.Repositorio.Abstratos.OutrosDados;
-import Cadastro.NovosDados.Repositorio.Auxiliar.ValidCEP;
+import Cadastro.NovosDados.Repositorio.Abstratos.outrosDados;
+import Cadastro.NovosDados.Repositorio.Auxiliar.validarCEP;
 
-public class Funcionario extends OutrosDados {
+public class Funcionario extends outrosDados {
 
     private int id;
     private String nome;
@@ -12,7 +12,7 @@ public class Funcionario extends OutrosDados {
     private String area;
     private String departamento;
 
-    public Funcionario(String nome, int idade, String genero, String email, String telefone, ValidCEP infoCEP, String area, String departamento) {
+    public Funcionario(String nome, int idade, String genero, String email, String telefone, validarCEP infoCEP, String area, String departamento) {
         this.nome = nome;
         this.idade = idade;
         this.genero = genero;

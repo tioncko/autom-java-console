@@ -1,65 +1,43 @@
 package Cadastro.Database.Metodos;
 
-import Cadastro.Database.DataSet;
-import Cadastro.NovosDados.Repositorio.Auxiliar.PermissaoUsuario;
-import Cadastro.NovosDados.Repositorio.DTO.Cliente;
-import Cadastro.NovosDados.Repositorio.DTO.Fornecedor;
-import Cadastro.NovosDados.Repositorio.DTO.Servicos;
+import Cadastro.Database.dataSet;
+import Cadastro.NovosDados.Repositorio.Auxiliar.permissaoUsuario;
 import Cadastro.NovosDados.Repositorio.DTO.Usuario;
 import Cadastro.NovosDados.Repositorio.Enums.camposUsuario;
 import Cadastro.NovosDados.Repositorio.Enums.permissao;
-import Raiz.Utils.SmartTools;
+import Raiz.Utils.smartTools;
 
 import java.util.*;
 
-public class MetodosUsuario extends Usuario {
+public class metodosUsuario extends Usuario {
 
-    private Map<Integer, Usuario> tabUsuario;
-    private DataSet<Usuario> DS;
+    private dataSet<Usuario> DS;
     public static String message;
     public static int cod = 0;
 
     /**
      * Construtor
      */
-
-    public MetodosUsuario() {
-        //    this.tabUsuario = new HashMap<>();
-    }
-
-    /*
-    public MetodosUsuario(MetodosUsuario usr) {
-        this.tabUsuario = usr.tabUsuario;
-    }
-    */
     @SuppressWarnings("unchecked")
-    public MetodosUsuario(DataSet<?> banco) {
-        this.DS = (DataSet<Usuario>) banco;
+    public metodosUsuario(dataSet<?> banco) {
+        this.DS = (dataSet<Usuario>) banco;
     }
 
     /**
      * Inserir novo usuário
      */
     public void novoUsuario(Integer id, Usuario user) {
-        //var mu = new MetodosUsuario();
-        //mu.tabUsuario = this.tabUsuario;
-
         if (!validUsuario(user.getLogin())) {
             DS.insert(user.setId(id), new Usuario(user.getLogin().toLowerCase(), user.getPassword(), user.getNome(), user.getDepto()), Usuario.class);
-        } else
-            cod = 1;
+        } else cod = 1;
     }
 
     /**
      * Alterar um usuário
      */
     public void alterUsuario(Integer id, String Campo, String update) {
-        //var mu = new MetodosUsuario();
-        // mu.tabUsuario = this.tabUsuario;
-
         if (!DS.select(Usuario.class).isEmpty()) {
             if (DS.select(Usuario.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
-                //fieldUser getCampo = fieldUser.valueOf(Campo.toUpperCase());
                 camposUsuario getCampo = camposUsuario.valueOf(Campo.toUpperCase());
 
                 Set<Map.Entry<Integer, Usuario>> getUser = DS.select(Usuario.class).entrySet();
@@ -75,7 +53,7 @@ public class MetodosUsuario extends Usuario {
                                 } else cod = 2;
                                 break;
                             case SENHA:
-                                DS.insert(id, new Usuario(user.getLogin(), SmartTools.Senha.Encrypt(update), user.getNome(), user.getDepto()), Usuario.class);
+                                DS.insert(id, new Usuario(user.getLogin(), smartTools.Senha.Encrypt(update), user.getNome(), user.getDepto()), Usuario.class);
                                 break;
                             case NOME:
                                 DS.insert(id, new Usuario(user.getLogin(), user.getPassword(), update, user.getDepto()), Usuario.class);
@@ -91,32 +69,6 @@ public class MetodosUsuario extends Usuario {
             } else message = "\nRegistro inexistente na tabela.";
         } else message = "\nA tabela de usuários está vazia.";
     }
-    //#region lambda
-/*
-    getUser.stream()
-    .filter(x-> x.getKey().equals(id))
-    .forEach(user -> {
-        switch (getCampo) {
-            case LOGIN -> {
-                if (!validUsuario(user.getValue().getLogin(), mu)) {
-                    tabUsuario.put(id, new Usuario(update.toLowerCase(), user.getValue().getPassword(),
-                            user.getValue().getNome(), user.getValue().getDepto()));
-                }
-                cod = 1;
-            }
-            case SENHA ->
-                    tabUsuario.put(id, new Usuario(user.getValue().getLogin(), Senha.Encrypt(update),
-                            user.getValue().getNome(), user.getValue().getDepto()));
-            case NOME ->
-                    tabUsuario.put(id, new Usuario(user.getValue().getLogin(), user.getValue().getPassword(), update,
-                            user.getValue().getDepto()));
-            case DEPTO ->
-                    tabUsuario.put(id, new Usuario(user.getValue().getLogin(), user.getValue().getPassword(),
-                            user.getValue().getNome(), update));
-        }
-    });
-*/
-    //#endregion
 
     /**
      * Remover um usuário
@@ -182,10 +134,11 @@ public class MetodosUsuario extends Usuario {
         return maxnum + 1;
     }
 
-
-    public boolean validUsuario(String login) {//}, MetodosUsuario dt) {
+    /**
+     * Valida se o usuário já existe
+     */
+    public boolean validUsuario(String login) {//}, metodosUsuario dt) {
         boolean valid = false;
-        //this.tabUsuario = dt.tabUsuario;
 
         if (!DS.select(Usuario.class).isEmpty()) {
             Set<Map.Entry<Integer, Usuario>> getUser = DS.select(Usuario.class).entrySet();
@@ -196,14 +149,13 @@ public class MetodosUsuario extends Usuario {
     }
 
     /**
-     * Validar usuário para acesso a plataforma
+     * Validar login para acesso à plataforma (autenticação)
      */
-    public boolean validLoginUsuario(String login, String pass) {//}, MetodosUsuario dt) {
+    public boolean validLoginUsuario(String login, String pass) {//}, metodosUsuario dt) {
         boolean valid = false;
-        //this.tabUsuario = dt.tabUsuario;
 
         if (!DS.select(Usuario.class).isEmpty()) {
-            String encrypt = String.valueOf(SmartTools.Senha.Encrypt(pass));
+            String encrypt = String.valueOf(smartTools.Senha.Encrypt(pass));
             Set<Map.Entry<Integer, Usuario>> getUser = DS.select(Usuario.class).entrySet();
             for (Map.Entry<Integer, Usuario> setUser : getUser) {
 
@@ -221,7 +173,7 @@ public class MetodosUsuario extends Usuario {
     /**
      * Imprimir usuários que estão na lista no momento
      */
-    public boolean PrintMapWithSet() {
+    public boolean printMapWithSet() {
         if (!DS.select(Usuario.class).isEmpty()) {
             Set<Map.Entry<Integer, Usuario>> getUser = DS.select(Usuario.class).entrySet();
             for (Map.Entry<Integer, Usuario> setUser : getUser) {
@@ -240,13 +192,7 @@ public class MetodosUsuario extends Usuario {
     /**
      * Enum para o campo de alteração da tabUsuario
      */
-    /*
-    private enum fieldUser {
-        LOGIN, SENHA, NOME, DEPTO;
-    }
-     */
-    public Integer UserId(String access) {//}, MetodosUsuario dt) {
-        //this.tabUsuario = dt.tabUsuario;
+    public Integer userId(String access) {//}, metodosUsuario dt) {
         Integer retrn = null;
 
         if (!DS.select(Usuario.class).isEmpty()) {
@@ -267,9 +213,8 @@ public class MetodosUsuario extends Usuario {
     /**
      * Validando permissão de acesso ao usuario
      */
-    public PermissaoUsuario validPermissao(String login) {//}, MetodosUsuario dt){
-        PermissaoUsuario access = null;
-        //this.tabUsuario = dt.tabUsuario;
+    public permissaoUsuario validPermissao(String login) {//}, metodosUsuario dt){
+        permissaoUsuario access = null;
 
         if (!DS.select(Usuario.class).isEmpty()) {
             Set<Map.Entry<Integer, Usuario>> getUser = DS.select(Usuario.class).entrySet();
@@ -297,12 +242,12 @@ public class MetodosUsuario extends Usuario {
 
                     Integer kid = setUser.getKey();
                     Usuario user = setUser.getValue();
-                    PermissaoUsuario root = new PermissaoUsuario(String.valueOf(permissao.ROOT));
+                    permissaoUsuario root = new permissaoUsuario(String.valueOf(permissao.ROOT));
                     if (id.equals(1) && kid.equals(id) && user.getLogin().equals("supervisor".toLowerCase()) && access.equals(String.valueOf(root))) {
 
                         permissao acessosup;
-                        acessosup = SmartTools.Numeros.isNumeric(access) ? permissao.getAccess(Integer.parseInt(access)) : permissao.valueOf(access.toUpperCase());
-                        PermissaoUsuario perm = new PermissaoUsuario(String.valueOf(acessosup).toUpperCase());
+                        acessosup = smartTools.Numeros.isNumeric(access) ? permissao.getAccess(Integer.parseInt(access)) : permissao.valueOf(access.toUpperCase());
+                        permissaoUsuario perm = new permissaoUsuario(String.valueOf(acessosup).toUpperCase());
 
                         DS.insert(id, new Usuario(user.getLogin(), user.getPassword(), user.getNome(), user.getDepto(), perm), Usuario.class);
                     }
@@ -318,7 +263,7 @@ public class MetodosUsuario extends Usuario {
         if (!DS.select(Usuario.class).isEmpty()) {
             if (DS.select(Usuario.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
                 Set<Map.Entry<Integer, Usuario>> getUser = DS.select(Usuario.class).entrySet();
-                permissao acesso = SmartTools.Numeros.isNumeric(access) ? permissao.getAccess(Integer.parseInt(access)) : permissao.valueOf(access.toUpperCase());
+                permissao acesso = smartTools.Numeros.isNumeric(access) ? permissao.getAccess(Integer.parseInt(access)) : permissao.valueOf(access.toUpperCase());
 
                 if ((!access.toUpperCase().equals(String.valueOf(permissao.ROOT))) || (!String.valueOf(acesso).equals(String.valueOf(1)))) {
                     for (Map.Entry<Integer, Usuario> setUser : getUser) {
@@ -326,7 +271,7 @@ public class MetodosUsuario extends Usuario {
                         Usuario user = setUser.getValue();
                         if (setUser.getKey().equals(id)) {
 
-                            PermissaoUsuario perm = new PermissaoUsuario(String.valueOf(acesso).toUpperCase());
+                            permissaoUsuario perm = new permissaoUsuario(String.valueOf(acesso).toUpperCase());
                             DS.insert(id, new Usuario(user.getLogin(), user.getPassword(), user.getNome(), user.getDepto(), perm), Usuario.class);
                         }
                     }
@@ -343,9 +288,9 @@ public class MetodosUsuario extends Usuario {
         if (!DS.select(Usuario.class).isEmpty()) {
             if (DS.select(Usuario.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id) && x.getKey().equals(idAdm))) {
                 if (!access.toUpperCase().equals(String.valueOf(permissao.ROOT))) {
-                    PermissaoUsuario admin = new PermissaoUsuario(String.valueOf(permissao.ADMIN));
-                    PermissaoUsuario root = new PermissaoUsuario(String.valueOf(permissao.ROOT));
-                    PermissaoUsuario perm = validEnumPermissao(access);
+                    permissaoUsuario admin = new permissaoUsuario(String.valueOf(permissao.ADMIN));
+                    permissaoUsuario root = new permissaoUsuario(String.valueOf(permissao.ROOT));
+                    permissaoUsuario perm = validEnumPermissao(access);
 
                     Set<Map.Entry<Integer, Usuario>> getUser = DS.select(Usuario.class).entrySet();
                     boolean valid = getUser.stream().anyMatch(get -> get.getKey().equals(idAdm)
@@ -361,9 +306,12 @@ public class MetodosUsuario extends Usuario {
         } else message = "\nA tabela de usuários está vazia.";
     }
 
-    protected PermissaoUsuario validEnumPermissao(String access) {
-        permissao acesso = SmartTools.Numeros.isNumeric(access) ? permissao.getAccess(Integer.parseInt(access)) : permissao.valueOf(access.toUpperCase());
-        return new PermissaoUsuario(String.valueOf(acesso).toUpperCase());
+    /**
+     * Retorna a permissão do usuário
+     */
+    protected permissaoUsuario validEnumPermissao(String access) {
+        permissao acesso = smartTools.Numeros.isNumeric(access) ? permissao.getAccess(Integer.parseInt(access)) : permissao.valueOf(access.toUpperCase());
+        return new permissaoUsuario(String.valueOf(acesso).toUpperCase());
     }
 
     /**
@@ -377,7 +325,7 @@ public class MetodosUsuario extends Usuario {
 
                     Integer kid = setUser.getKey();
                     Usuario user = setUser.getValue();
-                    PermissaoUsuario root = new PermissaoUsuario(String.valueOf(permissao.ROOT));
+                    permissaoUsuario root = new permissaoUsuario(String.valueOf(permissao.ROOT));
 
                     if (kid.equals(id) && (!Objects.equals(String.valueOf(user.getAccess()), String.valueOf(root)))) {
                         DS.insert(id, new Usuario(user.getLogin(), user.getPassword(), user.getNome(), user.getDepto()), Usuario.class);
@@ -387,6 +335,9 @@ public class MetodosUsuario extends Usuario {
         } else message = "\nA tabela de usuários está vazia.";
     }
 
+    /**
+     * Valida se o id existe
+     */
     public boolean userValid (Integer id) {
         boolean valid = false;
 
@@ -398,40 +349,82 @@ public class MetodosUsuario extends Usuario {
 
         return valid;
     }
-    //#region notes
-/*
+
+    //#region rascunho
+
+    /*
+    //private Map<Integer, Usuario> tabUsuario;
+    //public metodosUsuario() {
+        //    this.tabUsuario = new HashMap<>();
+    //}
+
+    public metodosUsuario(metodosUsuario usr) {
+        this.tabUsuario = usr.tabUsuario;
+    }
+
+            //var mu = new metodosUsuario();
+        //mu.tabUsuario = this.tabUsuario;
+
+    private enum fieldUser {
+        LOGIN, SENHA, NOME, DEPTO;
+    }
+
+    getUser.stream()
+    .filter(x-> x.getKey().equals(id))
+    .forEach(user -> {
+        switch (getCampo) {
+            case LOGIN -> {
+                if (!validUsuario(user.getValue().getLogin(), mu)) {
+                    tabUsuario.put(id, new Usuario(update.toLowerCase(), user.getValue().getPassword(),
+                            user.getValue().getNome(), user.getValue().getDepto()));
+                }
+                cod = 1;
+            }
+            case SENHA ->
+                    tabUsuario.put(id, new Usuario(user.getValue().getLogin(), Senha.Encrypt(update),
+                            user.getValue().getNome(), user.getValue().getDepto()));
+            case NOME ->
+                    tabUsuario.put(id, new Usuario(user.getValue().getLogin(), user.getValue().getPassword(), update,
+                            user.getValue().getDepto()));
+            case DEPTO ->
+                    tabUsuario.put(id, new Usuario(user.getValue().getLogin(), user.getValue().getPassword(),
+                            user.getValue().getNome(), update));
+        }
+    });
+
+
     public static void main(String[] args) throws Exception {
 
-        MetodosUsuario musr = new MetodosUsuario();
+        metodosUsuario musr = new metodosUsuario();
 
         System.out.println("# Lista de clientes #");
 
         musr.setLogin("Keyla");
-        musr.setPassword(SmartTools.Senha.Encrypt("1234"));
+        musr.setPassword(smartTools.Senha.Encrypt("1234"));
         musr.setNome("Keyla Nascimento");
         musr.setDepto("Juridico");
         musr.novoUsuario(1, musr);
 
         musr.setLogin("Paula");
-        musr.setPassword(SmartTools.Senha.Encrypt("5845"));
+        musr.setPassword(smartTools.Senha.Encrypt("5845"));
         musr.setNome("Paula Matos");
         musr.setDepto("TI");
         musr.novoUsuario(2, musr);
 
         musr.setLogin("Rose");
-        musr.setPassword(SmartTools.Senha.Encrypt("8754"));
+        musr.setPassword(smartTools.Senha.Encrypt("8754"));
         musr.setNome("Rose Barros");
         musr.setDepto("TI");
         musr.novoUsuario(3, musr);
 
         musr.setLogin("Tabata");
-        musr.setPassword(SmartTools.Senha.Encrypt("9687"));
+        musr.setPassword(smartTools.Senha.Encrypt("9687"));
         musr.setNome("Tabata Amaral");
         musr.setDepto("Governança");
         musr.novoUsuario(4, musr);
 
         musr.setLogin("supervisor");
-        musr.setPassword(SmartTools.Senha.Encrypt("5474"));
+        musr.setPassword(smartTools.Senha.Encrypt("5474"));
         musr.setNome("Perola Pardo");
         musr.setDepto("Business");
         musr.novoUsuario(5, musr);
