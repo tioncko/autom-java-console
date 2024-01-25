@@ -116,11 +116,13 @@ public abstract class smartTools {
         }
     }
 
+    //#region CEP BKP
+    /*
     public static class CEP {
 
         /**
          * Retorna o objeto CEP
-         */
+         /
         public static validarCEP responseCEP(String NumCEP, int NumEndereco) {
 
             impressaoLog.logGenerico<CEP> printLog = new impressaoLog.logGenerico<>();
@@ -158,6 +160,8 @@ public abstract class smartTools {
             return novoCEP;
         }
     }
+    */
+    //#endregion
 
     public static class DiaAtual {
 

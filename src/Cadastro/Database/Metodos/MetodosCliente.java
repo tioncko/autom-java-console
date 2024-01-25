@@ -1,5 +1,6 @@
 package Cadastro.Database.Metodos;
 
+import Cadastro.Database.Metodos.Deserializers.jsonCEP;
 import Cadastro.Database.dataSet;
 import Cadastro.NovosDados.Repositorio.DTO.Cliente;
 import Cadastro.NovosDados.Repositorio.Enums.camposCliente;
@@ -62,10 +63,10 @@ public class metodosCliente extends Cliente {
                                 DS.insert(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCPF(), cli.getEmail(), update, cli.getInfoCEP()), Cliente.class);
                                 break;
                             case CEP:
-                                DS.insert(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCPF(), cli.getEmail(), cli.getTelefone(), smartTools.CEP.responseCEP(update, cli.getInfoCEP().getNum())), Cliente.class);
+                                DS.insert(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCPF(), cli.getEmail(), cli.getTelefone(), jsonCEP.responseCEP(update, cli.getInfoCEP().getNum())), Cliente.class);
                                 break;
                             case NUMCASA:
-                                DS.insert(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCPF(), cli.getEmail(), cli.getTelefone(), smartTools.CEP.responseCEP(cli.getInfoCEP().getCEP().replace("-", ""), Integer.parseInt(update))), Cliente.class);
+                                DS.insert(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCPF(), cli.getEmail(), cli.getTelefone(), jsonCEP.responseCEP(cli.getInfoCEP().getCEP().replace("-", ""), Integer.parseInt(update))), Cliente.class);
                                 break;
                             default:
                                 break;

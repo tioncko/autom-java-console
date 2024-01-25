@@ -1,5 +1,6 @@
 package Cadastro.Database.JSON.JsonTools;
 
+import Cadastro.Database.Metodos.Deserializers.jsonCEP;
 import Cadastro.NovosDados.Repositorio.Auxiliar.Propriedades;
 import Cadastro.NovosDados.Repositorio.DTO.Fornecedor;
 import Cadastro.NovosDados.Repositorio.DTO.Produtos;
@@ -68,7 +69,9 @@ class jsonDTO {
                 CEP = ret + CEP;
             }
             int numLocal = item.get("numLocal").getAsInt();
-        forn.setInfoCEP(smartTools.CEP.responseCEP(CEP, numLocal));
+//        forn.setInfoCEP(smartTools.CEP.responseCEP(CEP, numLocal));
+        forn.setInfoCEP(jsonCEP.responseCEP(CEP, numLocal));
+
         return forn;
     }
 }

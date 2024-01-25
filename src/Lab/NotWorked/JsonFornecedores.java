@@ -1,5 +1,6 @@
 package Lab.NotWorked;
 
+import Cadastro.Database.Metodos.Deserializers.jsonCEP;
 import Cadastro.NovosDados.Repositorio.Enums.arquivoConfig;
 import Raiz.Core.Config;
 import Cadastro.NovosDados.Repositorio.DTO.Fornecedor;
@@ -33,7 +34,8 @@ public class JsonFornecedores extends jsonPerGson {
             forn.setEmail(email);
             forn.setInscEstadual(inscEstadual);
             forn.setTelefone(telefone);
-            forn.setInfoCEP(smartTools.CEP.responseCEP(infoCEP, numLocal));
+            forn.setInfoCEP(jsonCEP.responseCEP(infoCEP, numLocal));
+//            forn.setInfoCEP(smartTools.CEP.responseCEP(infoCEP, numLocal));
             return forn;
         }
     }
@@ -49,6 +51,8 @@ public class JsonFornecedores extends jsonPerGson {
         }
     }
 
+    //#region rascunho
+    /*
     public Map<Integer, Fornecedor> ListaFornecedores() {
 
         Map<Integer, Fornecedor> lista = new HashMap<>();
@@ -56,7 +60,7 @@ public class JsonFornecedores extends jsonPerGson {
         String endpointJson = Config.getProperties(configParam);
 
         JsonDeserializerFornecedores json = new JsonDeserializerFornecedores();
-        List<Fornecedor> forn = requestJson(endpointJson, Fornecedor.class, json);
+        List<Fornecedor> forn = requestListJson(endpointJson, Fornecedor.class, json);
 
         Integer i = 1;
         for (Fornecedor item : forn) {
@@ -65,15 +69,6 @@ public class JsonFornecedores extends jsonPerGson {
         }
         return lista;
     }
-
-    public Fornecedor nomeForn (Integer id) {
-
-        Fornecedor forn;
-        Set<Map.Entry<Integer, Fornecedor>> getForn = ListaFornecedores().entrySet();
-
-        forn = getForn.stream()
-                .filter(setid -> setid.getKey().equals(id))
-                .findFirst().orElseThrow().getValue();
-        return forn;
-    }
+         */
+//#endregion
 }

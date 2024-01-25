@@ -1,6 +1,7 @@
 package Raiz.Inicio;
 
 import Cadastro.Database.Metodos.*;
+import Cadastro.Database.Metodos.Deserializers.jsonCEP;
 import Cadastro.Database.Metodos.Interfaces.INovosDados;
 import Cadastro.Database.dataSet;
 import Cadastro.NovosDados.Repositorio.Auxiliar.Propriedades;
@@ -33,7 +34,7 @@ public class Cadastro implements INovosDados {
             novoCli.setIdade(idade);
             novoCli.setEmail(email);
             novoCli.setTelefone(telefone);
-            novoCli.setInfoCEP(smartTools.CEP.responseCEP(CEP, numCasa));
+            novoCli.setInfoCEP(jsonCEP.responseCEP(CEP, numCasa));
 
             novoCli.novoCliente(novoCli.nextId(), novoCli);
         }
@@ -155,7 +156,7 @@ public class Cadastro implements INovosDados {
             novoFrn.setEmail(email);
             novoFrn.setInscEstadual(inscEstadual);
             novoFrn.setTelefone(telefone);
-            novoFrn.setInfoCEP(smartTools.CEP.responseCEP(CEP, numCasa));
+            novoFrn.setInfoCEP(jsonCEP.responseCEP(CEP, numCasa));
             novoFrn.setAtividades(novoFrn.fornAtividades(atividade));
 
             novoFrn.novoFornecedor(novoFrn.nextId(), novoFrn);

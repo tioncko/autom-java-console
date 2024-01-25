@@ -24,8 +24,8 @@ public class Config {
 
             pr = switch (param) {
                 case "store_class", "supply_class" -> src + prop.getProperty(param);
-                case "endpointMarcas" -> prop.getProperty(param);
-                default -> pr;
+                case "endpointMarcas", "endpointCEP" -> prop.getProperty(param);
+                default -> null;
             };
 
         } catch (Exception e) {

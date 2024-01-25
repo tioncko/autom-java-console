@@ -21,7 +21,7 @@ Tela Loja
 
 ==============================
 
-# Soluções para implementar # (14/16)
+# Soluções para implementar # (15/18)
 
 [OK] Validação de exclusão de item da lista de cada classe "Metodos" [exemplo: código X já foi excluído]
 [OK] Incluir condição para impressão da mensagem de saída [sout("Alteração concluida") ou sout("a tabela tá vazia")]
@@ -37,7 +37,9 @@ Tela Loja
 [OK] (se possível) aplicar cor fixa nos menus (Cor fixa nos títulos)
 [OK] Limpar comentários das classes -> DEFINIR ELES COMO RASCUNHO
 [OK] Verificar a possibilidade de criar uma validação de response code na parte do cep [Ajuste feito]
-- Inserir fornecedores na lista de produtos
-- Associar as atividades aos fornecedores
+[OK] Inserir fornecedores na lista de produtos
+- Criar método para remover e incrementar atividades
+[OK] Associar as atividades aos fornecedores
+[OK] Necessário mudar a forma de coleta de CEP (atual: via XML, atualizar para: via JSON)
 
 ==============================

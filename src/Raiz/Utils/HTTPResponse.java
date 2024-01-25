@@ -40,7 +40,7 @@ public abstract class httpResponse {
                 return response.toString();
             } else return responseCode + "_Status_Code";
         } catch (Exception e) {
-            log.warning("[" + httpResponse.class.getSimpleName() + "] ["+ responseCode + "_Status_Code" + "]" + e.getMessage());
+            log.warning("[" + httpResponse.class.getSimpleName() + "] ["+ responseCode + "_Status_Code" + "] " + e.getMessage());
         }
         return null;
     }

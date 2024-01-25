@@ -24,15 +24,15 @@ Tela Cadastro:
 
 O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas nas seguintes tarefas (novas tarefas serão informadas aqui):
 
-✅ *Validação de exclusão de item da lista de cada classe "Metodos" `exemplo: código X já foi excluído`*
+✅ *Validação de exclusão de item da lista de cada classe "Metodos" `-> exemplo: código X já foi excluído`*
 
-✅ *Incluir condição para impressão da mensagem de saída `sout("Alteração concluida") ou sout("a tabela está vazia")`*
+✅ *Incluir condição para impressão da mensagem de saída `-> sout("Alteração concluida") ou sout("a tabela está vazia")`*
 
 ✅ *Aplicar validação nos métodos de localização*
 
 ✅ *Incluir novo método para validar se o atributo getAtividades da tela de fornecedores está vazia, para assim, permitir o insert*
 
-✅ *Revisar ajustes feitos na area de fornecedor para as areas Cliente e Usuario `validId`*
+✅ *Revisar ajustes feitos na area de fornecedor para as areas Cliente e Usuário `-> validId`*
 
 ✅ *Implementar equals e hashcode para CPF e CNPJ*
 
@@ -40,9 +40,9 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 
 ✅ *Validar se os logs implementados estão funcionando da forma que foi planejada*
 
-✅ Descrição dos métodos `o que são, o que fazem e o que retornam`
+✅ *Descrição dos métodos `-> o que são, o que fazem e o que retornam`*
 
-✅ *Releitura de nomes de variáveis, métodos e classes `exemplo: Map<Integer, Servicos> x = new HashMap<>(); -> Map<Integer, Servicos> mapServ = new HashMap<>();`*
+✅ *Releitura de nomes de variáveis, métodos e classes `-> exemplo: Map<Integer, Servicos> x = new HashMap<>(); -> Map<Integer, Servicos> mapServ = new HashMap<>();`*
 
 ✅ *(se possível) aplicar cor fixa nos menus (Cor fixa nos títulos)*
 
@@ -50,9 +50,13 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 
 ✅ *Verificar a possibilidade de criar uma validação de response code na parte do cep*
 
-🔲 Inserir fornecedores na lista de produtos
+✅ *Inserir fornecedores na lista de produtos*
 
-🔲 Associar as atividades aos fornecedores
+✅ *Associar as atividades aos fornecedores*
+
+🔲 Criar método para remover e incrementar atividades
+
+✅ *Necessário mudar a forma de coleta de CEP `-> atual: via XML, atualizar para: via JSON`*
 
 ## 📝 Áreas pendentes
 

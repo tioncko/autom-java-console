@@ -39,8 +39,9 @@ public abstract class jsonPerGson extends httpResponse {
 
     /**
      * Método que faz a requisição do json via Gson, deserializa, e transforma em lista
+     * https://zetcode.com/java/gson/ - tips
      */
-    public static <T, R> List<T> requestJson(String uri, Class<T> objClass, R JsonDeserializerObject)  {
+    public static <T, R> List<T> requestListJson(String uri, Class<T> objClass, R JsonDeserializerObject)  {
 
         String content = responseContent(uri);
         Gson gson = new GsonBuilder().registerTypeAdapter(objClass, JsonDeserializerObject).serializeNulls().create();
@@ -49,5 +50,13 @@ public abstract class jsonPerGson extends httpResponse {
 
         assert list != null;
         return new ArrayList<>(list);
+    }
+
+    public static <T, R> T requestObjJson(String uri, Class<T> objClass, R JsonDeserializerObject)  {
+
+        String content = responseContent(uri);
+        Gson gson = new GsonBuilder().registerTypeAdapter(objClass, JsonDeserializerObject).serializeNulls().create();
+
+        return gson.fromJson(content, objClass);
     }
 }

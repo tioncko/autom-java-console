@@ -35,7 +35,7 @@ public class menuPrincipal extends leitorDados {
         if(smartTools.DiaAtual.Daily().equals("Bom dia")){
             System.out.println
             ("\n=====================================================================\n" +
-             "============= " + smartTools.DiaAtual.Daily() + ", \u001B[31m" + currentLogin + " " + supTab + "\u001B[0m==" +
+             "============= " + smartTools.DiaAtual.Daily() + ", \u001B[31m" + currentLogin + "\u001B[0m " + supTab + "==" +
              "\n=====================================================================");
         }
         if(smartTools.DiaAtual.Daily().equals("Boa tarde") || smartTools.DiaAtual.Daily().equals("Boa noite")){

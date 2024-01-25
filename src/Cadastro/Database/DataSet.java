@@ -37,15 +37,20 @@ public class dataSet<T> extends leitorDados {
     private final Map<Integer, Servicos> tabServico;
 
     public dataSet() {
+        System.out.println("Carregando sistema....");
         this.tabCliente = new HashMap<>();
 
         rootAccess ac = new rootAccess();
         this.tabUsuario = new HashMap<>(ac.givePermission());//new HashMap<>();
 
         jsonExtraction.coletaJsonDados json = new jsonExtraction.coletaJsonDados();
-        this.tabForn = new HashMap<>(json.mapForn());
         this.tabProduto = new HashMap<>(json.mapProd());//new HashMap<>();
+
+        System.out.println("Finalizando carregamento do sistema....");
+        this.tabForn = new HashMap<>(json.mapForn());
         this.tabServico = new HashMap<>(json.mapServ());
+
+        System.out.println("Iniciando sistema....");
     }
 
     /**

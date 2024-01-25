@@ -53,7 +53,7 @@ public class jsonMarcas extends jsonPerGson {
         String endpointJson = Config.getProperties(configParam);
 
         jsonDeserializerMarcas json = new jsonDeserializerMarcas();
-        List<Marcas> marcas = requestJson(endpointJson, Marcas.class, json);
+        List<Marcas> marcas = requestListJson(endpointJson, Marcas.class, json);
 
         Integer i = 1;
         for (Marcas item : marcas){
@@ -77,11 +77,10 @@ public class jsonMarcas extends jsonPerGson {
                 .findFirst().orElseThrow().getValue();
         return mar;
     }
-}
 
-//#region rascunho
+    //#region rascunho
+
 /*
-
     public static void main(String[] args) throws Exception {
 
         //String configParam = Config.arquivoConfig.Marcas.getProperty();
@@ -101,3 +100,4 @@ public class jsonMarcas extends jsonPerGson {
     }
 */
 //#endregion
+}
