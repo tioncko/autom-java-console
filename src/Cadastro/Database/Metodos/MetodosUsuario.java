@@ -184,7 +184,7 @@ public class metodosUsuario extends Usuario {
             }
             return true;
         } else {
-            System.out.println("\nA tabela de usuários está vazia.");
+            System.out.println("A tabela de usuários está vazia.");
             return false;
         }
     }

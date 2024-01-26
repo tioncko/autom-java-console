@@ -287,7 +287,8 @@ public class jsonExtraction extends jsonResponse {
         /**
          * Método que retorna uma lista de Produtos
          */
-        public Map<Integer, Produtos> mapProd () {
+        //public Map<Integer, Produtos> mapProd () {
+        public Map<Integer, Produtos> base () { // Insere os nomes dos fornecedores na tabela de produtos (trocar o nome base por mapProd)
             Complementos jsonCp = new Complementos();
             Map<Integer, Produtos> retProd = jsonCp.mapJsonProd();
             Set<Map.Entry<Integer, String>> sup = jsonCp.getNomeForn().entrySet(); ////
@@ -307,6 +308,32 @@ public class jsonExtraction extends jsonResponse {
                 });
             }
             return retProd;
+        }
+
+        //public Map<Integer, Produtos> base(){
+        public Map<Integer, Produtos> mapProd () {
+            Map<Integer, Produtos> retProd = new HashMap<>();
+
+            try {
+                jsonToMap json = new jsonToMap();
+                String fileParam = arquivoConfig.Loja.getPropriedade();
+                String varContains = "Servicos Automotivos";
+                Stream <Map.Entry <Integer, Produtos>>
+                        getListProd = json.getMapRecord(Produtos.class, fileParam).entrySet().stream()
+                        .filter(c -> (!c.getValue().toString().contains(varContains)));
+
+                List<Produtos> prod = new ArrayList<>();
+                getListProd.forEach(x -> prod.add(x.getValue()));
+
+                for(int i = 0; i < prod.size(); i++){
+                    retProd.put(i + 1, prod.get(i));
+                }
+
+                return retProd;
+            } catch (Exception e) {
+                log.severe("[" + coletaJsonDados.class.getSimpleName() + "] " + e.getMessage());
+            }
+            return new HashMap<>();
         }
 
         //#region rascunho

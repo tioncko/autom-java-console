@@ -157,8 +157,7 @@ public class Cadastro implements INovosDados {
             novoFrn.setInscEstadual(inscEstadual);
             novoFrn.setTelefone(telefone);
             novoFrn.setInfoCEP(jsonCEP.responseCEP(CEP, numCasa));
-            novoFrn.setAtividades(novoFrn.fornAtividades(atividade));
-
+            if (!atividade[0].isEmpty()) novoFrn.setAtividades(novoFrn.fornAtividades(atividade));
             novoFrn.novoFornecedor(novoFrn.nextId(), novoFrn);
         }
 
@@ -289,7 +288,7 @@ public class Cadastro implements INovosDados {
 
         @Override
         public boolean listarServicos() {
-            return novoSrv.PrintMapWithSet();
+            return novoSrv.printMapWithSet();
         }
 
         public boolean validarId(Integer id) { return novoSrv.userValid(id); }

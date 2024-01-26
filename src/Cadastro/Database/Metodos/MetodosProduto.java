@@ -142,7 +142,7 @@ public class metodosProduto extends Produtos {
             }
             return true;
         } else {
-            System.out.println("\nA tabela de produtos está vazia.");
+            System.out.println("A tabela de produtos está vazia.");
             return false;
         }
     }

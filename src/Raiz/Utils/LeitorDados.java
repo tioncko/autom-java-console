@@ -11,8 +11,7 @@ import static Raiz.Utils.smartTools.validacaoDigitos.*;
 public abstract class leitorDados implements INovosDados.IReader {
 
     impressaoLog.logGenerico<leitorDados> printLog = new impressaoLog.logGenerico<>();
-    @SuppressWarnings("unchecked")
-    Logger log = printLog.getLogRetorno((Class<leitorDados>) (Object) (leitorDados.class));
+    @SuppressWarnings("unchecked") Logger log = printLog.getLogRetorno((Class<leitorDados>) (Object) (leitorDados.class));
 
     private static final Scanner txt;
 

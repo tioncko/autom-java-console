@@ -145,7 +145,7 @@ public class metodosCliente extends Cliente {
             }
             return true;
         } else {
-            System.out.println("\nA tabela de clientes está vazia.");
+            System.out.println("A tabela de clientes está vazia.");
             return false;
         }
     }

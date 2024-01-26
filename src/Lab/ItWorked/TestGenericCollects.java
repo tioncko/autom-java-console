@@ -1,5 +1,9 @@
 package Lab.ItWorked;
 
+import javax.swing.*;
+import java.io.BufferedReader;
+import java.io.Console;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class TestGenericCollects {
@@ -65,5 +69,35 @@ public class TestGenericCollects {
         }
     }
 
+    public static void main(String[] args) {
 
+        //TestGenericCollects x = new TestGenericCollects();
+       //System.out.println(x.ret("v1"));
+
+    }
+
+    public List<String> ret (String... update) {
+
+        List<String> obj = new ArrayList<>();
+
+        String obj1 = "", obj2 = "";
+        if (update.length < 2) {
+            obj1 = update[0];
+            obj.add(obj1);
+            System.out.println("Passo 1");
+        }
+        if (update.length == 2) {
+            obj1 = update[0];
+            obj.add(obj1);
+            obj2 = update[1];
+            obj.add(obj2);
+            System.out.println("Passo 2");
+        }
+        else {
+            obj.add(update[0]);
+            System.out.println("Passo 3");
+        }
+
+        return obj;
+    }
 }

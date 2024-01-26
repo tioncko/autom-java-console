@@ -48,13 +48,24 @@ public class metodosFornecedor extends Fornecedor {
                     boolean nullable = (forn.getValue().getAtividades() == null);
                     List<String> obj = new ArrayList<>();
 
-                    if (update.length < 2 || nullable)
-                        obj1 = update[0];
-                    if (update.length == 2) {
-                        obj1 = update[0];
-                        obj2 = update[1];
+                    boolean add = update[0].equalsIgnoreCase("INCREMENTAR");
+                    boolean rem = update[0].equalsIgnoreCase("REMOVER");
+                    if (!add && !rem) {
+                        if (update.length < 2 || nullable)
+                            //obj1 = update[0];
+                            obj.add(update[0]);
+                        if (update.length == 2) {
+                            obj1 = update[0];
+                            obj2 = update[1];
+                        }
+                        //else obj.add(update[0]);
                     }
-                    else obj.add(update[0]);
+                    if (add || rem) {
+                        genericSet<Grupos> value = fornAtividades(update[1]);
+                        for (Grupos g : value) {
+                            obj.add(String.valueOf(g));
+                        }
+                    }
 
                     switch (getCampo) {
                         case RAZAOSOCIAL ->
@@ -75,10 +86,15 @@ public class metodosFornecedor extends Fornecedor {
                             DS.insert(id, new Fornecedor(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), forn.getValue().getCnpj(), forn.getValue().getEmail(), forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), jsonCEP.responseCEP(forn.getValue().getInfoCEP().getCEP().replace("-", ""), Integer.parseInt(obj1)), forn.getValue().getAtividades()), Fornecedor.class);
                         case ATIVIDADES -> {
 
+                            genericSet<Grupos> listAtividades = null;
                             genericSet<Grupos> list = forn.getValue().getAtividades();
-                            genericSet<Grupos> listAtividades = !(obj2.isEmpty())
-                                ? updtAtividades(obj1, obj2, list)
-                                : fornAtividades(String.valueOf(obj));//isrtAtividades(obj1);
+                            if (!add && !rem) {
+                                listAtividades = !(obj2.isEmpty())
+                                        ? updtAtividades(obj1, obj2, list)
+                                        : fornAtividades(String.valueOf(obj));//isrtAtividades(obj1);
+                            }
+                            if (add) listAtividades = incrmtAtividades(list, fornAtividades(String.valueOf(obj)));
+                            if (rem) listAtividades = remoAtividades(list, fornAtividades(String.valueOf(obj)));
 
                             DS.insert(id, new Fornecedor(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), forn.getValue().getCnpj(), forn.getValue().getEmail(), forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), forn.getValue().getInfoCEP(), listAtividades), Fornecedor.class);
                         }
@@ -167,7 +183,7 @@ public class metodosFornecedor extends Fornecedor {
             getForn.forEach(x -> System.out.println("id{" + x.getKey() + "}, " + x.getValue()));
             return true;
         } else {
-            System.out.println("\nA tabela de fornecedores está vazia.");
+            System.out.println("A tabela de fornecedores está vazia.");
             return false;
         }
     }
@@ -183,6 +199,21 @@ public class metodosFornecedor extends Fornecedor {
         } else maxnum = 0;
 
         return maxnum + 1;
+    }
+
+    /**
+     * Valida se o id existe
+     */
+    public boolean userValid (Integer id) {
+        boolean valid = false;
+        if (!DS.select(Fornecedor.class).isEmpty()) {
+            if (DS.select(Fornecedor.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+
+                valid = true;
+            } else message = "\nRegistro inexistente na tabela.";
+        } else message = "\nA tabela de fornecedores está vazia.";
+
+        return valid;
     }
 
     /**
@@ -229,18 +260,32 @@ public class metodosFornecedor extends Fornecedor {
     }
 
     /**
-     * Valida se o id existe
+     * Método de apoio para incrementar as atividades do cadastro de fornecedores as que já existem
      */
-    public boolean userValid (Integer id) {
-        boolean valid = false;
-        if (!DS.select(Fornecedor.class).isEmpty()) {
-            if (DS.select(Fornecedor.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+    public genericSet<Grupos> incrmtAtividades(genericSet<Grupos> typeforn, genericSet<Grupos> atividades) {
+        genericSet<Grupos> lista = new genericSet<>();
+        lista.addAll(typeforn);
+        lista.addAll(atividades);
+        return lista;
+    }
 
-                valid = true;
-            } else message = "\nRegistro inexistente na tabela.";
-        } else message = "\nA tabela de fornecedores está vazia.";
+    /**
+     * Método de apoio para remover as atividades do cadastro de fornecedores as que já existem
+     */
+    public genericSet<Grupos> remoAtividades(genericSet<Grupos> typeforn, genericSet<Grupos> atividades) {
+        genericSet<Grupos> release = new genericSet<>();
+        release.addAll(typeforn);
+        List<Grupos> list = new ArrayList<>(atividades);
 
-        return valid;
+        for (int j = 0; j < atividades.size(); j++) {
+            for (Grupos s : typeforn) {
+                if (s.getGrupo().equals(String.valueOf(list.get(j)))) {
+                    release.remove(s);
+                }
+            }
+        }
+        if (release.isEmpty()) release = null;
+        return release;
     }
 
     //#region rascunho

@@ -28,10 +28,8 @@ public class Propriedades {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o)
-                return true;
-            if (o == null || getClass() != o.getClass())
-                return false;
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
             Categoria categoria = (Categoria) o;
             return Objects.equals(Categoria, categoria.Categoria);
         }

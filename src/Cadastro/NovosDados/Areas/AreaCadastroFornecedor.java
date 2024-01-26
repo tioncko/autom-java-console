@@ -93,19 +93,6 @@ public class areaCadastroFornecedor extends leitorDados implements IAreaCadastro
                             String field = readText("Campo: ");
                             boolean fieldValid = (field.equalsIgnoreCase("atividades"));
 
-                            if (fieldValid && !(af.retorno(alterId))) {
-                                af.alterarFornecedor(
-                                        alterId,
-                                        field,
-                                        readSentence("Alteração dado antigo (" + field.toUpperCase() + "): "),
-                                        readSentence("Alteração dado novo (" + field.toUpperCase() + "): ")
-                                );
-                                if (!(metodosFornecedor.message == null))
-                                    System.out.println(metodosFornecedor.message);
-                                else System.out.println("\nAlteração concluída!");
-                                af.localizarFornecedor(alterId);
-                            }
-
                             if (fieldValid && af.retorno(alterId)) {
                                 af.alterarFornecedor(
                                         alterId,
@@ -116,6 +103,52 @@ public class areaCadastroFornecedor extends leitorDados implements IAreaCadastro
                                     System.out.println(metodosFornecedor.message);
                                 else System.out.println("\nAlteração concluída!");
                                 af.localizarFornecedor(alterId);
+                            }
+
+                            if (fieldValid && !(af.retorno(alterId))) {
+                                int cond = readInt(
+                                        "(1) Alterar atividades" +
+                                          "\n(2) Incrementar atividades" +
+                                          "\n(3) Remover atividades: ");
+
+                                if (cond == 1) {
+                                    af.alterarFornecedor(
+                                            alterId,
+                                            field,
+                                            readSentence("Alteração dado antigo (" + field.toUpperCase() + "): "),
+                                            readSentence("Alteração dado novo (" + field.toUpperCase() + "): ")
+                                    );
+                                    if (!(metodosFornecedor.message == null))
+                                        System.out.println(metodosFornecedor.message);
+                                    else System.out.println("\nAlteração concluída!");
+                                    af.localizarFornecedor(alterId);
+
+                                } else if (cond == 2) {
+                                    String add = "INCREMENTAR";
+                                    af.alterarFornecedor(
+                                            alterId,
+                                            field,
+                                            add,
+                                            String.valueOf(readStrList("Informar atividades abaixo [para finalizar, digite SAIR] "))
+                                    );
+                                    if (!(metodosFornecedor.message == null))
+                                        System.out.println(metodosFornecedor.message);
+                                    else System.out.println("\nAlteração concluída!");
+                                    af.localizarFornecedor(alterId);
+
+                                } else if (cond == 3) {
+                                    String rem = "REMOVER";
+                                    af.alterarFornecedor(
+                                            alterId,
+                                            field,
+                                            rem,
+                                            String.valueOf(readStrList("Informar atividades abaixo [para finalizar, digite SAIR] "))
+                                    );
+                                    if (!(metodosFornecedor.message == null))
+                                        System.out.println(metodosFornecedor.message);
+                                    else System.out.println("\nAlteração concluída!");
+                                    af.localizarFornecedor(alterId);
+                                } else System.out.println("\nNão houve alterações nesse registro!");
                             }
 
                             if (!(fieldValid)) {

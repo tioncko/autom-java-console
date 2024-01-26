@@ -54,7 +54,7 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 
 ✅ *Associar as atividades aos fornecedores*
 
-🔲 Criar método para remover e incrementar atividades
+✅ *Criar método para remover e incrementar atividades*
 
 ✅ *Necessário mudar a forma de coleta de CEP `-> atual: via XML, atualizar para: via JSON`*
 

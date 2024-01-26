@@ -144,13 +144,13 @@ public class metodosServico extends Servicos {
     /**
      * Imprimir servicos que estão na lista no momento
      */
-    public boolean PrintMapWithSet() {
+    public boolean printMapWithSet() {
         if (!DS.select(Servicos.class).isEmpty()) {
             Stream<Map.Entry<Integer, Servicos>> getServ = DS.select(Servicos.class).entrySet().stream();
             getServ.forEach(x -> System.out.println("id{" + x.getKey() + "}, " + x.getValue()));
             return true;
         } else {
-            System.out.println("\nA tabela de serviços está vazia.");
+            System.out.println("A tabela de serviços está vazia.");
             return false;
         }
     }

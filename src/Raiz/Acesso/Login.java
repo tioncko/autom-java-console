@@ -30,18 +30,20 @@ public class Login {
 
         System.out.println("\n---------------------------------------------------------------------");
         System.out.println("---------------------------------------------------------------------");
+        System.out.println("---------------------------------------------------------------------");
         System.out.println("---------- @@@@ -- @@@ - @@@ @@@@@@@@@  @@@@@@@  @@@@@  @@@@@ -------");
         System.out.println("--------- @@@@@@ - @@@ - @@@ @@@@@@@@@ @@@ - @@@ @@@@@@@@@@@@ -------");
         System.out.println("-------- @@@  @@@  @@@ - @@@ -- @@@ -- @@@ - @@@ @@@ @@@@ @@@ -------");
         System.out.println("------- @@@@@@@@@@ @@@ - @@@ -- @@@ -- @@@ - @@@ @@@  @@  @@@ -------");
         System.out.println("------ @@@ ---- @@@ @@@@@@@ --- @@@ --- @@@@@@@  @@@ ---- @@@ -------");
+        System.out.println("--------------------------------------------------------v1.17--------");
         System.out.println("---------------------------------------------------------------------");
         System.out.println("---------------------------------------------------------------------\n");
 
         int x = 0;
         do{
-            String login = mp.readText("Login: ").toLowerCase();
-            String pass = mp.readText("Senha: ");
+            String login = mp.readSentence("Login: ").toLowerCase();
+            String pass = mp.readSentence("Senha: ");
 
             if (musr.validLoginUsuario(login, pass)){//, DT.DTUsers())) {
                 setUsr(login);
