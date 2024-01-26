@@ -69,7 +69,7 @@ Tela Loja:
 
 ## 📫 Contribuindo para autom-java-console
 
-Para contribuir com <nome_do_projetoautom-java-console, siga estas etapas:
+Para contribuir com autom-java-console, siga estas etapas:
 
 1. Faça um fork deste repositório.
 2. Crie um branch: `git checkout -b <nome_branch>`.
