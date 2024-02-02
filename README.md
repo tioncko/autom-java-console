@@ -13,63 +13,55 @@
 ![Visão do fluxo do sistema](img/autom.png)
 
 ## 🚀 Áreas implementadas
-Tela Cadastro:
-- Cliente
-- Fornecedor
-- Usuário
+**Tela Cadastro:**
+- Clientes
+- Fornecedores
+- Usuários
 - Produtos e Serviços
-
+- Funcionários
+- Carros
 
 ## 🔜 Ajustes e melhorias
 
 O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas nas seguintes tarefas (novas tarefas serão informadas aqui):
 
-✅ *Validação de exclusão de item da lista de cada classe "Metodos" `-> exemplo: código X já foi excluído`*
+✔️ **Parte 1 concluída, mais detalhes no arquivo de ajustes**
+**_[To Do](ToDo.txt)_**
 
-✅ *Incluir condição para impressão da mensagem de saída `-> sout("Alteração concluida") ou sout("a tabela está vazia")`*
+🔄 *Parte 2 abaixo*:
 
-✅ *Aplicar validação nos métodos de localização*
+✅ Desenvolver área do funcionário
 
-✅ *Incluir novo método para validar se o atributo getAtividades da tela de fornecedores está vazia, para assim, permitir o insert*
+✅ Padronizar as opções de Menu em todas as áreas
 
-✅ *Revisar ajustes feitos na area de fornecedor para as areas Cliente e Usuário `-> validId`*
+✅ Ajustar interfaces para que os métodos não fiquem repetitivos
 
-✅ *Implementar equals e hashcode para CPF e CNPJ*
+✅ Desenvolver área do carro
 
-✅ *Aplicar try/catch em métodos que utilizam "throws Exception"*
+⬜ Associar o funcionário a seu usuário
 
-✅ *Validar se os logs implementados estão funcionando da forma que foi planejada*
+✅ Associar a marca ao carro
 
-✅ *Descrição dos métodos `-> o que são, o que fazem e o que retornam`*
+⬜ Associar o carro ao clientes
 
-✅ *Releitura de nomes de variáveis, métodos e classes `-> exemplo: Map<Integer, Servicos> x = new HashMap<>(); -> Map<Integer, Servicos> mapServ = new HashMap<>();`*
+⬜ Criar API de lista de clientes para consumo
 
-✅ *(se possível) aplicar cor fixa nos menus (Cor fixa nos títulos)*
+⬜ Criar API de lista de funcionários para consumo
 
-✅ *Limpar comentários das classes `-> DEFINIR ELES COMO RASCUNHO`*
-
-✅ *Verificar a possibilidade de criar uma validação de response code na parte do cep*
-
-✅ *Inserir fornecedores na lista de produtos*
-
-✅ *Associar as atividades aos fornecedores*
-
-✅ *Criar método para remover e incrementar atividades*
-
-✅ *Necessário mudar a forma de coleta de CEP `-> atual: via XML, atualizar para: via JSON`*
+⬜ Incrementar área do carro dentro da area do cliente
 
 ## 📝 Áreas pendentes
 
-Tela Cadastro:
-- Funcionário
-- Carro
-
-Tela Loja:
+**Tela Loja:**
 - A definir áreas
 
-## 📫 Contribuindo para autom-java-console
+## 📫 Contribuindo para *autom-java-console*
 
+<<<<<<< HEAD
 Para contribuir com autom-java-console, siga estas etapas:
+=======
+Para contribuir com *autom-java-console*, siga estas etapas:
+>>>>>>> 2ca75bb ([v1.18] Finalizado o desenvolvimento da área de cadastro dos carros. Lista de ajustes atualizado no arquivo ToDo)
 
 1. Faça um fork deste repositório.
 2. Crie um branch: `git checkout -b <nome_branch>`.

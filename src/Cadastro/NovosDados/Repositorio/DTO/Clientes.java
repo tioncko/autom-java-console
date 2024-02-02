@@ -3,14 +3,12 @@ package Cadastro.NovosDados.Repositorio.DTO;
 import Cadastro.NovosDados.Repositorio.Abstratos.outrosDados;
 import Cadastro.NovosDados.Repositorio.Auxiliar.validarCEP;
 
-import java.util.Objects;
-
-public class Cliente extends outrosDados {
+public class Clientes extends outrosDados {
 
     private int id;
     private String nome;
     private int idade;
-    private String cpf;
+    //private String cpf;
 
     //#region rascunho
     /* private String email;
@@ -19,16 +17,16 @@ public class Cliente extends outrosDados {
      */
     //#endregion
 
-    public Cliente(String nome, int idade, String cpf, String email, String telefone, validarCEP infoCEP) {
+    public Clientes(String nome, int idade, String cpf, String email, String telefone, validarCEP infoCEP) {
         this.nome = nome;
         this.idade = idade;
-        this.cpf = cpf;
+        this.setDocumento(cpf);
         this.setEmail(email);
         this.setTelefone(telefone);
         this.setInfoCEP(infoCEP);
     }
 
-    public Cliente() {
+    public Clientes() {
 
     }
 
@@ -51,13 +49,6 @@ public class Cliente extends outrosDados {
     }
     public void setIdade(int idade) {
         this.idade = idade;
-    }
-
-    public String getCPF() {
-        return cpf;
-    }
-    public void setCPF(String cpf) {
-        this.cpf = cpf;
     }
 
     //#region rascunho
@@ -85,13 +76,20 @@ public class Cliente extends outrosDados {
     public void setInfoCEP(validarCEP infoCEP) {
         this.infoCEP = infoCEP;
     }
-*/
-//#endregion
+
+
+    /*
+    public String getCPF() {
+        return cpf;
+    }
+    public void setCPF(String cpf) {
+        this.cpf = cpf;
+    }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (!(obj instanceof Cliente cli)) return false;
+        if (!(obj instanceof Clientes cli)) return false;
         return Objects.equals(this.getCPF(), cli.getCPF());
     }
 
@@ -99,13 +97,15 @@ public class Cliente extends outrosDados {
     public int hashCode() {
         return Objects.hash(getCPF());
     }
+*/
+    //#endregion
 
     @Override
     public String toString() {
-        return "Cliente{" +
+        return "Clientes{" +
                 "nome='" + nome + '\'' +
                 ", idade=" + idade +
-                ", cpf='" + cpf + '\'' +
+                ", cpf='" + getDocumento() + '\'' +
                 ", email='" + getEmail() + '\'' +
                 ", telefone='" + getTelefone() + '\'' +
                 ", " + getInfoCEP() +
@@ -116,8 +116,8 @@ public class Cliente extends outrosDados {
     /*
     public static void main(String[] args) {
 
-        System.out.println(Cliente.ResponseCEP("04472205", 47).getCidade());
-        System.out.println(Cliente.ResponseCEP("04472205", 47));
+        System.out.println(Clientes.ResponseCEP("04472205", 47).getCidade());
+        System.out.println(Clientes.ResponseCEP("04472205", 47));
     }
 
 

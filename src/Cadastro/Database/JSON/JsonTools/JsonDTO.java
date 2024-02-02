@@ -2,10 +2,9 @@ package Cadastro.Database.JSON.JsonTools;
 
 import Cadastro.Database.Metodos.Deserializers.jsonCEP;
 import Cadastro.NovosDados.Repositorio.Auxiliar.Propriedades;
-import Cadastro.NovosDados.Repositorio.DTO.Fornecedor;
+import Cadastro.NovosDados.Repositorio.DTO.Fornecedores;
 import Cadastro.NovosDados.Repositorio.DTO.Produtos;
 import Cadastro.NovosDados.Repositorio.DTO.Servicos;
-import Raiz.Utils.smartTools;
 import com.google.gson.JsonObject;
 
 class jsonDTO {
@@ -48,10 +47,10 @@ class jsonDTO {
     }
 
     /**
-     * Método que recebe um objeto Json que retorna um objeto Fornecedor
+     * Método que recebe um objeto Json que retorna um objeto Fornecedores
      */
-    protected static Fornecedor getFornecedor(JsonObject item) {
-        Fornecedor forn = new Fornecedor();
+    protected static Fornecedores getFornecedor(JsonObject item) {
+        Fornecedores forn = new Fornecedores();
         forn.setRazaoSocial(item.get("razaoSocial").getAsString());
         forn.setNomeFantasia(item.get("nomeFantasia").getAsString());
             String cnpj = item.get("cnpj").getAsString();
@@ -59,7 +58,7 @@ class jsonDTO {
                 String ret = "0";
                 cnpj = ret + cnpj;
             }
-        forn.setCnpj(cnpj);
+        forn.setDocumento(cnpj);
         forn.setEmail(item.get("email").getAsString());
         forn.setInscEstadual(item.get("inscEstadual").getAsString());
         forn.setTelefone(item.get("telefone").getAsString());

@@ -4,7 +4,7 @@ import Cadastro.Database.dataSet;
 import Cadastro.Database.JSON.JsonTools.jsonExtraction.*;
 import Cadastro.NovosDados.Repositorio.DTO.Produtos;
 import Cadastro.NovosDados.Repositorio.DTO.Servicos;
-import Cadastro.NovosDados.Repositorio.Enums.camposItens;
+import Cadastro.NovosDados.Repositorio.Enums.Fields.camposItens;
 import Raiz.Core.impressaoLog;
 
 import java.util.Map;

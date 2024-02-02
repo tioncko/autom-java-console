@@ -3,7 +3,7 @@ package Cadastro.NovosDados.Repositorio.DTO;
 import Cadastro.NovosDados.Repositorio.Abstratos.outrosDados;
 import Cadastro.NovosDados.Repositorio.Auxiliar.validarCEP;
 
-public class Funcionario extends outrosDados {
+public class Funcionarios extends outrosDados {
 
     private int id;
     private String nome;
@@ -12,10 +12,11 @@ public class Funcionario extends outrosDados {
     private String area;
     private String departamento;
 
-    public Funcionario(String nome, int idade, String genero, String email, String telefone, validarCEP infoCEP, String area, String departamento) {
+    public Funcionarios(String nome, int idade, String genero, String cpf, String email, String telefone, validarCEP infoCEP, String area, String departamento) {
         this.nome = nome;
         this.idade = idade;
         this.genero = genero;
+        this.setDocumento(cpf);
         this.setEmail(email);
         this.setTelefone(telefone);
         this.setInfoCEP(infoCEP);
@@ -23,14 +24,14 @@ public class Funcionario extends outrosDados {
         this.departamento = departamento;
     }
 
-    public Funcionario() {
+    public Funcionarios() {
     }
 
     public int getId() {
         return id;
     }
-    public void setId(int id) {
-        this.id = id;
+    public Integer setId(int id) {
+        return this.id = id;
     }
 
     public String getNome() {
@@ -70,12 +71,12 @@ public class Funcionario extends outrosDados {
 
     @Override
     public String toString() {
-        return "Funcionario{" +
+        return "Funcionarios{" +
                 "nome='" + nome + '\'' +
                 ", idade=" + idade + '\'' +
                 ", email='" + getEmail() + '\'' +
                 ", telefone='" + getTelefone() + '\'' +
-                ", " + getInfoCEP() + '\'' +
+                ", " + getInfoCEP() +
                 ", area='" + area + '\'' +
                 ", departamento='" + departamento + '\''
                 + '}';

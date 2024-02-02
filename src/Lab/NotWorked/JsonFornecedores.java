@@ -1,22 +1,15 @@
 package Lab.NotWorked;
 
 import Cadastro.Database.Metodos.Deserializers.jsonCEP;
-import Cadastro.NovosDados.Repositorio.Enums.arquivoConfig;
-import Raiz.Core.Config;
-import Cadastro.NovosDados.Repositorio.DTO.Fornecedor;
+import Cadastro.NovosDados.Repositorio.DTO.Fornecedores;
 import Raiz.Utils.jsonPerGson;
-import Raiz.Utils.smartTools;
 import com.google.gson.*;
 import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class JsonFornecedores extends jsonPerGson {
 
     private static class DeserializeFornecedores {
-        protected Fornecedor getJsonFornecedor(JsonObject object) {
+        protected Fornecedores getJsonFornecedor(JsonObject object) {
 
             String razaoSocial = object.get("razaoSocial").getAsString();
             String nomeFantasia = object.get("nomeFantasia").getAsString();
@@ -27,10 +20,10 @@ public class JsonFornecedores extends jsonPerGson {
             String infoCEP = object.get("infoCEP").getAsString();
             int numLocal = object.get("numLocal").getAsInt();
 
-            Fornecedor forn = new Fornecedor();
+            Fornecedores forn = new Fornecedores();
             forn.setRazaoSocial(razaoSocial);
             forn.setNomeFantasia(nomeFantasia);
-            forn.setCnpj(cnpj);
+            forn.setDocumento(cnpj);
             forn.setEmail(email);
             forn.setInscEstadual(inscEstadual);
             forn.setTelefone(telefone);
@@ -40,10 +33,10 @@ public class JsonFornecedores extends jsonPerGson {
         }
     }
 
-    private static class JsonDeserializerFornecedores implements JsonDeserializer<Fornecedor> {
+    private static class JsonDeserializerFornecedores implements JsonDeserializer<Fornecedores> {
 
         @Override
-        public Fornecedor deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        public Fornecedores deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 
             DeserializeFornecedores df = new DeserializeFornecedores();
             JsonObject getObj = json.getAsJsonObject();
@@ -53,18 +46,18 @@ public class JsonFornecedores extends jsonPerGson {
 
     //#region rascunho
     /*
-    public Map<Integer, Fornecedor> ListaFornecedores() {
+    public Map<Integer, Fornecedores> ListaFornecedores() {
 
-        Map<Integer, Fornecedor> lista = new HashMap<>();
+        Map<Integer, Fornecedores> lista = new HashMap<>();
         String configParam = arquivoConfig.Fornecedores.getPropriedade();
         String endpointJson = Config.getProperties(configParam);
 
         JsonDeserializerFornecedores json = new JsonDeserializerFornecedores();
-        List<Fornecedor> forn = requestListJson(endpointJson, Fornecedor.class, json);
+        List<Fornecedores> forn = requestListJson(endpointJson, Fornecedores.class, json);
 
         Integer i = 1;
-        for (Fornecedor item : forn) {
-            lista.put(i, new Fornecedor(item.getRazaoSocial(), item.getNomeFantasia(), item.getCnpj(), item.getEmail(), item.getInscEstadual(), item.getTelefone(), item.getInfoCEP()));
+        for (Fornecedores item : forn) {
+            lista.put(i, new Fornecedores(item.getRazaoSocial(), item.getNomeFantasia(), item.getCnpj(), item.getEmail(), item.getInscEstadual(), item.getTelefone(), item.getInfoCEP()));
             i++;
         }
         return lista;

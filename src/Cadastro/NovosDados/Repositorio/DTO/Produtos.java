@@ -56,7 +56,7 @@ public class Produtos extends Gondola {
                 "nome='" + nome + '\'' +
                 ", preco=" + getPreco() +
                 ", qtd=" + qtd +
-                ", fornecedor=" + forn +
+                ", fornecedor='" + forn + '\'' +
                 ", categoria='" + getCategoria() + '\'' +
                 ", grupo='" + getGrupo() + '\'' +
                 '}';

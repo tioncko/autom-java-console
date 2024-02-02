@@ -15,25 +15,13 @@ public interface INovosDados {
         public String readMask(String str);
     }
 
-    public interface ICustomer {
-        public void cadastrarCliente(String nome, int idade, String cpf, String email, String telefone, String CEP, int numCasa);
-        public void alterarCliente(Integer id, String campo, String update);
-        public void excluirCliente(Integer id);
-        public void localizarCliente(Integer id);
-        public void localizarMaisClientes(Integer ini, Integer fim);
-        public void removerMaisClientes(Integer ini, Integer fim);
-        public boolean listarClientes();
-        public boolean validarId(Integer id);
-    }
-
-    public interface IUsers {
-        public void cadastrarUsuario(String login, String pass, String nome, String depto);
-        public void alterarUsuario(Integer id, String campo, String update);
-        public void excluirUsuario(Integer id);
-        public void localizarUsuario(Integer id);
-        public void localizarMaisUsuarios(Integer ini, Integer fim);
-        public void removerMaisUsuarios(Integer ini, Integer fim);
-        public boolean listarUsuario();
+    public interface IGeneral {
+        public void alterar(Integer id, String campo, String... update);
+        public void excluir(Integer id);
+        public void localizar(Integer id);
+        public void localizarMais(Integer ini, Integer fim);
+        public void removerMais(Integer ini, Integer fim);
+        public boolean listar();
         public boolean validarId(Integer id);
     }
 
@@ -44,36 +32,39 @@ public interface INovosDados {
         public void removerPermissao(Integer id);
     }
 
+    public interface ICustomer {
+        public void cadastrar(String nome, int idade, String cpf, String email, String telefone, String CEP, int numCasa);
+        //public void alterar(Integer id, String campo, String update);
+    }
+
+    public interface IUsers {
+        public void cadastrar(String login, String pass, String nome, String depto);
+        //public void alterar(Integer id, String campo, String update);
+    }
+
     public interface ISupplier {
-        public void cadastrarFornecedor(String razaoSocial, String nomeFantasia, String cnpj, String email, String inscEstadual, String telefone, String CEP, int numCasa, String... atividade);
-        public void alterarFornecedor(Integer id, String campo, String... update);
-        public void excluirFornecedor(Integer id);
-        public void localizarFornecedor(Integer id);
-        public void localizarMaisFornecedores(Integer ini, Integer fim);
-        public void removerMaisFornecedores(Integer ini, Integer fim);
-        public boolean listarFornecedores();
-        public boolean validarId(Integer id);
+        public void cadastrar(String razaoSocial, String nomeFantasia, String cnpj, String email, String inscEstadual, String telefone, String CEP, int numCasa, String... atividade);
+        //public void alterar(Integer id, String campo, String... update);
     }
 
     public interface IProducts {
-        public void cadastrarProduto(String nomeProd, double preco, int qtd, String forn, Categoria categoria, Grupos grupo);
-        public void alterarProduto(Integer id, String campo, String update);
-        public void excluirProduto(Integer id);
-        public void localizarProduto(Integer id);
-        public void localizarMaisProdutos(Integer ini, Integer fim);
-        public void removerMaisProdutos(Integer ini, Integer fim);
-        public boolean listarProdutos();
-        public boolean validarId(Integer id);
+        public void cadastrar(String nomeProd, double preco, int qtd, String forn, Categoria categoria, Grupos grupo);
+        //public void alterar(Integer id, String campo, String update);
+        //public <T> void ver(Integer id, String campo, T... update);
     }
 
     public interface IServices {
-        public void cadastrarServico(String nomeProd, double preco, Categoria categoria, Grupos grupo);
-        public void alterarServico(Integer id, String campo, String update);
-        public void excluirServico(Integer id);
-        public void localizarServico(Integer id);
-        public void localizarMaisServicos(Integer ini, Integer fim);
-        public void removerMaisServicos(Integer ini, Integer fim);
-        public boolean listarServicos();
-        public boolean validarId(Integer id);
+        public void cadastrar(String nomeProd, double preco, Categoria categoria, Grupos grupo);
+        //public void alterar(Integer id, String campo, String update);
+    }
+
+    public interface IEmployee {
+        public void cadastrar(String nome, int idade, String genero, String cpf, String email, String telefone, String CEP, int numCasa, String area, String departamento);
+        //public void alterar(Integer id, String campo, String update);
+    }
+
+    public interface ICars {
+        public void cadastrar(String nome, String placa, String origem, String marca);
+        //public void alterar(Integer id, String campo, String update);
     }
 }

@@ -3,33 +3,32 @@ package Cadastro.Database.Metodos;
 import Cadastro.Database.Metodos.Deserializers.jsonCEP;
 import Cadastro.Database.dataSet;
 import Cadastro.NovosDados.Repositorio.Auxiliar.Propriedades.*;
-import Cadastro.NovosDados.Repositorio.DTO.Fornecedor;
-import Cadastro.NovosDados.Repositorio.Enums.camposForn;
-import Raiz.Utils.smartTools.*;
+import Cadastro.NovosDados.Repositorio.DTO.Fornecedores;
+import Cadastro.NovosDados.Repositorio.Enums.Fields.camposForn;
 import Raiz.Utils.smartTools.genericCollects.*;
 
 import java.util.*;
 import java.util.stream.Stream;
 
-public class metodosFornecedor extends Fornecedor {
+public class metodosFornecedores extends Fornecedores {
 
-    private final dataSet<Fornecedor> DS;
+    private final dataSet<Fornecedores> DS;
     public static String message;
 
     /**
      * Construtor
      */
     @SuppressWarnings("unchecked")
-    public metodosFornecedor(dataSet<?> banco) {
-        this.DS = (dataSet<Fornecedor>) banco;
+    public metodosFornecedores(dataSet<?> banco) {
+        this.DS = (dataSet<Fornecedores>) banco;
     }
 
     /**
      * Inserir novo fornecedor
      */
-    public void novoFornecedor(Integer id, Fornecedor forn) {
-        if (forn.getCnpj() != null){
-            DS.insert(forn.setId(id), new Fornecedor(forn.getRazaoSocial(), forn.getNomeFantasia(), forn.getCnpj(), forn.getEmail(), forn.getInscEstadual(), forn.getTelefone(), forn.getInfoCEP(), forn.getAtividades()), Fornecedor.class);
+    public void novoFornecedor(Integer id, Fornecedores forn) {
+        if (forn.getDocumento() != null){
+            DS.insert(forn.setId(id), new Fornecedores(forn.getRazaoSocial(), forn.getNomeFantasia(), forn.getDocumento(), forn.getEmail(), forn.getInscEstadual(), forn.getTelefone(), forn.getInfoCEP(), forn.getAtividades()), Fornecedores.class);
         } else message = "\nNão é possível realizar o cadastro do cliente " + forn.getNomeFantasia() + ". Necessário informar o seu CPF.";
     }
 
@@ -37,11 +36,11 @@ public class metodosFornecedor extends Fornecedor {
      * Alterar um fornecedor
      */
     public void alterFornecedor(Integer id, String Campo, String... update) {
-        if (!DS.select(Fornecedor.class).isEmpty()) {
-            if (DS.select(Fornecedor.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+        if (!DS.select(Fornecedores.class).isEmpty()) {
+            if (DS.select(Fornecedores.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
                 camposForn getCampo = camposForn.valueOf(Campo.toUpperCase());
 
-                Set<Map.Entry<Integer, Fornecedor>> getForn = DS.select(Fornecedor.class).entrySet();
+                Set<Map.Entry<Integer, Fornecedores>> getForn = DS.select(Fornecedores.class).entrySet();
                 getForn.stream().filter(x -> x.getKey().equals(id)).forEach(forn -> {
 
                     String obj1 = "", obj2 = "";
@@ -51,9 +50,10 @@ public class metodosFornecedor extends Fornecedor {
                     boolean add = update[0].equalsIgnoreCase("INCREMENTAR");
                     boolean rem = update[0].equalsIgnoreCase("REMOVER");
                     if (!add && !rem) {
-                        if (update.length < 2 || nullable)
-                            //obj1 = update[0];
-                            obj.add(update[0]);
+                        if (update.length < 2 || nullable) {
+                            obj1 = update[0];
+                            obj.add(obj1);
+                        }
                         if (update.length == 2) {
                             obj1 = update[0];
                             obj2 = update[1];
@@ -69,21 +69,21 @@ public class metodosFornecedor extends Fornecedor {
 
                     switch (getCampo) {
                         case RAZAOSOCIAL ->
-                            DS.insert(id, new Fornecedor(obj1, forn.getValue().getNomeFantasia(), forn.getValue().getCnpj(), forn.getValue().getEmail(), forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), forn.getValue().getInfoCEP(), forn.getValue().getAtividades()), Fornecedor.class);
+                            DS.insert(id, new Fornecedores(obj1, forn.getValue().getNomeFantasia(), forn.getValue().getDocumento(), forn.getValue().getEmail(), forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), forn.getValue().getInfoCEP(), forn.getValue().getAtividades()), Fornecedores.class);
                         case NOMEFANTASIA ->
-                            DS.insert(id, new Fornecedor(forn.getValue().getRazaoSocial(), obj1, forn.getValue().getCnpj(), forn.getValue().getEmail(), forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), forn.getValue().getInfoCEP(), forn.getValue().getAtividades()), Fornecedor.class);
+                            DS.insert(id, new Fornecedores(forn.getValue().getRazaoSocial(), obj1, forn.getValue().getDocumento(), forn.getValue().getEmail(), forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), forn.getValue().getInfoCEP(), forn.getValue().getAtividades()), Fornecedores.class);
                         case CNPJ ->
-                            DS.insert(id, new Fornecedor(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), obj1, forn.getValue().getEmail(), forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), forn.getValue().getInfoCEP(), forn.getValue().getAtividades()), Fornecedor.class);
+                            DS.insert(id, new Fornecedores(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), obj1, forn.getValue().getEmail(), forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), forn.getValue().getInfoCEP(), forn.getValue().getAtividades()), Fornecedores.class);
                         case EMAIL ->
-                            DS.insert(id, new Fornecedor(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), forn.getValue().getCnpj(), obj1, forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), forn.getValue().getInfoCEP(), forn.getValue().getAtividades()), Fornecedor.class);
+                            DS.insert(id, new Fornecedores(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), forn.getValue().getDocumento(), obj1, forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), forn.getValue().getInfoCEP(), forn.getValue().getAtividades()), Fornecedores.class);
                         case INSC_ESTADUAL ->
-                            DS.insert(id, new Fornecedor(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), forn.getValue().getCnpj(), forn.getValue().getEmail(), obj1, forn.getValue().getTelefone(), forn.getValue().getInfoCEP(), forn.getValue().getAtividades()), Fornecedor.class);
+                            DS.insert(id, new Fornecedores(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), forn.getValue().getDocumento(), forn.getValue().getEmail(), obj1, forn.getValue().getTelefone(), forn.getValue().getInfoCEP(), forn.getValue().getAtividades()), Fornecedores.class);
                         case TELEFONE ->
-                            DS.insert(id, new Fornecedor(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), forn.getValue().getCnpj(), forn.getValue().getEmail(), forn.getValue().getInscEstadual(), obj1, forn.getValue().getInfoCEP(), forn.getValue().getAtividades()), Fornecedor.class);
+                            DS.insert(id, new Fornecedores(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), forn.getValue().getDocumento(), forn.getValue().getEmail(), forn.getValue().getInscEstadual(), obj1, forn.getValue().getInfoCEP(), forn.getValue().getAtividades()), Fornecedores.class);
                         case CEP ->
-                            DS.insert(id, new Fornecedor(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), forn.getValue().getCnpj(), forn.getValue().getEmail(), forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), jsonCEP.responseCEP(obj1, forn.getValue().getInfoCEP().getNum()), forn.getValue().getAtividades()), Fornecedor.class);
+                            DS.insert(id, new Fornecedores(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), forn.getValue().getDocumento(), forn.getValue().getEmail(), forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), jsonCEP.responseCEP(obj1, forn.getValue().getInfoCEP().getNum()), forn.getValue().getAtividades()), Fornecedores.class);
                         case NUMFORN ->
-                            DS.insert(id, new Fornecedor(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), forn.getValue().getCnpj(), forn.getValue().getEmail(), forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), jsonCEP.responseCEP(forn.getValue().getInfoCEP().getCEP().replace("-", ""), Integer.parseInt(obj1)), forn.getValue().getAtividades()), Fornecedor.class);
+                            DS.insert(id, new Fornecedores(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), forn.getValue().getDocumento(), forn.getValue().getEmail(), forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), jsonCEP.responseCEP(forn.getValue().getInfoCEP().getCEP().replace("-", ""), Integer.parseInt(obj1)), forn.getValue().getAtividades()), Fornecedores.class);
                         case ATIVIDADES -> {
 
                             genericSet<Grupos> listAtividades = null;
@@ -96,7 +96,7 @@ public class metodosFornecedor extends Fornecedor {
                             if (add) listAtividades = incrmtAtividades(list, fornAtividades(String.valueOf(obj)));
                             if (rem) listAtividades = remoAtividades(list, fornAtividades(String.valueOf(obj)));
 
-                            DS.insert(id, new Fornecedor(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), forn.getValue().getCnpj(), forn.getValue().getEmail(), forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), forn.getValue().getInfoCEP(), listAtividades), Fornecedor.class);
+                            DS.insert(id, new Fornecedores(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), forn.getValue().getDocumento(), forn.getValue().getEmail(), forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), forn.getValue().getInfoCEP(), listAtividades), Fornecedores.class);
                         }
                         default -> {
                         }
@@ -110,10 +110,10 @@ public class metodosFornecedor extends Fornecedor {
      * Remover um fornecedor
      */
     public void remoFornecedor(Integer id) {
-        if (!DS.select(Fornecedor.class).isEmpty()) {
-            if (DS.select(Fornecedor.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+        if (!DS.select(Fornecedores.class).isEmpty()) {
+            if (DS.select(Fornecedores.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
 
-                DS.select(Fornecedor.class).remove(id);
+                DS.select(Fornecedores.class).remove(id);
             } else message = "\nRegistro inexistente na tabela.";
         } else message = "\nA tabela de fornecedores está vazia.";
     }
@@ -122,9 +122,9 @@ public class metodosFornecedor extends Fornecedor {
      * Localizar um fornecedor
      */
     public void findFornecedor(Integer id) {
-        if (!DS.select(Fornecedor.class).isEmpty()) {
-            if (DS.select(Fornecedor.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
-                Set<Map.Entry<Integer, Fornecedor>> getForn = DS.select(Fornecedor.class).entrySet();
+        if (!DS.select(Fornecedores.class).isEmpty()) {
+            if (DS.select(Fornecedores.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+                Set<Map.Entry<Integer, Fornecedores>> getForn = DS.select(Fornecedores.class).entrySet();
 
                 getForn.stream().filter(setid -> setid.getKey().equals(id)).forEach(x -> System.out.println("id{" + x.getKey() + "}, " + x.getValue()));
             } else message = "\nRegistro inexistente na tabela.";
@@ -132,13 +132,13 @@ public class metodosFornecedor extends Fornecedor {
     }
 
     /**
-     * Retorna um objeto Fornecedor pelo id
+     * Retorna um objeto Fornecedores pelo id
      */
-    public Fornecedor fornecedorProd(Integer id) {
-        Fornecedor forn = null;
-        if (!DS.select(Fornecedor.class).isEmpty()) {
-            if (DS.select(Fornecedor.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
-                Set<Map.Entry<Integer, Fornecedor>> getForn = DS.select(Fornecedor.class).entrySet();
+    public Fornecedores fornecedorProd(Integer id) {
+        Fornecedores forn = null;
+        if (!DS.select(Fornecedores.class).isEmpty()) {
+            if (DS.select(Fornecedores.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+                Set<Map.Entry<Integer, Fornecedores>> getForn = DS.select(Fornecedores.class).entrySet();
 
                 forn = getForn.stream().filter(setid -> setid.getKey().equals(id)).findFirst().orElseThrow().getValue();
             } else System.out.println("\nRegistro inexistente na tabela.");
@@ -151,9 +151,9 @@ public class metodosFornecedor extends Fornecedor {
      * Listar fornecedores por ids
      */
     public void listbyIdFornecedor(Integer ini_id, Integer fim_id) {
-        if (!DS.select(Fornecedor.class).isEmpty()) {
-            if (DS.select(Fornecedor.class).entrySet().stream().anyMatch(x -> x.getKey().equals(ini_id))) {
-                Set<Map.Entry<Integer, Fornecedor>> getForn = DS.select(Fornecedor.class).entrySet();
+        if (!DS.select(Fornecedores.class).isEmpty()) {
+            if (DS.select(Fornecedores.class).entrySet().stream().anyMatch(x -> x.getKey().equals(ini_id))) {
+                Set<Map.Entry<Integer, Fornecedores>> getForn = DS.select(Fornecedores.class).entrySet();
 
                 getForn.stream().filter(id -> id.getKey() >= ini_id && id.getKey() <= fim_id).forEach(x -> System.out.println("id{" + x.getKey() + "}, " + x.getValue()));
             } else message = "\nRegistro inexistente na tabela.";
@@ -164,9 +164,9 @@ public class metodosFornecedor extends Fornecedor {
      * Remover fornecedores por ids
      */
     public void remobyIdFornecedor(Integer ini_id, Integer fim_id) {
-        if (!DS.select(Fornecedor.class).isEmpty()) {
-            if (DS.select(Fornecedor.class).entrySet().stream().anyMatch(x -> x.getKey().equals(ini_id))) {
-                Set<Map.Entry<Integer, Fornecedor>> getForn = DS.select(Fornecedor.class).entrySet();
+        if (!DS.select(Fornecedores.class).isEmpty()) {
+            if (DS.select(Fornecedores.class).entrySet().stream().anyMatch(x -> x.getKey().equals(ini_id))) {
+                Set<Map.Entry<Integer, Fornecedores>> getForn = DS.select(Fornecedores.class).entrySet();
 
                 getForn.removeIf(id -> id.getKey() >= ini_id && id.getKey() <= fim_id);
             } else message = "\nRegistro inexistente na tabela.";
@@ -177,8 +177,8 @@ public class metodosFornecedor extends Fornecedor {
      * Imprimir fornecedores que estão na lista no momento
      */
     public boolean printMapWithSet() {
-        if (!DS.select(Fornecedor.class).isEmpty()) {
-            Set<Map.Entry<Integer, Fornecedor>> getForn = DS.select(Fornecedor.class).entrySet();
+        if (!DS.select(Fornecedores.class).isEmpty()) {
+            Set<Map.Entry<Integer, Fornecedores>> getForn = DS.select(Fornecedores.class).entrySet();
 
             getForn.forEach(x -> System.out.println("id{" + x.getKey() + "}, " + x.getValue()));
             return true;
@@ -193,8 +193,8 @@ public class metodosFornecedor extends Fornecedor {
      */
     public Integer nextId() {
         int maxnum;
-        if (!DS.select(Fornecedor.class).isEmpty()) {
-            Set<Map.Entry<Integer, Fornecedor>> getForn = DS.select(Fornecedor.class).entrySet();
+        if (!DS.select(Fornecedores.class).isEmpty()) {
+            Set<Map.Entry<Integer, Fornecedores>> getForn = DS.select(Fornecedores.class).entrySet();
             maxnum = getForn.stream().mapToInt(Map.Entry::getKey).max().getAsInt();
         } else maxnum = 0;
 
@@ -206,8 +206,8 @@ public class metodosFornecedor extends Fornecedor {
      */
     public boolean userValid (Integer id) {
         boolean valid = false;
-        if (!DS.select(Fornecedor.class).isEmpty()) {
-            if (DS.select(Fornecedor.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+        if (!DS.select(Fornecedores.class).isEmpty()) {
+            if (DS.select(Fornecedores.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
 
                 valid = true;
             } else message = "\nRegistro inexistente na tabela.";
@@ -220,8 +220,8 @@ public class metodosFornecedor extends Fornecedor {
      * Verifica se o atributo atividade está ou não nulo
      */
     public boolean returnAtividades(Integer id) {
-        Stream<Map.Entry<Integer, Fornecedor>>
-                getForn = DS.select(Fornecedor.class).entrySet().stream().filter(x -> x.getKey().equals(id));
+        Stream<Map.Entry<Integer, Fornecedores>>
+                getForn = DS.select(Fornecedores.class).entrySet().stream().filter(x -> x.getKey().equals(id));
         return getForn.anyMatch(y -> y.getValue().getAtividades() == null);
     }
 
@@ -290,15 +290,15 @@ public class metodosFornecedor extends Fornecedor {
 
     //#region rascunho
     /*
-    //private Map<Integer, Fornecedor> tabFornecedor;
+    //private Map<Integer, Fornecedores> tabFornecedor;
 
-        //tabFornecedor.put(forn.setId(id), new Fornecedor(forn.getRazaoSocial(), forn.getNomeFantasia(), forn.getCnpj(), forn.getEmail(), forn.getInscEstadual(), forn.getTelefone(), forn.getInfoCEP(), forn.getAtividades()));
+        //tabFornecedor.put(forn.setId(id), new Fornecedores(forn.getRazaoSocial(), forn.getNomeFantasia(), forn.getCnpj(), forn.getEmail(), forn.getInscEstadual(), forn.getTelefone(), forn.getInfoCEP(), forn.getAtividades()));
 
-    public metodosFornecedor() {
+    public metodosFornecedores() {
         this.tabFornecedor = new HashMap<>();
     }
 
-    public metodosFornecedor(metodosFornecedor forn) {
+    public metodosFornecedores(metodosFornecedores forn) {
         this.tabFornecedor = forn.tabFornecedor;
     }
 
@@ -310,8 +310,8 @@ public class metodosFornecedor extends Fornecedor {
 
     public static void main(String[] args) {
 
-        //Cliente cli = new Cliente();
-        metodosFornecedor mcli = new metodosFornecedor();
+        //Clientes cli = new Clientes();
+        metodosFornecedores mcli = new metodosFornecedores();
         //smartTools.CEP CEP = new smartTools();
 
         System.out.println("# Lista de clientes #");

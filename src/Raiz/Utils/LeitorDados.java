@@ -1,5 +1,6 @@
 package Raiz.Utils;
 
+import Cadastro.Database.Metodos.Deserializers.jsonMarcas.*;
 import Cadastro.Database.Metodos.Interfaces.INovosDados;
 import Raiz.Core.impressaoLog;
 import Raiz.Utils.smartTools.genericCollects.*;
@@ -182,7 +183,59 @@ public abstract class leitorDados implements INovosDados.IReader {
                 }
             }
         }
+        System.out.println("*************************************************");
         return doc;
+    }
+
+    public String readBrand(String str){
+        String brand, ret = null;
+        boolean auth = false, start = false;
+
+        coletarMarca json = new coletarMarca();
+        while (!start) {
+            if (!auth) System.out.print(str);
+            if (auth) System.out.print("Digite novamente a marca desejada: ");
+            brand = txt.next();
+            auth = false;
+
+            while (!auth) {
+                List<String> listMarcas = json.stringToList(json.stringsMarcas(brand)).stream().toList();
+                if (listMarcas.size() > 1) {
+                    System.out.println("*************************************************");
+                    System.out.println("Foram encontradas as marcas a seguir que se aproximam na sua informação.\nInforme a correta caso esteja nessa lista. " + listMarcas);
+                    System.out.println("Caso queira informar uma nova marca, digite DIGITAR.");
+                    System.out.print("Caso não queira informar uma nova marca, digite SAIR: ");
+                    String desc = txt.next();
+
+                    if(!desc.equalsIgnoreCase("digitar") && !desc.equalsIgnoreCase("sair")) {
+                        int i = 0;
+                        for (String mc : listMarcas) {
+                            if (mc.toLowerCase().contains(desc)) {
+                                int j = i;
+                                auth = true;
+                                start = true;
+                                ret = listMarcas.get(j);
+                            }
+                            if (!mc.toLowerCase().contains(desc)) auth = true;
+                            i++;
+                        }
+                    }
+                    if(desc.equalsIgnoreCase("digitar")) auth = true;
+                    if(desc.equalsIgnoreCase("sair")) {
+                        auth = true;
+                        start = true;
+                        ret = null;
+                    }
+
+                } else {
+                    auth = true;
+                    start = true;
+                    ret = listMarcas.get(0);
+                }
+                System.out.println("*************************************************");
+            }
+        }
+        return ret;
     }
 
     /**

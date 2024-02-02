@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 import Cadastro.Database.dataSet;
 import Cadastro.Database.JSON.JsonTools.jsonExtraction.*;
 import Cadastro.NovosDados.Repositorio.DTO.*;
-import Cadastro.NovosDados.Repositorio.Enums.camposItens;
+import Cadastro.NovosDados.Repositorio.Enums.Fields.camposItens;
 import Raiz.Core.impressaoLog;
 
 public class metodosProduto extends Produtos {
@@ -197,7 +197,7 @@ public metodosProduto(metodosProduto prod) {
 
     public static void main(String[] args) throws Exception {
 
-        metodosFornecedor forn = new metodosFornecedor();
+        metodosFornecedores forn = new metodosFornecedores();
         metodosProduto prod = new metodosProduto();
 
         coletaJsonDados<Produtos> cat = new coletaJsonDados<>();

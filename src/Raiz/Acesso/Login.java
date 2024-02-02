@@ -6,13 +6,13 @@ import Cadastro.Database.Metodos.*;
 public class Login {
 
     menuPrincipal mp;
-    metodosUsuario musr;
+    metodosUsuarios musr;
     //rootAccess DT;
     dataSet<?> banco;
 
     public Login(dataSet<?> DS) {
         this.mp = new menuPrincipal(DS);
-        this.musr = new metodosUsuario(DS);
+        this.musr = new metodosUsuarios(DS);
         //this.DT = new rootAccess(DS);
         this.banco = DS;
     }
@@ -36,7 +36,7 @@ public class Login {
         System.out.println("-------- @@@  @@@  @@@ - @@@ -- @@@ -- @@@ - @@@ @@@ @@@@ @@@ -------");
         System.out.println("------- @@@@@@@@@@ @@@ - @@@ -- @@@ -- @@@ - @@@ @@@  @@  @@@ -------");
         System.out.println("------ @@@ ---- @@@ @@@@@@@ --- @@@ --- @@@@@@@  @@@ ---- @@@ -------");
-        System.out.println("--------------------------------------------------------v1.17--------");
+        System.out.println("--------------------------------------------------------v1.18--------");
         System.out.println("---------------------------------------------------------------------");
         System.out.println("---------------------------------------------------------------------\n");
 

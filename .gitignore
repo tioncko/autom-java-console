@@ -1,8 +1,11 @@
 ### IntelliJ IDEA ###
 out/
-lib/
 !**/src/main/**/out/
 !**/src/test/**/out/
+
+lib/
+!**/src/main/**/lib/
+!**/src/test/**/lib/
 
 ### Eclipse ###
 .apt_generated

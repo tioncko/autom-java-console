@@ -1,21 +1,13 @@
 package Raiz.Utils;
 
-import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.time.*;
 import java.util.*;
-import java.util.logging.Logger;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 import Cadastro.NovosDados.Repositorio.Auxiliar.Criptografia;
-import Cadastro.NovosDados.Repositorio.Auxiliar.validarCEP;
 import Cadastro.NovosDados.Repositorio.Enums.agora;
 import Cadastro.NovosDados.Repositorio.Enums.operacao;
-import Raiz.Core.impressaoLog;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
+import Raiz.Utils.leitorDados;
 
 public abstract class smartTools {
 
@@ -197,7 +189,7 @@ public abstract class smartTools {
         }
     }
 
-    public static class Numeros {
+    public static class objetosAuxiliares extends leitorDados{
 
         /**
          * Efetua a validação do valor recebido via parâmetro se é ou não um número
@@ -213,6 +205,18 @@ public abstract class smartTools {
                 return false;
             }
         }
+
+        /**
+         * Retorna a opção selecionada no medu interno de cada área
+         */
+        public Integer optionMenu(String obj) {
+            return readInt("\nO que deseja?" +
+                    "\n\033[3m\u001B[32m(1) Permanecer na tela de cadastro de " + obj +
+                    "\n(2) Retornar ao menu principal" +
+                    "\n(3) Ir para o menu de cadastro geral" +
+                    "\n(4) Sair da aplicação?: \u001B[0m\033[0m");
+        }
+
     }
 
     public static class genericCollects {
@@ -249,10 +253,7 @@ public abstract class smartTools {
         public static class genericSet<E> extends TreeSet<E> {
 
             protected Set<E> list;
-            public genericSet() {
-                this.list = new TreeSet<>();
-                //super(l);
-            }
+            public genericSet() { this.list = new TreeSet<>(); } //super(l)
 
             @Override
             public String toString() {

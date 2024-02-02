@@ -5,14 +5,12 @@ import Cadastro.NovosDados.Repositorio.Auxiliar.Propriedades.*;
 import Cadastro.NovosDados.Repositorio.Auxiliar.validarCEP;
 import Raiz.Utils.smartTools.genericCollects.*;
 
-import java.util.Objects;
-
-public class Fornecedor extends outrosDados {
+public class Fornecedores extends outrosDados {
 
     private int id;
     private String razaoSocial;
     private String nomeFantasia;
-    private String cnpj;
+    //private String cnpj;
     private String inscEstadual;
     private genericSet<Grupos> atividades;
 
@@ -24,10 +22,10 @@ public class Fornecedor extends outrosDados {
      */
     //#endregion
 
-    public Fornecedor(String razaoSocial, String nomeFantasia, String cnpj, String email, String inscEstadual, String telefone, validarCEP infoCEP, genericSet<Grupos> atividades) {
+    public Fornecedores(String razaoSocial, String nomeFantasia, String cnpj, String email, String inscEstadual, String telefone, validarCEP infoCEP, genericSet<Grupos> atividades) {
         this.razaoSocial = razaoSocial;
         this.nomeFantasia = nomeFantasia;
-        this.cnpj = cnpj;
+        this.setDocumento(cnpj);
         this.setEmail(email);
         this.inscEstadual = inscEstadual;
         this.setTelefone(telefone);
@@ -35,17 +33,17 @@ public class Fornecedor extends outrosDados {
         this.atividades = atividades;
     }
 
-    public Fornecedor(String razaoSocial, String nomeFantasia, String cnpj, String email, String inscEstadual, String telefone, validarCEP infoCEP) {
+    public Fornecedores(String razaoSocial, String nomeFantasia, String cnpj, String email, String inscEstadual, String telefone, validarCEP infoCEP) {
         this.razaoSocial = razaoSocial;
         this.nomeFantasia = nomeFantasia;
-        this.cnpj = cnpj;
+        this.setDocumento(cnpj);
         this.setEmail(email);
         this.inscEstadual = inscEstadual;
         this.setTelefone(telefone);
         this.setInfoCEP(infoCEP);
     }
 
-    public Fornecedor() {
+    public Fornecedores() {
     }
 
     public int getId() {
@@ -67,13 +65,6 @@ public class Fornecedor extends outrosDados {
     }
     public void setNomeFantasia(String nomeFantasia) {
         this.nomeFantasia = nomeFantasia;
-    }
-
-    public String getCnpj() {
-        return cnpj;
-    }
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
     }
 
     public String getInscEstadual() {
@@ -99,9 +90,7 @@ public class Fornecedor extends outrosDados {
     public void setEmail(String email) {
         this.email = email;
     }
-*/
 
-/*
     public String getTelefone() {
         return telefone;
     }
@@ -117,13 +106,18 @@ public class Fornecedor extends outrosDados {
     public void setInfoCEP(validarCEP infoCEP) {
         this.infoCEP = infoCEP;
     }
-*/
-//#endregion
+
+        public String getCnpj() {
+            return cnpj;
+        }
+        public void setCnpj(String cnpj) {
+            this.cnpj = cnpj;
+        }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (!(obj instanceof Fornecedor forn)) return false;
+        if (!(obj instanceof Fornecedores forn)) return false;
         return Objects.equals(this.getCnpj(), forn.getCnpj());
     }
 
@@ -131,13 +125,15 @@ public class Fornecedor extends outrosDados {
     public int hashCode() {
         return Objects.hash(getCnpj());
     }
+*/
+    //#endregion
 
     @Override
     public String toString() {
-        return "Fornecedor{" +
+        return "Fornecedores{" +
                 "razaoSocial='" + razaoSocial + '\'' +
                 ", nomeFantasia='" + nomeFantasia + '\'' +
-                ", cnpj=" + cnpj + '\'' +
+                ", cnpj=" + getDocumento() + '\'' +
                 ", email='" + getEmail() + '\'' +
                 ", inscEstadual='" + inscEstadual + '\'' +
                 ", telefone='" + getTelefone() + '\'' +

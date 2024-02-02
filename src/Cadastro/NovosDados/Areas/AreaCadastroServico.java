@@ -1,15 +1,16 @@
 package Cadastro.NovosDados.Areas;
 
 import Cadastro.Database.dataSet;
-import Cadastro.Database.JSON.JsonTools.jsonExtraction;
-import Cadastro.Database.Metodos.Interfaces.IAreaCadastro;
 import Cadastro.Database.Metodos.metodosServico;
 import Cadastro.NovosDados.Repositorio.DTO.Servicos;
 import Raiz.Acesso.menuPrincipal;
+import Cadastro.Database.Metodos.Interfaces.IAreaCadastro;
 import Raiz.Inicio.Cadastro;
 import Raiz.Utils.leitorDados;
+import Raiz.Utils.smartTools.*;
+import Cadastro.Database.JSON.JsonTools.jsonExtraction;
 
-public class areaCadastroServico extends leitorDados implements IAreaCadastro.IServicos {
+public class areaCadastroServico extends leitorDados implements IAreaCadastro {
 
     menuPrincipal mp;
     Cadastro cad;
@@ -24,7 +25,7 @@ public class areaCadastroServico extends leitorDados implements IAreaCadastro.IS
     }
 
     @Override
-    public void menuCadastroServico(Integer userId)  {
+    public void menuAreaCadastro(Integer userId)  {
         System.out.println("\n\u001B[34mServico:\u001B[0m");
         System.out.println("1 - Cadastrar Servico");
         System.out.println("2 - Alterar Servico");
@@ -38,12 +39,12 @@ public class areaCadastroServico extends leitorDados implements IAreaCadastro.IS
         System.out.print("\n-----------------------------------------");
         String id = readText("\n\033[3mDigite código do menu para suas ações: \033[0m");
         System.out.println("-----------------------------------------");
-        acoesCadastroServico(id, userId);
+        acoesAreaCadastro(id, userId);
     }
 
+    boolean session = true;
     @Override
-    public void acoesCadastroServico(String id, Integer userId) {
-        boolean session = true;
+    public void acoesAreaCadastro(String id, Integer userId) {
         jsonExtraction.coletaJsonDados cjd = new jsonExtraction.coletaJsonDados();
 
         while (session) {
@@ -53,43 +54,26 @@ public class areaCadastroServico extends leitorDados implements IAreaCadastro.IS
                     System.out.println("\n# Cadastrar novo serviço #\n");
                     //as.cadastrarServico("Jorge", "22", "04472205484", "teste@olos.com.br", "014585445489", "2555555", "04472205", 38, String.valueOf(ReadStrList("try: ")));
 
-                    as.cadastrarServico(
+                    as.cadastrar(
                             readSentence("Nome do serviço: "),
                             readDbl("Preco: "),
                             cjd.nomeCategoria(readInt("Categoria: "), Servicos.class),
                             cjd.nomeGrupo(readInt("Grupo: "), Servicos.class));
                     System.out.println("\nCadastro concluído!");
 
-                    System.out.print("\n----------------------------------------------");
-                    Integer opcaoCadProd = readInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do serviço" +
-                            "\n(2) Retornar ao menu principal" +
-                            "\n(3) Ir para o menu de cadastro geral" +
-                            "\n(4) Sair da aplicação?: \033[0m");
-                    System.out.println("----------------------------------------------");
-
-                    if (opcaoCadProd == 1) menuCadastroServico(userId);
-                    if (opcaoCadProd == 2) {
-                        session = false;
-                        mp.paginaInicial(banco);
-                    }
-                    if (opcaoCadProd == 3) mp.menuCadastro(userId, banco);
-                    if (opcaoCadProd == 4) {
-                        System.out.println("\nAplicação encerrada.");
-                        System.exit(0);
-                    }
+                    opcoesAreaCadastro(Servicos.class.getName(), userId);
                     break;
                     //#endregion
                 case "2":
                     //#region Alterar um serviço
                     System.out.println("\n# Alterar um serviço #\n");
-                    if (as.listarServicos()) {
+                    if (as.listar()) {
                         System.out.println();
 
                         int alterId = readInt("Id: ");
                         if (as.validarId(alterId)) {
                             String field = readText("Campo: ");
-                            as.alterarServico(
+                            as.alterar(
                                     alterId,
                                     field,
                                     readSentence("Alteração (" + field.toUpperCase() + "): "));
@@ -97,41 +81,24 @@ public class areaCadastroServico extends leitorDados implements IAreaCadastro.IS
                             if (!(metodosServico.message == null))
                                 System.out.println(metodosServico.message);
                             else System.out.println("\nAlteração concluída!");
-                            as.localizarServico(alterId);
+                            as.localizar(alterId);
                         }
                         if (!(metodosServico.message == null))
                             System.out.println(metodosServico.message);
                     }
 
-                    System.out.print("\n----------------------------------------------");
-                    Integer opcaoAltProd = readInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do serviço" +
-                            "\n(2) Retornar ao menu principal" +
-                            "\n(3) Ir para o menu de cadastro geral?" +
-                            "\n(4) Sair da aplicação?: \033[0m");
-                    System.out.println("----------------------------------------------");
-
-                    if (opcaoAltProd == 1) menuCadastroServico(userId);
-                    if (opcaoAltProd == 2) {
-                        session = false;
-                        mp.paginaInicial(banco);
-                    }
-                    if (opcaoAltProd == 3) mp.menuCadastro(userId, banco);
-                    if (opcaoAltProd == 4) {
-                        System.out.println("\nAplicação encerrada.");
-                        System.exit(0);
-                    }
+                    opcoesAreaCadastro(Servicos.class.getName(), userId);
                     break;
                     //#endregion
                 case "3":
                     //#region Excluir um serviço
                     System.out.println("\n# Excluir um serviço #\n");
-                    if(as.listarServicos()) {
+                    if(as.listar()) {
                         System.out.println();
 
                         int remoId = readInt("Id: ");
                         if (as.validarId(remoId)) {
-                            as.excluirServico(
+                            as.excluir(
                                     remoId //ReadInt("Id: ")
                             );
                             if (!(metodosServico.message == null))
@@ -142,35 +109,18 @@ public class areaCadastroServico extends leitorDados implements IAreaCadastro.IS
                             System.out.println(metodosServico.message);
                     }
 
-                    System.out.print("\n----------------------------------------------");
-                    Integer opcaoExcProd = readInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do serviço" +
-                            "\n(2) Retornar ao menu principal" +
-                            "\n(3) Ir para o menu de cadastro geral" +
-                            "\n(4) Sair da aplicação?: \033[0m");
-                    System.out.println("----------------------------------------------");
-
-                    if (opcaoExcProd == 1) menuCadastroServico(userId);
-                    if (opcaoExcProd == 2) {
-                        session = false;
-                        mp.paginaInicial(banco);
-                    }
-                    if (opcaoExcProd == 3) mp.menuCadastro(userId, banco);
-                    if (opcaoExcProd == 4) {
-                        System.out.println("\nAplicação encerrada.");
-                        System.exit(0);
-                    }
+                    opcoesAreaCadastro(Servicos.class.getName(), userId);
                     break;
                     //#endregion
                 case "4":
                     //#region Localizar um serviço
                     System.out.println("\n# Localizar um serviço #\n");
-                    if(as.listarServicos()){
+                    if(as.listar()){
                         System.out.println();
 
                         int findId = readInt("Id: ");
                         if (as.validarId(findId)) {
-                            as.localizarServico(
+                            as.localizar(
                                     findId //ReadInt("Id: ")
                             );
                             if (!(metodosServico.message == null))
@@ -180,35 +130,18 @@ public class areaCadastroServico extends leitorDados implements IAreaCadastro.IS
                             System.out.println(metodosServico.message);
                     }
 
-                    System.out.print("\n----------------------------------------------");
-                    Integer opcaoLocProd = readInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do serviço" +
-                            "\n(2) Retornar ao menu principal" +
-                            "\n(3) Ir para o menu de cadastro geral" +
-                            "\n(4) Sair da aplicação?: \033[0m");
-                    System.out.println("----------------------------------------------");
-
-                    if (opcaoLocProd == 1) menuCadastroServico(userId);
-                    if (opcaoLocProd == 2) {
-                        session = false;
-                        mp.paginaInicial(banco);
-                    }
-                    if (opcaoLocProd == 3) mp.menuCadastro(userId, banco);
-                    if (opcaoLocProd == 4) {
-                        System.out.println("\nAplicação encerrada.");
-                        System.exit(0);
-                    }
+                    opcoesAreaCadastro(Servicos.class.getName(), userId);
                     break;
                     //#endregion
                 case "5":
                     //#region Localizar vários serviços
                     System.out.println("\n# Localizar vários serviços #\n");
-                    if(as.listarServicos()){
+                    if(as.listar()){
                         System.out.println();
 
                         int findId = readInt("Início: ");
                         if (as.validarId(findId)) {
-                            as.localizarMaisServicos(
+                            as.localizarMais(
                                     findId, //ReadInt("Início: "),
                                     readInt("Fim: "));
                             if (!(metodosServico.message == null))
@@ -218,35 +151,18 @@ public class areaCadastroServico extends leitorDados implements IAreaCadastro.IS
                             System.out.println(metodosServico.message);
                     }
 
-                    System.out.print("\n----------------------------------------------");
-                    Integer opcaoLocMProd = readInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do serviço" +
-                            "\n(2) Retornar ao menu principal" +
-                            "\n(3) Ir para o menu de cadastro geral" +
-                            "\n(4) Sair da aplicação?: \033[0m");
-                    System.out.println("----------------------------------------------");
-
-                    if (opcaoLocMProd == 1) menuCadastroServico(userId);
-                    if (opcaoLocMProd == 2) {
-                        session = false;
-                        mp.paginaInicial(banco);
-                    }
-                    if (opcaoLocMProd == 3) mp.menuCadastro(userId, banco);
-                    if (opcaoLocMProd == 4) {
-                        System.out.println("\nAplicação encerrada.");
-                        System.exit(0);
-                    }
+                    opcoesAreaCadastro(Servicos.class.getName(), userId);
                     break;
                     //#endregion
                 case "6":
                     //#region Remover vários serviços
                     System.out.println("\n# Remover vários serviço #\n");
-                    if(as.listarServicos()){
+                    if(as.listar()){
                         System.out.println();
 
                         int remoId = readInt("Início: ");
                         if (as.validarId(remoId)) {
-                            as.removerMaisServicos(
+                            as.removerMais(
                                     remoId, //ReadInt("Início: "),
                                     readInt("Fim: "));
                             if (!(metodosServico.message == null))
@@ -256,76 +172,47 @@ public class areaCadastroServico extends leitorDados implements IAreaCadastro.IS
                             System.out.println(metodosServico.message);
                     }
 
-                    System.out.print("\n----------------------------------------------");
-                    Integer opcaoRemMProd = readInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do serviço" +
-                            "\n(2) Retornar ao menu principal" +
-                            "\n(3) Ir para o menu de cadastro geral" +
-                            "\n(4) Sair da aplicação?: \033[0m");
-                    System.out.println("----------------------------------------------");
-
-                    if (opcaoRemMProd == 1) menuCadastroServico(userId);
-                    if (opcaoRemMProd == 2) {
-                        session = false;
-                        mp.paginaInicial(banco);
-                    }
-                    if (opcaoRemMProd == 3) mp.menuCadastro(userId, banco);
-                    if (opcaoRemMProd == 4) {
-                        System.out.println("\nAplicação encerrada.");
-                        System.exit(0);
-                    }
+                    opcoesAreaCadastro(Servicos.class.getName(), userId);
                     break;
                     //#endregion
                 case "7":
                     //#region Lista de serviços
                     System.out.println("\n# Lista de serviços #\n");
-                    as.listarServicos();
+                    as.listar();
 
-                    System.out.print("\n----------------------------------------------");
-                    Integer opcaoListProd = readInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do serviço" +
-                            "\n(2) Retornar ao menu principal" +
-                            "\n(3) Ir para o menu de cadastro geral" +
-                            "\n(4) Sair da aplicação?: \033[0m");
-                    System.out.println("----------------------------------------------");
-
-                    if (opcaoListProd == 1) menuCadastroServico(userId);
-                    if (opcaoListProd == 2) {
-                        session = false;
-                        mp.paginaInicial(banco);
-                    }
-                    if (opcaoListProd == 3) mp.menuCadastro(userId, banco);
-                    if (opcaoListProd == 4) {
-                        System.out.println("\nAplicação encerrada.");
-                        System.exit(0);
-                    }
+                    opcoesAreaCadastro(Servicos.class.getName(), userId);
                     break;
                     //#endregion
                 case "*":
                     //#region Retorno ao menu
-                    System.out.print("\n----------------------------------------------");
-                    Integer opcaoVoltar = readInt("\n\033[3mO que deseja?" +
-                            "\n(1) Permanecer na tela de cadastro do serviço" +
-                            "\n(2) Retornar ao menu principal" +
-                            "\n(3) Ir para o menu de cadastro geral" +
-                            "\n(4) Sair da aplicação?: \033[0m");
-                    System.out.println("----------------------------------------------");
-
-                    if (opcaoVoltar == 1) menuCadastroServico(userId);
-                    if (opcaoVoltar == 2) {
-                        session = false;
-                        mp.paginaInicial(banco);
-                    }
-                    if (opcaoVoltar == 3) mp.menuCadastro(userId, banco);
-                    if (opcaoVoltar == 4) {
-                        System.out.println("\nAplicação encerrada.");
-                        System.exit(0);
-                    }
+                    opcoesAreaCadastro(Servicos.class.getName(), userId);
                     break;
                     //#endregion
                 default:
                     break;
             }
+        }
+    }
+
+    @Override
+    public void opcoesAreaCadastro(String classe, Integer userId) {
+        objetosAuxiliares obj = new objetosAuxiliares();
+        System.out.print("\n----------------------------------------------");
+        Integer opcao = obj.optionMenu(classe);
+        System.out.println("----------------------------------------------");
+
+        if (opcao == 1) menuAreaCadastro(userId);
+        if (opcao == 2) {
+            session = false;
+            mp.paginaInicial(banco);
+        }
+        if (opcao == 3) {
+            session = false;
+            mp.menuCadastro(userId, banco);
+        }
+        if (opcao == 4) {
+            System.out.println("\nAplicação encerrada.");
+            System.exit(0);
         }
     }
 }

@@ -52,6 +52,10 @@ public abstract class jsonPerGson extends httpResponse {
         return new ArrayList<>(list);
     }
 
+    /**
+     * Método que faz a requisição do json via Gson, deserializa, e transforma em um objeto único
+     * https://zetcode.com/java/gson/ - tips
+     */
     public static <T, R> T requestObjJson(String uri, Class<T> objClass, R JsonDeserializerObject)  {
 
         String content = responseContent(uri);

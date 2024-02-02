@@ -8,14 +8,27 @@ public class Carros {
     private String nome;
     private String placa;
     private String origem;
-    private Cliente cliente;
+    private Clientes clientes;
     private Marcas marca;
 
-    public Carros(String nome, String placa, String origem, Cliente cliente, Marcas marca) {
+    public Carros(String nome, String placa, String origem) {
         this.nome = nome;
         this.placa = placa;
         this.origem = origem;
-        this.cliente = cliente;
+    }
+
+    public Carros(String nome, String placa, String origem, Marcas marca) {
+        this.nome = nome;
+        this.placa = placa;
+        this.origem = origem;
+        this.marca = marca;
+    }
+
+    public Carros(String nome, String placa, String origem, Clientes clientes, Marcas marca) {
+        this.nome = nome;
+        this.placa = placa;
+        this.origem = origem;
+        this.clientes = clientes;
         this.marca = marca;
     }
 
@@ -25,8 +38,8 @@ public class Carros {
     public int getId() {
         return id;
     }
-    public void setId(int id) {
-        this.id = id;
+    public Integer setId(int id) {
+        return this.id = id;
     }
 
     public String getNome() {
@@ -50,11 +63,11 @@ public class Carros {
         this.origem = origem;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Clientes getCliente() {
+        return clientes;
     }
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setCliente(Clientes clientes) {
+        this.clientes = clientes;
     }
 
     public Marcas getMarca() {
@@ -70,8 +83,8 @@ public class Carros {
                 "nome='" + nome + '\'' +
                 ", placa='" + placa + '\'' +
                 ", origem='" + origem + '\'' +
-                ", cliente=" + cliente +
-                ", marca=" + marca +
+                ", clientes='" + clientes + '\'' +
+                ", marca='" + marca + '\'' +
                 '}';
     }
 }

@@ -37,8 +37,8 @@ public class Servicos extends Gondola {
         return "Servicos{" +
                 "nome='" + nomeServ + '\'' +
                 ", preço=" + getPreco()  +
-                ", categoria=" + getCategoria()  +
-                ", grupo=" + getGrupo()  +
+                ", categoria='" + getCategoria() + '\'' +
+                ", grupo='" + getGrupo() + '\'' +
                 '}';
     }
 }

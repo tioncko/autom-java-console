@@ -21,7 +21,9 @@ Tela Loja
 
 ==============================
 
-# Soluções para implementar # (18/18)
+# Soluções para implementar #
+
+[PARTE 1] (18/18)
 
 [OK] Validação de exclusão de item da lista de cada classe "Metodos" [exemplo: código X já foi excluído]
 [OK] Incluir condição para impressão da mensagem de saída [sout("Alteração concluida") ou sout("a tabela tá vazia")]
@@ -41,5 +43,18 @@ Tela Loja
 [OK] Criar método para remover e incrementar atividades
 [OK] Associar as atividades aos fornecedores
 [OK] Necessário mudar a forma de coleta de CEP (atual: via XML, atualizar para: via JSON)
+
+[PARTE 2] (5/10)
+
+[OK] Desenvolver área do funcionário
+[OK] Padronizar as opções de Menu em todas as áreas
+[OK] Ajustar interfaces para que os métodos não fiquem repetitivos
+[OK] Desenvolver área do carro
+- Associar o funcionário a seu usuário
+[OK] Associar a marca ao carro
+- Associar o carro ao clientes
+- Criar API de lista de clientes para consumo
+- Criar API de lista de funcionários para consumo
+- Incrementar área do carro dentro da area do cliente
 
 ==============================

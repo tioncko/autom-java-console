@@ -1,6 +1,6 @@
 package Cadastro.Database.JSON.JsonTools;
 
-import Cadastro.NovosDados.Repositorio.DTO.Fornecedor;
+import Cadastro.NovosDados.Repositorio.DTO.Fornecedores;
 import Cadastro.NovosDados.Repositorio.DTO.Produtos;
 import Cadastro.NovosDados.Repositorio.DTO.Servicos;
 import Raiz.Core.Config;
@@ -84,8 +84,8 @@ public class jsonResponse extends jsonDTO {
                                 Servicos serv = getServicos(item);
                                 yield itensGen.adicionarItemALista((T) serv);
                             }
-                            case "Fornecedor" -> {
-                                Fornecedor forn = getFornecedor(item);
+                            case "Fornecedores" -> {
+                                Fornecedores forn = getFornecedor(item);
                                 yield itensGen.adicionarItemALista((T) forn);
                             }
                             default -> listaGen;

@@ -142,11 +142,11 @@ public class jsonExtraction extends jsonResponse {
         /**
          * Método que retorna o nome de um fornecedor
          */
-        public Fornecedor nomeForn (Integer id) {
+        public Fornecedores nomeForn (Integer id) {
 
-            Fornecedor forn;
+            Fornecedores forn;
             coletaJsonDados p = new coletaJsonDados();
-            Set<Map.Entry<Integer, Fornecedor>> getForn = p.mapForn().entrySet();;
+            Set<Map.Entry<Integer, Fornecedores>> getForn = p.mapForn().entrySet();;
 
             forn = getForn.stream()
                     .filter(setid -> setid.getKey().equals(id))
@@ -156,16 +156,16 @@ public class jsonExtraction extends jsonResponse {
 
         //#region rascunho
         /*
-        public metodosFornecedor DTForn() {
+        public metodosFornecedores DTForn() {
 
             jsonToMap p = new jsonToMap();
-            metodosFornecedor novoFrn = new metodosFornecedor();
+            metodosFornecedores novoFrn = new metodosFornecedores();
             //String fileParam = Config.NameSettings.Fornecedores.getProperty();
             String fileParam = arquivoConfig.Fornecedores.getPropriedade();
 
             try {
-                Map<Integer, Fornecedor> sup = p.getMapRecord(Fornecedor.class, fileParam);
-                Set<Map.Entry<Integer, Fornecedor>> getForn = sup.entrySet();
+                Map<Integer, Fornecedores> sup = p.getMapRecord(Fornecedores.class, fileParam);
+                Set<Map.Entry<Integer, Fornecedores>> getForn = sup.entrySet();
 
                 getForn.forEach(forn -> {
                     novoFrn.setRazaoSocial(forn.getValue().getRazaoSocial());
@@ -188,11 +188,11 @@ public class jsonExtraction extends jsonResponse {
         /**
          * Método que retorna uma lista de Fornecedores
          */
-        public Map<Integer, Fornecedor> mapForn() {
+        public Map<Integer, Fornecedores> mapForn() {
             try {
                 jsonToMap jsonmap = new jsonToMap();
                 String fileParam = arquivoConfig.Fornecedores.getPropriedade();
-                Map<Integer, Fornecedor> getListForn = jsonmap.getMapRecord(Fornecedor.class, fileParam);
+                Map<Integer, Fornecedores> getListForn = jsonmap.getMapRecord(Fornecedores.class, fileParam);
 
                 for (int i = 1; i <= getListForn.size(); i++) {
                     int id = i;
@@ -201,7 +201,7 @@ public class jsonExtraction extends jsonResponse {
 
                     getListForn.entrySet().stream().filter(x -> x.getKey().equals(id)).forEach(forn -> {
 
-                        getListForn.put(id, new Fornecedor(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), forn.getValue().getCnpj(), forn.getValue().getEmail(), forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), forn.getValue().getInfoCEP(), listAtividades));
+                        getListForn.put(id, new Fornecedores(forn.getValue().getRazaoSocial(), forn.getValue().getNomeFantasia(), forn.getValue().getDocumento(), forn.getValue().getEmail(), forn.getValue().getInscEstadual(), forn.getValue().getTelefone(), forn.getValue().getInfoCEP(), listAtividades));
                     });
                 }
 
@@ -338,11 +338,11 @@ public class jsonExtraction extends jsonResponse {
 
         //#region rascunho
         /*
-        public Fornecedor nomeForn (Integer id) throws Exception {
+        public Fornecedores nomeForn (Integer id) throws Exception {
 
-            Fornecedor forn;
+            Fornecedores forn;
             jsonToMap p = new jsonToMap();
-            Set<Map.Entry<Integer, Fornecedor>> getForn = p.getMapRecord(Fornecedor.class).entrySet();
+            Set<Map.Entry<Integer, Fornecedores>> getForn = p.getMapRecord(Fornecedores.class).entrySet();
 
             forn = getForn.stream()
                     .filter(setid -> setid.getKey().equals(id))
@@ -587,13 +587,13 @@ public class jsonExtraction extends jsonResponse {
         y.getMapRecord(Produtos.class, propy, (a, b) -> new Grupos(b)).forEach((K, V) -> System.out.println("Grupo{id=" + K + ", descricao='" + V + "'}"));
         System.out.print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
 
-        //y.getMapRecord(Fornecedor.class).forEach((K, V) -> System.out.println("Forn{id=" + K + ", Valor='" + V + "'}"));
+        //y.getMapRecord(Fornecedores.class).forEach((K, V) -> System.out.println("Forn{id=" + K + ", Valor='" + V + "'}"));
 
         coletaJsonDados o = new coletaJsonDados();
         System.out.println(o.nomeCategoria(2, Produtos.class));
         System.out.println(o.nomeGrupo(5, Produtos.class));
 
-        //coletaJsonDados<Fornecedor> u = new coletaJsonDados<>();
+        //coletaJsonDados<Fornecedores> u = new coletaJsonDados<>();
         //System.out.println(u.nomeForn(5).getRazaoSocial());
     }
 */
@@ -749,7 +749,7 @@ public class jsonExtraction extends jsonResponse {
          **/
         public List<Integer> getFornIds(String param) {
             coletaJsonDados cjd = new coletaJsonDados();
-            Set<Map.Entry<Integer, Fornecedor>> setForn = cjd.mapForn().entrySet();
+            Set<Map.Entry<Integer, Fornecedores>> setForn = cjd.mapForn().entrySet();
 
             List<Integer> getIds = new ArrayList<>();
             setForn.forEach(x -> {
@@ -904,7 +904,7 @@ public class jsonExtraction extends jsonResponse {
         System.out.print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n\n");
 
         //for (Integer qw : lista) {
-        //    Map<Integer, Fornecedor> pe = qwe.mapForn();
+        //    Map<Integer, Fornecedores> pe = qwe.mapForn();
         //
         //            pe.entrySet().stream().filter(d -> d.getKey().equals(qw))
         //                    .forEach(o -> System.out.println("{id=" + o.getKey() + ", Forn='" + o.getValue().getNomeFantasia() + "'}"));

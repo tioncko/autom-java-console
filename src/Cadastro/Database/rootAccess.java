@@ -1,10 +1,9 @@
 package Cadastro.Database;
 
-import Cadastro.Database.Metodos.metodosUsuario;
+import Cadastro.Database.Metodos.metodosUsuarios;
 import Cadastro.NovosDados.Repositorio.Auxiliar.permissaoUsuario;
-import Cadastro.NovosDados.Repositorio.DTO.Usuario;
+import Cadastro.NovosDados.Repositorio.DTO.Usuarios;
 import Cadastro.NovosDados.Repositorio.Enums.permissao;
-import Raiz.Utils.smartTools;
 import Raiz.Utils.smartTools.*;
 
 import java.util.HashMap;
@@ -19,16 +18,16 @@ public class rootAccess {
 
     //#region rascunho
 /*
-    //metodosUsuario musr;
+    //metodosUsuarios musr;
     public rootAccess() {
-        //this.musr = new metodosUsuario();
+        //this.musr = new metodosUsuarios();
     }
 
     //public rootAccess(dataSet<?> DS) {
-    //    this.musr = new metodosUsuario(DS);
+    //    this.musr = new metodosUsuarios(DS);
     //    this.banco = DS;
     //}
-    public metodosUsuario DTUsers() {
+    public metodosUsuarios DTUsers() {
 
         Integer idSup = musr.nextId();
         musr.setId(idSup);
@@ -55,9 +54,9 @@ public class rootAccess {
     /**
      * Cria os dois usuários padrão para acesso a interface
      */
-    public Map<Integer, Usuario> MapUsr() {
-        Map<Integer, Usuario> usuarioMap = new HashMap<>();
-        metodosUsuario sup = new metodosUsuario(banco);
+    public Map<Integer, Usuarios> MapUsr() {
+        Map<Integer, Usuarios> usuarioMap = new HashMap<>();
+        metodosUsuarios sup = new metodosUsuarios(banco);
 
         int idSup = 1;
         sup.setId(idSup);
@@ -67,7 +66,7 @@ public class rootAccess {
         sup.setDepto("TI");
         usuarioMap.put(idSup, sup);
 
-        metodosUsuario adm = new metodosUsuario(banco);
+        metodosUsuarios adm = new metodosUsuarios(banco);
         int idAdm = 2;
         adm.setId(idAdm);
         adm.setLogin("admin".toLowerCase());
@@ -82,21 +81,21 @@ public class rootAccess {
     /**
      * Insere o usuario root no banco de dados
      */
-    public Map<Integer, Usuario> root(Map<Integer, Usuario> usr, Integer id, String access) {
-        Map<Integer, Usuario> usuario = new HashMap<>();
-        Set<Map.Entry<Integer, Usuario>> getUsr = usr.entrySet();
+    public Map<Integer, Usuarios> root(Map<Integer, Usuarios> usr, Integer id, String access) {
+        Map<Integer, Usuarios> usuario = new HashMap<>();
+        Set<Map.Entry<Integer, Usuarios>> getUsr = usr.entrySet();
 
         getUsr.forEach(setUser -> {
             Integer kid = setUser.getKey();
-            Usuario user = setUser.getValue();
+            Usuarios user = setUser.getValue();
             permissaoUsuario root = new permissaoUsuario(String.valueOf(permissao.ROOT));
             if (id.equals(1) && kid.equals(id) && user.getLogin().equals("supervisor".toLowerCase()) && access.equals(String.valueOf(root))) {
 
                 permissao acessosup;
-                acessosup = smartTools.Numeros.isNumeric(access) ? permissao.getAccess(Integer.parseInt(access)) : permissao.valueOf(access.toUpperCase());
+                acessosup = objetosAuxiliares.isNumeric(access) ? permissao.getAccess(Integer.parseInt(access)) : permissao.valueOf(access.toUpperCase());
                 permissaoUsuario perm = new permissaoUsuario(String.valueOf(acessosup).toUpperCase());
 
-                usuario.put(id, new Usuario(user.getLogin(), user.getPassword(), user.getNome(), user.getDepto(), perm));
+                usuario.put(id, new Usuarios(user.getLogin(), user.getPassword(), user.getNome(), user.getDepto(), perm));
             }
         });
 
@@ -106,20 +105,20 @@ public class rootAccess {
     /**
      * Insere o usuario admin no banco de dados
      */
-    public Map<Integer, Usuario> admin(Map<Integer, Usuario> usr, Integer id, String access) {
-        Map<Integer, Usuario> usuario = new HashMap<>();
-        Set<Map.Entry<Integer, Usuario>> getUsr = usr.entrySet();
+    public Map<Integer, Usuarios> admin(Map<Integer, Usuarios> usr, Integer id, String access) {
+        Map<Integer, Usuarios> usuario = new HashMap<>();
+        Set<Map.Entry<Integer, Usuarios>> getUsr = usr.entrySet();
         permissao acesso;
-            acesso = smartTools.Numeros.isNumeric(access) ? permissao.getAccess(Integer.parseInt(access)) : permissao.valueOf(access.toUpperCase());
+            acesso = objetosAuxiliares.isNumeric(access) ? permissao.getAccess(Integer.parseInt(access)) : permissao.valueOf(access.toUpperCase());
 
         if ((!access.toUpperCase().equals(String.valueOf(permissao.ROOT))) || (!String.valueOf(acesso).equals(String.valueOf(1)))) {
-            for (Map.Entry<Integer, Usuario> setUser : getUsr) {
+            for (Map.Entry<Integer, Usuarios> setUser : getUsr) {
 
-                Usuario user = setUser.getValue();
+                Usuarios user = setUser.getValue();
                 if (setUser.getKey().equals(id)) {
 
                     permissaoUsuario perm = new permissaoUsuario(String.valueOf(acesso).toUpperCase());
-                    usuario.put(id, new Usuario(user.getLogin(), user.getPassword(), user.getNome(), user.getDepto(), perm));
+                    usuario.put(id, new Usuarios(user.getLogin(), user.getPassword(), user.getNome(), user.getDepto(), perm));
                 }
             }
         } else
@@ -131,13 +130,13 @@ public class rootAccess {
     /**
      * Método que dá a permissão aos usuários criados acima
      */
-    public Map<Integer, Usuario> givePermission() {
+    public Map<Integer, Usuarios> givePermission() {
 
-        Map<Integer, Usuario> usuarioMap = MapUsr();
-        Map<Integer, Usuario> musr = new HashMap<>();
+        Map<Integer, Usuarios> usuarioMap = MapUsr();
+        Map<Integer, Usuarios> musr = new HashMap<>();
 
-        Set<Map.Entry<Integer, Usuario>> root = root(usuarioMap, 1, String.valueOf(permissao.ROOT)).entrySet();
-        Set<Map.Entry<Integer, Usuario>> admin = admin(usuarioMap, 2, String.valueOf(permissao.ADMIN)).entrySet();
+        Set<Map.Entry<Integer, Usuarios>> root = root(usuarioMap, 1, String.valueOf(permissao.ROOT)).entrySet();
+        Set<Map.Entry<Integer, Usuarios>> admin = admin(usuarioMap, 2, String.valueOf(permissao.ADMIN)).entrySet();
 
         root.forEach(x -> musr.put(1, x.getValue()));
         admin.forEach(x -> musr.put(2, x.getValue()));

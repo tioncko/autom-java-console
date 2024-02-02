@@ -4,16 +4,16 @@ import Cadastro.NovosDados.Repositorio.Auxiliar.*;
 
 import java.util.Objects;
 
-public class Usuario {
+public class Usuarios {
 
     private int id;
     private String login;
     private Criptografia password;
-    private String nome;
+    private String nome; //Funcionário
     private String depto;
     private permissaoUsuario access;
 
-    public Usuario(String login, Criptografia password, String nome, String depto, permissaoUsuario access) {
+    public Usuarios(String login, Criptografia password, String nome, String depto, permissaoUsuario access) {
         this.login = login;
         this.password = password;
         this.nome = nome;
@@ -21,14 +21,14 @@ public class Usuario {
         this.access = access;
     }
 
-    public Usuario(String login, Criptografia password, String nome, String depto) {
+    public Usuarios(String login, Criptografia password, String nome, String depto) {
         this.login = login;
         this.password = password;
         this.nome = nome;
         this.depto = depto;
     }
 
-    public Usuario() {
+    public Usuarios() {
     }
 
     public int getId() {
@@ -76,7 +76,7 @@ public class Usuario {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (!(obj instanceof Usuario user)) return false;
+        if (!(obj instanceof Usuarios user)) return false;
         return Objects.equals(this.getLogin(), user.getLogin());
     }
 
@@ -87,7 +87,7 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Usuario{" +
+        return "Usuarios{" +
                 "login='" + login + '\'' +
                 //", password='" + password + '\'' +
                 ", nome='" + nome + '\'' +

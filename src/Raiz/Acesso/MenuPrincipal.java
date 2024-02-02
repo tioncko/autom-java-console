@@ -8,11 +8,11 @@ import Raiz.Utils.*;
 
 public class menuPrincipal extends leitorDados {
 
-    metodosUsuario mu;
+    metodosUsuarios mu;
     dataSet<?> banco;
 
     public menuPrincipal(dataSet<?> DS) {
-        this.mu = new metodosUsuario(DS);
+        this.mu = new metodosUsuarios(DS);
         this.banco = DS;
     }
 
@@ -71,11 +71,13 @@ public class menuPrincipal extends leitorDados {
 
     public void menuCadastro(Integer userId, dataSet<?> banco) {
         System.out.println("\n\u001B[36mCadastro:\u001B[0m");
-        System.out.println("1 - Cliente");
-        System.out.println("2 - Fornecedor");
-        System.out.println("3 - Usuário");
-        System.out.println("4 - Produto");
-        System.out.println("5 - Serviço");
+        System.out.println("1 - Clientes");
+        System.out.println("2 - Fornecedores");
+        System.out.println("3 - Usuários");
+        System.out.println("4 - Produtos");
+        System.out.println("5 - Serviços");
+        System.out.println("6 - Funcionários");
+        System.out.println("7 - Carros");
         System.out.println("* - Voltar para a tela anterior");
 
         System.out.print("\n-----------------------------------------");
@@ -84,23 +86,31 @@ public class menuPrincipal extends leitorDados {
         switch (id) {
             case "1":
                 areaCadastroCliente acad = new areaCadastroCliente(banco);
-                acad.menuCadastroCliente(userId);
+                acad.menuAreaCadastro(userId);
                 break;
             case "2":
                 areaCadastroFornecedor acaf = new areaCadastroFornecedor(banco);
-                acaf.menuCadastroFornecedor(userId);
+                acaf.menuAreaCadastro(userId);
                 break;
             case "3":
                 areaCadastroUsuario acau = new areaCadastroUsuario(banco);
-                acau.menuCadastroUsuario(userId);
+                acau.menuAreaCadastro(userId);
                 break;
             case "4":
                 areaCadastroProduto acap = new areaCadastroProduto(banco);
-                acap.menuCadastroProduto(userId);
+                acap.menuAreaCadastro(userId);
                 break;
             case "5":
                 areaCadastroServico acas = new areaCadastroServico(banco);
-                acas.menuCadastroServico(userId);
+                acas.menuAreaCadastro(userId);
+                break;
+            case "6":
+                areaCadastroFuncionario acan = new areaCadastroFuncionario(banco);
+                acan.menuAreaCadastro(userId);
+                break;
+            case "7":
+                areaCadastroCarro acar = new areaCadastroCarro(banco);
+                acar.menuAreaCadastro(userId);
                 break;
             case "*":
                 paginaInicial(banco);
@@ -113,7 +123,7 @@ public class menuPrincipal extends leitorDados {
 
     //rootAccess dtb;
     public menuPrincipal() {
-        this.mu = new metodosUsuario();
+        this.mu = new metodosUsuarios();
         this.dtb = new rootAccess();
     }
 
@@ -122,7 +132,7 @@ public class menuPrincipal extends leitorDados {
     public static void main(String[] args) {
 
         Cadastro cad = new Cadastro();
-        Cadastro.AcoesCliente ac = cad.new AcoesCliente();
+        Cadastro.AcoesClientes ac = cad.new AcoesClientes();
 
         ac.cadastrarCliente("Jorge", 22, "04472205484", "teste@olos.com.br", "014585445489", "04472205", 38);
         ac.listarClientes();

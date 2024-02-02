@@ -2,17 +2,16 @@ package Cadastro.Database.Metodos;
 
 import Cadastro.Database.Metodos.Deserializers.jsonCEP;
 import Cadastro.Database.dataSet;
-import Cadastro.NovosDados.Repositorio.DTO.Cliente;
-import Cadastro.NovosDados.Repositorio.Enums.camposCliente;
-import Raiz.Utils.smartTools;
+import Cadastro.NovosDados.Repositorio.DTO.Clientes;
+import Cadastro.NovosDados.Repositorio.Enums.Fields.camposCliente;
 
 import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-public class metodosCliente extends Cliente {
+public class metodosCliente extends Clientes {
 
-    private final dataSet<Cliente> DS;
+    private final dataSet<Clientes> DS;
     public static String message;
 
     /**
@@ -20,15 +19,15 @@ public class metodosCliente extends Cliente {
      */
     @SuppressWarnings("unchecked")
     public metodosCliente(dataSet<?> banco) {
-        this.DS = (dataSet<Cliente>) banco;
+        this.DS = (dataSet<Clientes>) banco;
     }
 
     /**
      * Inserir novo cliente
      */
-    public void novoCliente(Integer id, Cliente cli) {
-        if (cli.getCPF() != null) {
-            DS.insert(cli.setId(id), new Cliente(cli.getNome(), cli.getIdade(), cli.getCPF(), cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()), Cliente.class);
+    public void novoCliente(Integer id, Clientes cli) {
+        if (cli.getDocumento() != null) {
+            DS.insert(cli.setId(id), new Clientes(cli.getNome(), cli.getIdade(), cli.getDocumento(), cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()), Clientes.class);
         } else message = "\nNão é possível realizar o cadastro do cliente " + cli.getNome() + ". Necessário informar o seu CPF.";
     }
 
@@ -36,37 +35,37 @@ public class metodosCliente extends Cliente {
      * Alterar um cliente
      */
     public void alterCliente(Integer id, String Campo, String update) {
-        if (!DS.select(Cliente.class).isEmpty()) {
-            if (DS.select(Cliente.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+        if (!DS.select(Clientes.class).isEmpty()) {
+            if (DS.select(Clientes.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
                 camposCliente getCampo = camposCliente.valueOf(Campo.toUpperCase());
 
-                Set<Map.Entry<Integer, Cliente>> getCli = DS.select(Cliente.class).entrySet();
+                Set<Map.Entry<Integer, Clientes>> getCli = DS.select(Clientes.class).entrySet();
 
-                for (Map.Entry<Integer, Cliente> setCli : getCli) {
-                    Cliente cli = setCli.getValue();
+                for (Map.Entry<Integer, Clientes> setCli : getCli) {
+                    Clientes cli = setCli.getValue();
 
                     if (setCli.getKey().equals(id)) {
                         switch (getCampo) {
                             case NOME:
-                                DS.insert(id, new Cliente(update, cli.getIdade(), cli.getCPF(), cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()), Cliente.class);
+                                DS.insert(id, new Clientes(update, cli.getIdade(), cli.getDocumento(), cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()), Clientes.class);
                                 break;
                             case IDADE:
-                                DS.insert(id, new Cliente(cli.getNome(), Integer.parseInt(update), cli.getCPF(), cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()), Cliente.class);
+                                DS.insert(id, new Clientes(cli.getNome(), Integer.parseInt(update), cli.getDocumento(), cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()), Clientes.class);
                                 break;
                             case CPF:
-                                DS.insert(id, new Cliente(cli.getNome(), cli.getIdade(), update, cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()), Cliente.class);
+                                DS.insert(id, new Clientes(cli.getNome(), cli.getIdade(), update, cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()), Clientes.class);
                                 break;
                             case EMAIL:
-                                DS.insert(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCPF(), update, cli.getTelefone(), cli.getInfoCEP()), Cliente.class);
+                                DS.insert(id, new Clientes(cli.getNome(), cli.getIdade(), cli.getDocumento(), update, cli.getTelefone(), cli.getInfoCEP()), Clientes.class);
                                 break;
                             case TELEFONE:
-                                DS.insert(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCPF(), cli.getEmail(), update, cli.getInfoCEP()), Cliente.class);
+                                DS.insert(id, new Clientes(cli.getNome(), cli.getIdade(), cli.getDocumento(), cli.getEmail(), update, cli.getInfoCEP()), Clientes.class);
                                 break;
                             case CEP:
-                                DS.insert(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCPF(), cli.getEmail(), cli.getTelefone(), jsonCEP.responseCEP(update, cli.getInfoCEP().getNum())), Cliente.class);
+                                DS.insert(id, new Clientes(cli.getNome(), cli.getIdade(), cli.getDocumento(), cli.getEmail(), cli.getTelefone(), jsonCEP.responseCEP(update, cli.getInfoCEP().getNum())), Clientes.class);
                                 break;
                             case NUMCASA:
-                                DS.insert(id, new Cliente(cli.getNome(), cli.getIdade(), cli.getCPF(), cli.getEmail(), cli.getTelefone(), jsonCEP.responseCEP(cli.getInfoCEP().getCEP().replace("-", ""), Integer.parseInt(update))), Cliente.class);
+                                DS.insert(id, new Clientes(cli.getNome(), cli.getIdade(), cli.getDocumento(), cli.getEmail(), cli.getTelefone(), jsonCEP.responseCEP(cli.getInfoCEP().getCEP().replace("-", ""), Integer.parseInt(update))), Clientes.class);
                                 break;
                             default:
                                 break;
@@ -81,9 +80,9 @@ public class metodosCliente extends Cliente {
      * Remover um cliente
      */
     public void remoCliente(Integer id) {
-        if (!DS.select(Cliente.class).isEmpty()) {
-            if (DS.select(Cliente.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
-                DS.select(Cliente.class).remove(id);
+        if (!DS.select(Clientes.class).isEmpty()) {
+            if (DS.select(Clientes.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+                DS.select(Clientes.class).remove(id);
             } else message = "\nRegistro inexistente na tabela.";
         } else message = "\nA tabela de clientes está vazia.";
     }
@@ -92,10 +91,10 @@ public class metodosCliente extends Cliente {
      * Localizar um cliente
      */
     public void findCliente(Integer id) {
-        if (!DS.select(Cliente.class).isEmpty()) {
-            if (DS.select(Cliente.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
-                Stream<Map.Entry<Integer, Cliente>>
-                        getCli = DS.select(Cliente.class).entrySet().stream().filter(setid -> setid.getKey().equals(id));
+        if (!DS.select(Clientes.class).isEmpty()) {
+            if (DS.select(Clientes.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+                Stream<Map.Entry<Integer, Clientes>>
+                        getCli = DS.select(Clientes.class).entrySet().stream().filter(setid -> setid.getKey().equals(id));
 
                 getCli.forEach(x -> System.out.println("id{" + x.getKey() + "}, " + x.getValue()));
             } else message = "\nRegistro inexistente na tabela.";
@@ -106,10 +105,10 @@ public class metodosCliente extends Cliente {
      * Listar clientes por ids
      */
     public void listbyIdCliente(Integer ini_id, Integer fim_id) {
-        if (!DS.select(Cliente.class).isEmpty()) {
-            if (DS.select(Cliente.class).entrySet().stream().anyMatch(x -> x.getKey().equals(ini_id))) {
-                Supplier<Stream<Map.Entry<Integer, Cliente>>>
-                        getCli = () -> DS.select(Cliente.class).entrySet().stream().filter(id -> id.getKey() >= ini_id && id.getKey() <= fim_id);
+        if (!DS.select(Clientes.class).isEmpty()) {
+            if (DS.select(Clientes.class).entrySet().stream().anyMatch(x -> x.getKey().equals(ini_id))) {
+                Supplier<Stream<Map.Entry<Integer, Clientes>>>
+                        getCli = () -> DS.select(Clientes.class).entrySet().stream().filter(id -> id.getKey() >= ini_id && id.getKey() <= fim_id);
 
                 getCli.get().forEach(x -> System.out.println("id{" + x.getKey() + "}, " + x.getValue()));
             } else message = "\nRegistro inexistente na tabela.";
@@ -120,10 +119,10 @@ public class metodosCliente extends Cliente {
      * Remover clientes por ids
      */
     public void remobyIdCliente(Integer ini_id, Integer fim_id) {
-        if (!DS.select(Cliente.class).isEmpty()) {
-            if (DS.select(Cliente.class).entrySet().stream().anyMatch(x -> x.getKey().equals(ini_id))) {
-                Set<Map.Entry<Integer, Cliente>>
-                        getCli = DS.select(Cliente.class).entrySet();
+        if (!DS.select(Clientes.class).isEmpty()) {
+            if (DS.select(Clientes.class).entrySet().stream().anyMatch(x -> x.getKey().equals(ini_id))) {
+                Set<Map.Entry<Integer, Clientes>>
+                        getCli = DS.select(Clientes.class).entrySet();
 
                 getCli.removeIf(id -> id.getKey() >= ini_id && id.getKey() <= fim_id);
                 //getCli.stream().forEach(x -> System.out.println("id{" + x.getKey() + "}, " + x.getValue()));
@@ -135,12 +134,12 @@ public class metodosCliente extends Cliente {
      * Imprimir clientes que estão na lista no momento
      */
     public boolean printMapWithSet() {
-        if (!DS.select(Cliente.class).isEmpty()) {
-            Set<Map.Entry<Integer, Cliente>> getCli = DS.select(Cliente.class).entrySet();
+        if (!DS.select(Clientes.class).isEmpty()) {
+            Set<Map.Entry<Integer, Clientes>> getCli = DS.select(Clientes.class).entrySet();
 
-            for (Map.Entry<Integer, Cliente> setCli : getCli) {
+            for (Map.Entry<Integer, Clientes> setCli : getCli) {
                 Integer key = setCli.getKey();
-                Cliente cli = setCli.getValue();
+                Clientes cli = setCli.getValue();
                 System.out.println("id{" + key + "}, " + cli);
             }
             return true;
@@ -156,8 +155,8 @@ public class metodosCliente extends Cliente {
     public Integer nextId() {
 
         Integer maxnum = null;
-        if (!DS.select(Cliente.class).isEmpty()) {
-            Set<Map.Entry<Integer, Cliente>> getCli = DS.select(Cliente.class).entrySet();
+        if (!DS.select(Clientes.class).isEmpty()) {
+            Set<Map.Entry<Integer, Clientes>> getCli = DS.select(Clientes.class).entrySet();
 
             maxnum = getCli.stream().mapToInt(Map.Entry::getKey).max().getAsInt();
             //ou maxnum = getCli.stream().mapToInt(x -> x.getKey()).max().getAsInt();
@@ -173,8 +172,8 @@ public class metodosCliente extends Cliente {
     public boolean userValid (Integer id) {
         boolean valid = false;
 
-        if (!DS.select(Cliente.class).isEmpty()) {
-            if (DS.select(Cliente.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
+        if (!DS.select(Clientes.class).isEmpty()) {
+            if (DS.select(Clientes.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
                 valid = true;
             } else message = "\nRegistro inexistente na tabela.";
         } else message = "\nA tabela de clientes está vazia.";
@@ -185,7 +184,7 @@ public class metodosCliente extends Cliente {
     //#region rascunho
     /*
 
-        //tabCliente.put(cli.setId(id), new Cliente(cli.getNome(), cli.getIdade(), cli.getCpf(), cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()));
+        //tabCliente.put(cli.setId(id), new Clientes(cli.getNome(), cli.getIdade(), cli.getCpf(), cli.getEmail(), cli.getTelefone(), cli.getInfoCEP()));
 
     private enum fieldCli {
         NOME, IDADE, CPF, EMAIL, TELEFONE, CEP, NUMCASA;
@@ -194,18 +193,18 @@ public class metodosCliente extends Cliente {
 
 
 
-    //private Map<Integer, Cliente> tabCliente;
+    //private Map<Integer, Clientes> tabCliente;
     //public metodosCliente() {
         //this.tabCliente = new HashMap<>();
     //}
     public boolean PrintMapWithSet() {
         if (!tabCliente.isEmpty()) {
-            Set<Map.Entry<Integer, Cliente>>
+            Set<Map.Entry<Integer, Clientes>>
                     entries = tabCliente.entrySet();
 
-            for (Map.Entry<Integer, Cliente> entry : entries) {
+            for (Map.Entry<Integer, Clientes> entry : entries) {
                 Integer key = entry.getKey();
-                Cliente cli = entry.getValue();
+                Clientes cli = entry.getValue();
                 System.out.println("id{" + key + "}, " + cli);
             }
             return true;
@@ -216,7 +215,7 @@ public class metodosCliente extends Cliente {
     }
     public static void main(String[] args) {
 
-        //Cliente cli = new Cliente();
+        //Clientes cli = new Clientes();
         metodosCliente mcli = new metodosCliente();
         //smartTools.CEP CEP = new smartTools();
 
@@ -308,7 +307,7 @@ public class metodosCliente extends Cliente {
 
     public static void main(String[] args) {
 
-        Cliente cli = new Cliente();
+        Clientes cli = new Clientes();
         metodosCliente mcli = new metodosCliente();
 
         cli.setId(1);
@@ -326,20 +325,20 @@ public class metodosCliente extends Cliente {
 
     public void PrintWithMap()
     {
-        for(Map.Entry<Integer, Cliente> printPairs: tabCliente.entrySet()) {
+        for(Map.Entry<Integer, Clientes> printPairs: tabCliente.entrySet()) {
             System.out.print(printPairs.getKey() + " " + printPairs.getValue() + "\n");
         }
     }
 
         public void findCliente(Integer id) {
-        Set<Map.Entry<Integer, Cliente>>
+        Set<Map.Entry<Integer, Clientes>>
                 getCli = tabCliente.entrySet();
 
         getCli.stream()
                 .filter(setid -> setid.getKey().equals(id))
                 .forEach(x -> System.out.println("id{" + x.getKey() + "}, " + x.getValue()));
 
-        for (Map.Entry<Integer, Cliente> setCli : getCli) {
+        for (Map.Entry<Integer, Clientes> setCli : getCli) {
             if (setCli.getKey().equals(id)) {
                 System.out.println("id{" + id + "}, " + tabCliente.get(id));
             }
