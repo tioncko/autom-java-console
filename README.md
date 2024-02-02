@@ -17,7 +17,8 @@
 - Clientes
 - Fornecedores
 - Usuários
-- Produtos e Serviços
+- Produtos
+- Serviços
 - Funcionários
 - Carros
 
@@ -57,11 +58,7 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 
 ## 📫 Contribuindo para *autom-java-console*
 
-<<<<<<< HEAD
-Para contribuir com autom-java-console, siga estas etapas:
-=======
 Para contribuir com *autom-java-console*, siga estas etapas:
->>>>>>> 2ca75bb ([v1.18] Finalizado o desenvolvimento da área de cadastro dos carros. Lista de ajustes atualizado no arquivo ToDo)
 
 1. Faça um fork deste repositório.
 2. Crie um branch: `git checkout -b <nome_branch>`.
