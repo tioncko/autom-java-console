@@ -73,7 +73,7 @@ public class Funcionarios extends outrosDados {
     public String toString() {
         return "Funcionarios{" +
                 "nome='" + nome + '\'' +
-                ", idade=" + idade + '\'' +
+                ", idade=" + idade +
                 ", email='" + getEmail() + '\'' +
                 ", telefone='" + getTelefone() + '\'' +
                 ", " + getInfoCEP() +

@@ -63,6 +63,9 @@ public class areaCadastroCliente extends leitorDados implements IAreaCadastro {
                     System.out.println(metodosCliente.message);
                     else System.out.println("\nCadastro concluído!");
 
+                    areaCadastroCarro acad = new areaCadastroCarro(banco);
+                    acad.acoesAreaCadastro(id, userId);
+
                     opcoesAreaCadastro(Clientes.class.getName(), userId);
                     break;
                     //#endregion

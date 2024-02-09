@@ -39,14 +39,13 @@ public class dataSet<T> extends leitorDados {
     private final Map<Integer, Carros> tabCarro;
 
     public dataSet() {
-        System.out.println("Carregando sistema....");
-        this.tabCliente = new HashMap<>();
-        this.tabFunc = new HashMap<>();
-
         rootAccess ac = new rootAccess();
-        this.tabUsuario = new HashMap<>(ac.givePermission());//new HashMap<>();
-
         coletaJsonDados json = new coletaJsonDados();
+
+        System.out.println("Carregando sistema....");
+        this.tabCliente = new HashMap<>(json.mapCli());
+        this.tabFunc = new HashMap<>(json.mapFunc());
+        this.tabUsuario = new HashMap<> (ac.givePermission());//new HashMap<>();
         this.tabProduto = new HashMap<>(json.mapProd());//new HashMap<>();
 
         System.out.println("Finalizando carregamento do sistema....");

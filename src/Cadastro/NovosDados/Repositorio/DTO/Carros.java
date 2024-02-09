@@ -2,6 +2,9 @@ package Cadastro.NovosDados.Repositorio.DTO;
 
 import Cadastro.NovosDados.Repositorio.Auxiliar.Marcas;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Carros {
 
     private int id;
@@ -10,6 +13,10 @@ public class Carros {
     private String origem;
     private Clientes clientes;
     private Marcas marca;
+
+    public Carros(String nome) {
+        this.nome = nome;
+    }
 
     public Carros(String nome, String placa, String origem) {
         this.nome = nome;
@@ -86,5 +93,13 @@ public class Carros {
                 ", clientes='" + clientes + '\'' +
                 ", marca='" + marca + '\'' +
                 '}';
+    }
+
+    public class Modelos {
+
+        private List<Carros> model;
+
+        public List<Carros> getModelo() { return model; }
+        public void setModelo(List<Carros> modelo) { this.model = modelo; }
     }
 }

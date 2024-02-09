@@ -1,4 +1,4 @@
-package Lab.ItWorked;
+package RoomLab.ItWorked;
 
 import java.io.*;
 import java.lang.reflect.Type;

@@ -369,10 +369,60 @@ public class jsonExtraction extends jsonResponse {
                 getListServ.forEach(x -> serv.add(x.getValue()));
 
                 Map<Integer, Servicos> retServ = new HashMap<>();
-                for(int i = 1; i < serv.size(); i++){
-                    retServ.put(i, serv.get(i));
+                for(int i = 0; i < serv.size(); i++){
+                    retServ.put(i + 1, serv.get(i));
                 }
                 return retServ;
+            } catch (Exception e) {
+                log.severe("[" + coletaJsonDados.class.getSimpleName() + "] " + e.getMessage());
+            }
+            return new HashMap<>();
+        }
+
+        /**
+         * Método que retorna uma lista de Serviços
+         */
+        public Map<Integer, Clientes> mapCli(){
+            try {
+                jsonToMap json = new jsonToMap();
+                String fileParam = arquivoConfig.Clientes.getPropriedade();
+
+                Stream<Map.Entry<Integer, Clientes>>
+                        getCli = json.getMapRecord(Clientes.class, fileParam).entrySet().stream();
+
+                List<Clientes> cli = new ArrayList<>();
+                getCli.forEach(x -> cli.add(x.getValue()));
+
+                Map<Integer, Clientes> retCli = new HashMap<>();
+                for (int i = 0; i < cli.size(); i++) {
+                    retCli.put(i + 1, cli.get(i));
+                }
+                return retCli;
+            } catch (Exception e) {
+                log.severe("[" + coletaJsonDados.class.getSimpleName() + "] " + e.getMessage());
+            }
+            return new HashMap<>();
+        }
+
+        /**
+         * Método que retorna uma lista de Funcionários
+         */
+        public Map<Integer, Funcionarios> mapFunc(){
+            try {
+                jsonToMap json = new jsonToMap();
+                String fileParam = arquivoConfig.Funcionarios.getPropriedade();
+
+                Stream<Map.Entry<Integer, Funcionarios>>
+                        getFunc = json.getMapRecord(Funcionarios.class, fileParam).entrySet().stream();
+
+                List<Funcionarios> func = new ArrayList<>();
+                getFunc.forEach(x -> func.add(x.getValue()));
+
+                Map<Integer, Funcionarios> retFunc = new HashMap<>();
+                for (int i = 0; i < func.size(); i++) {
+                    retFunc.put(i + 1, func.get(i));
+                }
+                return retFunc;
             } catch (Exception e) {
                 log.severe("[" + coletaJsonDados.class.getSimpleName() + "] " + e.getMessage());
             }
@@ -381,7 +431,6 @@ public class jsonExtraction extends jsonResponse {
     }
 
     protected static class jsonToMap {
-
         /**
          * Método responsável por retornar uma lista genérica com índice de Fornecedores
          */

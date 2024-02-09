@@ -23,8 +23,8 @@ public class Config {
             String src = "src/";
 
             pr = switch (param) {
-                case "store_class", "supply_class" -> src + prop.getProperty(param);
-                case "endpointMarcas", "endpointCEP" -> prop.getProperty(param);
+                case "store_class", "supply_class", "custom_class", "employ_class" -> src + prop.getProperty(param);
+                case "endpointModelos", "endpointMarcas", "endpointCEP" -> prop.getProperty(param);
                 default -> null;
             };
 

@@ -1,6 +1,7 @@
 package Raiz.Utils;
 
 import Cadastro.Database.Metodos.Deserializers.jsonMarcas.*;
+import Cadastro.Database.Metodos.Deserializers.jsonModelos.*;
 import Cadastro.Database.Metodos.Interfaces.INovosDados;
 import Raiz.Core.impressaoLog;
 import Raiz.Utils.smartTools.genericCollects.*;
@@ -187,6 +188,9 @@ public abstract class leitorDados implements INovosDados.IReader {
         return doc;
     }
 
+    /**
+     * Leitura via Scanner das marcas de carros
+     */
     public String readBrand(String str){
         String brand, ret = null;
         boolean auth = false, start = false;
@@ -226,16 +230,63 @@ public abstract class leitorDados implements INovosDados.IReader {
                         start = true;
                         ret = null;
                     }
-
-                } else {
+                    System.out.println("*************************************************");
+                }
+                if (listMarcas.size() == 1) {
                     auth = true;
                     start = true;
                     ret = listMarcas.get(0);
                 }
-                System.out.println("*************************************************");
+                if (listMarcas.isEmpty()) {
+                    auth = true;
+                    start = true;
+                }
             }
         }
         return ret;
+    }
+
+    /**
+     * Leitura via Scanner dos modelos de carros
+     */
+    public String readModels(String brand) {
+
+        coletaModelos json = new coletaModelos();
+        Map<Integer, String> mapMod = json.getListModelos(brand);
+
+        if(!mapMod.isEmpty()) {
+            System.out.println("\n*************************************************");
+            System.out.printf("ID | Modelos da marca *%s*\n", brand);
+            System.out.println("---------------------------------");
+
+            mapMod.forEach((K, V) -> System.out.println(K + " | " + V));
+
+            int c = 0;
+            String str = null, ret = null;
+            boolean auth = false;
+            while (!auth) {
+
+                if (c == 0)
+                    str = "\n---------------------------------\nInforme o código do modelo para cadastro\n" + "ou digite MANUAL para informar um modelo que não tem na lista: ";
+                if (c > 0)
+                    str = "\nId inválido. Por favor, informe o código do modelo para cadastro\n" + "ou digite MANUAL para informar um modelo que não tem na lista: ";
+
+                String id = readSentence(str);
+                if (id.equalsIgnoreCase("manual")) {
+                    auth = true;
+                    ret = "MANUAL";
+                }
+                if (smartTools.objetosAuxiliares.isNumeric(id)) {
+                    if (mapMod.entrySet().stream().anyMatch(x -> x.getKey().equals(Integer.parseInt(id)))) {
+                        auth = true;
+                        ret = mapMod.entrySet().stream().filter(x -> x.getKey().equals(Integer.parseInt(id))).findFirst().orElseThrow().getValue();
+                    }
+                    c++;
+                }
+            }
+            System.out.println("*************************************************\n");
+            return ret;
+        } else return "MANUAL";
     }
 
     /**

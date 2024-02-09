@@ -5,12 +5,18 @@ import java.util.Objects;
 public class Marcas {
 
     private String Marca;
+    private int apiCode;
 
     public Marcas() {
     }
 
     public Marcas(String marca) {
-        Marca = marca;
+        this.Marca = marca;
+    }
+
+    public Marcas(String marca, int apiCode) {
+        this.Marca = marca;
+        this.apiCode = apiCode;
     }
 
     public String getMarca() {
@@ -20,10 +26,14 @@ public class Marcas {
         this.Marca = marca;
     }
 
-    @Override
-    public String toString() {
-        return Marca;
+    public int getApiCode() {
+        return apiCode;
     }
+    public void setApiCode(int apiCode) { this.apiCode = apiCode; }
+
+    @Override
+    //public String toString() { return "Marcas{" + Marca + '\'' + ", apiCode=" + apiCode + '}'; }
+    public String toString() { return Marca; }
 
     @Override
     public boolean equals(Object o){

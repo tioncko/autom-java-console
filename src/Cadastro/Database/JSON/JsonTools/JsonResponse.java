@@ -1,8 +1,6 @@
 package Cadastro.Database.JSON.JsonTools;
 
-import Cadastro.NovosDados.Repositorio.DTO.Fornecedores;
-import Cadastro.NovosDados.Repositorio.DTO.Produtos;
-import Cadastro.NovosDados.Repositorio.DTO.Servicos;
+import Cadastro.NovosDados.Repositorio.DTO.*;
 import Raiz.Core.Config;
 import Raiz.Core.impressaoLog;
 import com.google.gson.JsonArray;
@@ -87,6 +85,14 @@ public class jsonResponse extends jsonDTO {
                             case "Fornecedores" -> {
                                 Fornecedores forn = getFornecedor(item);
                                 yield itensGen.adicionarItemALista((T) forn);
+                            }
+                            case "Clientes" -> {
+                                Clientes cli = getCliente(item);
+                                yield itensGen.adicionarItemALista((T) cli);
+                            }
+                            case "Funcionarios" -> {
+                                Funcionarios func = getFuncionario(item);
+                                yield itensGen.adicionarItemALista((T) func);
                             }
                             default -> listaGen;
                         };

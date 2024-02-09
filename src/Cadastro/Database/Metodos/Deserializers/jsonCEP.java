@@ -5,7 +5,6 @@ import Cadastro.NovosDados.Repositorio.Enums.arquivoConfig;
 import Raiz.Core.Config;
 import Raiz.Core.impressaoLog;
 import Raiz.Utils.jsonPerGson;
-import Raiz.Utils.smartTools;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;
@@ -59,7 +58,7 @@ public class jsonCEP extends jsonPerGson {
             String endpointJson = Config.getProperties(configParam) + param;
 
             jsonDeserializerCEP json = new jsonDeserializerCEP();
-            validarCEP requestCEP = requestObjJson(endpointJson, validarCEP.class, json);
+            validarCEP requestCEP = requestElemJson(endpointJson, validarCEP.class, json);
 
             validarCEP CEP = new validarCEP();
             CEP.setCEP(requestCEP.getCEP());

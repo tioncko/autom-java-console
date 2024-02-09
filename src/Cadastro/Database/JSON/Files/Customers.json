@@ -1,0 +1,74 @@
+[
+  {
+    "nome": "JEFFERSON CARLOS SOARES PEREIRA",
+    "idade": "22",
+    "cpf": "61808792149",
+    "email": "jeffsoares.pereira@gmail.com",
+    "telefone": "66920901334",
+    "infoCEP": "78711008",
+    "numLocal": "34"
+  },
+  {
+    "nome": "OSWALDO CARLETO KNIFES",
+    "idade": "59",
+    "cpf": "37095665176",
+    "email": "knifes.oswald@gmail.com",
+    "telefone": "66932437836",
+    "infoCEP": "78057536",
+    "numLocal": "153"
+  },
+  {
+    "nome": "MARIA FERNANDA NASCIMENTO FERREIRA",
+    "idade": "29",
+    "cpf": "90968615821",
+    "email": "mafe.nascimento@outlook.com",
+    "telefone": "11934932993",
+    "infoCEP": "17063289",
+    "numLocal": "3325"
+  },
+  {
+    "nome": "PEDRO RODRIGO MAGNO SILVA",
+    "idade": "25",
+    "cpf": "46107087877",
+    "email": "magno.pedro@gmail.com",
+    "telefone": "11923423432",
+    "infoCEP": "8746090",
+    "numLocal": "5664"
+  },
+  {
+    "nome": "PATRÍCIO RIBEIRO GRANDCHAMP",
+    "idade": "37",
+    "cpf": "22105952828",
+    "email": "grandchamp.patríc@outlook.com",
+    "telefone": "13934322552",
+    "infoCEP": "13254408",
+    "numLocal": "2121"
+  },
+  {
+    "nome": "FERNANDA JOSEFA PEREIRA",
+    "idade": "33",
+    "cpf": "50649653890",
+    "email": "pereira.fernan@gmail.com",
+    "telefone": "11922553334",
+    "infoCEP": "13484502",
+    "numLocal": "233"
+  },
+  {
+    "nome": "DAVI GEOVILMÁRIO BELGIUM OLIVEIRA",
+    "idade": "23",
+    "cpf": "3481896565",
+    "email": "dageo.belgium@gmail.com",
+    "telefone": "75923564242",
+    "infoCEP": "44030545",
+    "numLocal": "112"
+  },
+  {
+    "nome": "LUCAS DE SOUZA BARROS",
+    "idade": "26",
+    "cpf": "6213573593",
+    "email": "souza.lucas@outlook.com",
+    "telefone": "75923642233",
+    "infoCEP": "40720194",
+    "numLocal": "43"
+  }
+]

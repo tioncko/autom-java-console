@@ -1,4 +1,4 @@
-package Lab;
+package RoomLab.BKP;
 
 import Cadastro.NovosDados.Repositorio.Auxiliar.permissaoUsuario;
 import Cadastro.NovosDados.Repositorio.DTO.Usuarios;

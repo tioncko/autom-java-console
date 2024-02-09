@@ -11,20 +11,23 @@ import java.util.*;
 
 public class jsonMarcas extends jsonPerGson {
 
-    private static class deserializeMarcas {
+        private static class deserializeMarcas {
 
-        /**
-         * Método que retorna um objeto Marca a partir de um json deserializado
-         */
-        protected Marcas getJsonMarcas(JsonObject object) {
+            /**
+             * Método que retorna um objeto Marca a partir de um json deserializado
+             */
+            protected Marcas getJsonMarcas(JsonObject object) {
 
-            String nome = object.get("nome").getAsString();
+                String nome = object.get("nome").getAsString();
+                int apiCode = object.get("apiCode").getAsInt();
 
-            Marcas brand = new Marcas();
-            brand.setMarca(nome);
-            return brand;
+                Marcas brand = new Marcas();
+                brand.setMarca(nome);
+                brand.setApiCode(apiCode);
+
+                return brand;
+            }
         }
-    }
 
     private static class jsonDeserializerMarcas implements JsonDeserializer<Marcas> {
 
@@ -60,9 +63,9 @@ public class jsonMarcas extends jsonPerGson {
                     if (item.getMarca().indexOf("- ") > 0) {
                         int v = item.getMarca().indexOf("- ") + 2;
                         String value = item.getMarca().replace(item.getMarca().substring(0, v), "");
-                        lista.put(i, new Marcas(value));
+                        lista.put(i, new Marcas(value, item.getApiCode()));
 
-                    } else lista.put(i, new Marcas(item.getMarca().trim()));
+                    } else lista.put(i, new Marcas(item.getMarca().trim(), item.getApiCode()));
                     i++;
                // }
             }
@@ -140,10 +143,7 @@ public class jsonMarcas extends jsonPerGson {
             return set;
         }
     }
-
-    //#endregion
-
-    //region rascunho
+    //#region rascunho
     /*
     public String over (String value) {
         jsonMarcas k = new jsonMarcas();
@@ -184,15 +184,16 @@ public class jsonMarcas extends jsonPerGson {
     }
 
      public static void main(String[] args) throws Exception {
-        //String configParam = Config.arquivoConfig.Marcas.getProperty();
-        //String endpointJson = Config.getProperties(configParam);
-        //JsonDeserializerMarcas json = new JsonDeserializerMarcas();
-        //List<Marcas> pp = requestJson(endpointJson, Marcas.class, json);
-        //pp.forEach(p -> System.out.println(p.getMarca().toUpperCase()));
-        jsonMarcas k = new jsonMarcas();
-        //k.ListaMarcas().forEach((K, V) -> System.out.println("Marcas{id=" + K + ", Nome='" + V + "'}"));
-        //pp.forEach(System.out::println);
-        //System.out.println(k.nomeMarca(1));
+         //String configParam = Config.arquivoConfig.Marcas.getProperty();
+         //String endpointJson = Config.getProperties(configParam);
+         //JsonDeserializerMarcas json = new JsonDeserializerMarcas();
+         //List<Marcas> pp = requestJson(endpointJson, Marcas.class, json);
+         //pp.forEach(p -> System.out.println(p.getMarca().toUpperCase()));
+         coletarMarca k = new coletarMarca();
+         k.ListaMarcas().forEach((K, V) -> System.out.println("Marcas{id=" + K + ", Nome='" + V + "'}"));
+         //pp.forEach(System.out::println);
+         //System.out.println(k.nomeMarca(1));
+         //}
         /*
         String value = "acu";
         boolean w = k.ListaMarcas().entrySet().stream()
@@ -237,10 +238,10 @@ public class jsonMarcas extends jsonPerGson {
         }
     } else System.out.println("{" + u.get(0) + "}");
 }
+/
+/
 
-
-
-        public static void main(String[] args) throws Exception {
+        //public static void main(String[] args) throws Exception {
             coletarMarca json = new coletarMarca();
             List<String> listMarcas = json.stringToList(json.stringsMarcas("mazd")).stream().toList();
             if (listMarcas.size() > 1) {
@@ -255,8 +256,10 @@ public class jsonMarcas extends jsonPerGson {
                     } i++;
                 }
             } else System.out.println("{" + listMarcas.get(0) + "}");
+
+
+
         }
      */
-    //#endregion
-
+         //#endregion
 }

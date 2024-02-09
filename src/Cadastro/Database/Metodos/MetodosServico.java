@@ -34,7 +34,7 @@ public class metodosServico extends Servicos {
      * Inserir novo servico
      */
     public void novoServico(Integer id, Servicos serv) {
-        DS.insert(serv.setId(id), new Servicos(serv.getNomeServ(), serv.getPreco(), serv.getCategoria(), serv.getGrupo()), Servicos.class);
+        DS.insert(serv.setId(id), new Servicos(serv.getNome(), serv.getPreco(), serv.getCategoria(), serv.getGrupo()), Servicos.class);
     }
 
     /**
@@ -50,10 +50,10 @@ public class metodosServico extends Servicos {
                 getServ.forEach(serv -> {
                         switch (getCampo) {
                             case DESCRICAO  -> DS.insert(id, new Servicos(update, serv.getValue().getPreco(), serv.getValue().getCategoria(), serv.getValue().getGrupo()), Servicos.class);
-                            case PRECO      -> DS.insert(id, new Servicos(serv.getValue().getNomeServ(), Double.parseDouble(update), serv.getValue().getCategoria(), serv.getValue().getGrupo()), Servicos.class);
+                            case PRECO      -> DS.insert(id, new Servicos(serv.getValue().getNome(), Double.parseDouble(update), serv.getValue().getCategoria(), serv.getValue().getGrupo()), Servicos.class);
                             case CATEGORIA  -> {
                                 try {
-                                    DS.insert(id, new Servicos(serv.getValue().getNomeServ(), serv.getValue().getPreco(), loja.nomeCategoria(Integer.parseInt(update), Produtos.class), serv.getValue().getGrupo()), Servicos.class);
+                                    DS.insert(id, new Servicos(serv.getValue().getNome(), serv.getValue().getPreco(), loja.nomeCategoria(Integer.parseInt(update), Produtos.class), serv.getValue().getGrupo()), Servicos.class);
                                 } catch (Exception e) {
                                     //System.out.println(e.getMessage());
                                     log.warning("[" + metodosServico.class.getSimpleName() + "] " + e.getMessage());
@@ -61,7 +61,7 @@ public class metodosServico extends Servicos {
                             }
                             case GRUPO      -> {
                                 try {
-                                    DS.insert(id, new Servicos(serv.getValue().getNomeServ(), serv.getValue().getPreco(), serv.getValue().getCategoria(), loja.nomeGrupo(Integer.parseInt(update), Produtos.class)), Servicos.class);
+                                    DS.insert(id, new Servicos(serv.getValue().getNome(), serv.getValue().getPreco(), serv.getValue().getCategoria(), loja.nomeGrupo(Integer.parseInt(update), Produtos.class)), Servicos.class);
                                 } catch (Exception e) {
                                     //System.out.println(e.getMessage());
                                     log.warning("[" + metodosServico.class.getSimpleName() + "] " + e.getMessage());

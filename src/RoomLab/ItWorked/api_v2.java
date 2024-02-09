@@ -1,9 +1,10 @@
-package Lab.ItWorked;
+package RoomLab.ItWorked;
 
 import java.io.*;
 import java.lang.reflect.Type;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
@@ -15,15 +16,11 @@ public class api_v2 {
         String url = "https://parallelum.com.br/fipe/api/v1/carros/marcas";
 
         String content = fetchContent(url);
-
+        Type BrandList = new TypeToken<List<Brand>>(){}.getType();
         Gson gson = new GsonBuilder().registerTypeAdapter(Brand.class, new JsonDeserializerBrand()).serializeNulls().create();
+        List<Brand> brand = gson.fromJson(content, BrandList);
 
-        Type BrandList = new TypeToken<ArrayList<Brand>>(){}.getType();
-        ArrayList<Brand> brand = gson.fromJson(content, BrandList);
         assert brand != null;
-       // brand.forEach(System.out::println);
-
-
         for (Brand b : brand) {
            System.out.println(b.getFirstName());
         }

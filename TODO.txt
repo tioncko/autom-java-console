@@ -44,7 +44,7 @@ Tela Loja
 [OK] Associar as atividades aos fornecedores
 [OK] Necessário mudar a forma de coleta de CEP (atual: via XML, atualizar para: via JSON)
 
-[PARTE 2] (5/10)
+[PARTE 2] (8/11)
 
 [OK] Desenvolver área do funcionário
 [OK] Padronizar as opções de Menu em todas as áreas
@@ -52,9 +52,23 @@ Tela Loja
 [OK] Desenvolver área do carro
 - Associar o funcionário a seu usuário
 [OK] Associar a marca ao carro
-- Associar o carro ao clientes
-- Criar API de lista de clientes para consumo
-- Criar API de lista de funcionários para consumo
+- Associar o carro ao cliente
+[OK] Criar API/JSON de lista de clientes para consumo
+[OK] Criar API/JSON de lista de funcionários para consumo
+[OK] Criar API/JSON de lista de carros para consumo
 - Incrementar área do carro dentro da area do cliente
 
 ==============================
+
+[MEMORANDO] - Criar API/JSON de lista de carros para consumo [CONCLUÍDO]
+
+-> Procedimento para caso o apiCode seja maior do que zero [OK] <-
+
+*GERAR BASE DE CONSULTA*
+consome a api de modelos [OK]
+consulta a api pelo código do modelo escolhido (Classe Marcas, atributo apiCode) [OK]
+retorna um modelo aleatório [OK - FOI MELHOR TRABALHADO]
+insere na tabela [OK]
+
+*INSERIR DADOS*
+oferecer pesquisa por modelo ou inserir nome direto [OK]

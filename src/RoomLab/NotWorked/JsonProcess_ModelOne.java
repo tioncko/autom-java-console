@@ -1,4 +1,4 @@
-package Lab.NotWorked;
+package RoomLab.NotWorked;
 
 import Cadastro.NovosDados.Repositorio.Enums.arquivoConfig;
 import Raiz.Core.Config;
@@ -100,7 +100,7 @@ public class JsonProcess_ModelOne {
 
         private static Servicos getServicos(JsonObject item) {
             Servicos serv = new Servicos();
-            serv.setNomeServ(item.get("Nome").getAsString());
+            serv.setNome(item.get("Nome").getAsString());
             serv.setPreco(item.get("Preco").getAsDouble());
 
             Propriedades.Categoria cat = new Propriedades.Categoria();

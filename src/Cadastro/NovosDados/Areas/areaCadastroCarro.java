@@ -52,13 +52,21 @@ public class areaCadastroCarro extends leitorDados implements IAreaCadastro {
                 case "1":
                     //#region Cadastrar novo carro
                     System.out.println("\n# Cadastrar novo carro #\n");
-                    as.cadastrar(
-                            readSentence("Nome: "),
-                            readText("Placa: "),
-                            readSentence("Origem: "),
-                            readBrand("Marca: ")
-                    );
-                    System.out.println("\nCadastro concluído!");
+                    String marca = readBrand("Marca: ");
+                    String nome;
+
+                    if (!marca.isEmpty()) {
+                        nome = readModels(marca);
+                        if (nome.equalsIgnoreCase("manual")) nome = readSentence("Nome: ");
+
+                        as.cadastrar(
+                                nome,
+                                readText("Placa: "),
+                                readSentence("Origem: "),
+                                marca
+                        );
+                        System.out.println("\nCadastro concluído!");
+                    } else System.out.println("\nNão foi possível efetuar o cadastro!");
 
                     opcoesAreaCadastro(Carros.class.getName(), userId);
                     break;
@@ -73,7 +81,7 @@ public class areaCadastroCarro extends leitorDados implements IAreaCadastro {
                         if (as.validarId(alterId)) {
                             String field = readText("Campo: ");
 
-                            if(!field.equalsIgnoreCase("marca")) {
+                            if (!field.equalsIgnoreCase("marca") && !field.equalsIgnoreCase("nome")) {
                                 as.alterar(
                                         alterId,
                                         field,
@@ -81,10 +89,11 @@ public class areaCadastroCarro extends leitorDados implements IAreaCadastro {
 
                                 if (!(metodosCarros.message == null))
                                     System.out.println(metodosCarros.message);
-                                else System.out.println("\nAlteração concluída!");
+                                else System.out.println("Alteração concluída!");
                                 as.localizar(alterId);
                             }
-                            if(field.equalsIgnoreCase("marca")) {
+
+                            if (field.equalsIgnoreCase("marca")) {
                                 String brand = readBrand("Alteração (" + field.toUpperCase() + "): ");
                                 if (brand != null) {
                                     as.alterar(
@@ -94,7 +103,31 @@ public class areaCadastroCarro extends leitorDados implements IAreaCadastro {
                                     );
                                     if (!(metodosCarros.message == null))
                                         System.out.println(metodosCarros.message);
-                                    else System.out.println("\nAlteração concluída!");
+                                    else System.out.println("Alteração concluída!");
+                                    as.localizar(alterId);
+                                }
+                                else {
+                                    System.out.println("\nNão houve alteração!");
+                                    as.localizar(alterId);
+                                }
+                            }
+
+                            if (field.equalsIgnoreCase("nome")) {
+                                System.out.println("Alteração (" + field.toUpperCase() + ")\n-----------------------------------------");
+                                String altMarca = readBrand("Marca: ");
+                                String altNome;
+
+                                if (!altMarca.isEmpty()) {
+                                    altNome = readModels(altMarca);
+                                    if (altNome.equalsIgnoreCase("manual")) altNome = readSentence("Nome: ");
+                                    as.alterar(
+                                            alterId,
+                                            field,
+                                            altNome
+                                    );
+                                    if (!(metodosCarros.message == null))
+                                        System.out.println(metodosCarros.message);
+                                    else System.out.println("Alteração concluída!");
                                     as.localizar(alterId);
                                 }
                                 else {

@@ -1,4 +1,4 @@
-package Lab.NotWorked;
+package RoomLab.NotWorked;
 
 import Cadastro.Database.Metodos.Deserializers.jsonCEP;
 import Cadastro.NovosDados.Repositorio.DTO.Fornecedores;

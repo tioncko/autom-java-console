@@ -1,4 +1,4 @@
-package Lab.ItWorked;
+package RoomLab.ItWorked;
 
 import Cadastro.NovosDados.Repositorio.Enums.arquivoConfig;
 import Raiz.Core.Config;

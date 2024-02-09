@@ -1,9 +1,5 @@
-package Lab.ItWorked;
+package RoomLab.ItWorked;
 
-import javax.swing.*;
-import java.io.BufferedReader;
-import java.io.Console;
-import java.io.InputStreamReader;
 import java.util.*;
 
 public class TestGenericCollects {

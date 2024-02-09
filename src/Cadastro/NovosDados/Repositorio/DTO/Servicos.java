@@ -6,10 +6,10 @@ import Cadastro.NovosDados.Repositorio.Auxiliar.Propriedades.*;
 public class Servicos extends Gondola {
 
     private int id;
-    private String nomeServ;
+    private String nome;
 
-    public Servicos(String nome, double preco, Categoria categoria, Grupos grupo) {
-        this.nomeServ = nome;
+    public Servicos(String nomeServ, double preco, Categoria categoria, Grupos grupo) {
+        this.nome = nomeServ;
         this.setPreco(preco);
         this.setCategoria(categoria);
         this.setGrupo(grupo);
@@ -25,17 +25,17 @@ public class Servicos extends Gondola {
         return this.id = id;
     }
 
-    public String getNomeServ() {
-        return nomeServ;
+    public String getNome() {
+        return nome;
     }
-    public void setNomeServ(String nome) {
-        this.nomeServ = nome;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     @Override
     public String toString() {
         return "Servicos{" +
-                "nome='" + nomeServ + '\'' +
+                "nome='" + nome + '\'' +
                 ", preço=" + getPreco()  +
                 ", categoria='" + getCategoria() + '\'' +
                 ", grupo='" + getGrupo() + '\'' +

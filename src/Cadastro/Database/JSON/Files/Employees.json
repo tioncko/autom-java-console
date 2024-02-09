@@ -1,0 +1,110 @@
+[
+  {
+    "nome": "MARIANO CARLOS RIBEIRO SILVA",
+    "idade": "43",
+    "genero": "MASCULINO",
+    "cpf": "95358751831",
+    "email": "mariano.crs@gmail.com",
+    "telefone": "11943254539",
+    "infoCEP": "16204140",
+    "numLocal": "526",
+    "area": "Mecânica",
+    "depto": "Produção"
+  },
+  {
+    "nome": "JULIANA ALVES DE OLIVEIRA",
+    "idade": "31",
+    "genero": "FEMININO",
+    "cpf": "37477712890",
+    "email": "oliv.julianaslv@gmail.com",
+    "telefone": "14935423432",
+    "infoCEP": "12296070",
+    "numLocal": "947",
+    "area": "Recebimento",
+    "depto": "Fiscal"
+  },
+  {
+    "nome": "MARIO PIRES SANTANA",
+    "idade": "33",
+    "genero": "MASCULINO",
+    "cpf": "29462647771",
+    "email": "pires.smario@outlook.com",
+    "telefone": "21987748374",
+    "infoCEP": "24804006",
+    "numLocal": "384",
+    "area": "Serviços",
+    "depto": "Produção"
+  },
+  {
+    "nome": "ROBERTO CARLOS DOS SANTOS BARROS",
+    "idade": "52",
+    "genero": "MASCULINO",
+    "cpf": "12988503630",
+    "email": "rc.santosbarros@outlook.com",
+    "telefone": "31935423234",
+    "infoCEP": "32657450",
+    "numLocal": "34",
+    "area": "Centro de Pedidos",
+    "depto": "Estoque"
+  },
+  {
+    "nome": "CALEBE YOSHIDA PEREIRA",
+    "idade": "23",
+    "genero": "MASCULINO",
+    "cpf": "23505103446",
+    "email": "yoshida.klb@gmail.com",
+    "telefone": "87925677545",
+    "infoCEP": "51340410",
+    "numLocal": "676",
+    "area": "Armazenamento",
+    "depto": "Estoque"
+  },
+  {
+    "nome": "CAMILA SAINZ DI CARLO",
+    "idade": "26",
+    "genero": "NEUTRO",
+    "cpf": "10280653450",
+    "email": "dicarlo.camila@outlook.com",
+    "telefone": "84987348384",
+    "infoCEP": "59090185",
+    "numLocal": "234",
+    "area": "Contabilidade",
+    "depto": "Financeiro"
+  },
+  {
+    "nome": "TEÓFILO ANTÔNIO COSTA SILVEIRA",
+    "idade": "46",
+    "genero": "MASCULINO",
+    "cpf": "14623815889",
+    "email": "teofilo.csantonio@outlook.com",
+    "telefone": "19956782383",
+    "infoCEP": "4571919",
+    "numLocal": "98",
+    "area": "Mecânica",
+    "depto": "Produção"
+  },
+  {
+    "nome": "ARETUZA KISS FERREIRA",
+    "idade": "35",
+    "genero": "TRANSGÊNERO",
+    "cpf": "47340310533",
+    "email": "aretuza.kiss@gmail.com",
+    "telefone": "75967346274",
+    "infoCEP": "44092310",
+    "numLocal": "4343",
+    "area": "Logística",
+    "depto": "Administrativo"
+  },
+  {
+    "nome": "PAULO RICARDO KRÜGGER MENNEGHEL",
+    "idade": "30",
+    "genero": "MASCULINO",
+    "cpf": "26160164783",
+    "email": "krugger.paulormen@outlook.com",
+    "telefone": "27987876536",
+    "infoCEP": "29195403",
+    "numLocal": "13",
+    "area": "Servicos",
+    "depto": "Produção"
+  }
+]

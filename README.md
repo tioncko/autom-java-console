@@ -43,11 +43,11 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 
 ✅ Associar a marca ao carro
 
-⬜ Associar o carro ao clientes
+⬜ Associar o carro ao cliente
 
-⬜ Criar API de lista de clientes para consumo
+✅ Criar API/JSON de lista de clientes para consumo
 
-⬜ Criar API de lista de funcionários para consumo
+✅ Criar API/JSON de lista de funcionários para consumo
 
 ⬜ Incrementar área do carro dentro da area do cliente
 

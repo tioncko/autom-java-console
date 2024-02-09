@@ -1,4 +1,4 @@
-package Lab;
+package RoomLab.BKP;
 
 public interface BKP_IAreaCadastro {
 

@@ -259,7 +259,7 @@ public class Cadastro implements INovosDados {
 
         @Override
         public void cadastrar(String nomeProd, double preco, Categoria categoria, Grupos grupo) {
-            novoSrv.setNomeServ(nomeProd);
+            novoSrv.setNome(nomeProd);
             novoSrv.setPreco(preco);
             novoSrv.setCategoria(categoria);
             novoSrv.setGrupo(grupo);

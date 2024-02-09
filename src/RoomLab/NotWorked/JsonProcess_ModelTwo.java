@@ -1,4 +1,4 @@
-package Lab.NotWorked;
+package RoomLab.NotWorked;
 
 import Cadastro.NovosDados.Repositorio.Auxiliar.Propriedades;
 import Cadastro.NovosDados.Repositorio.DTO.Produtos;
