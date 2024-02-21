@@ -39,13 +39,13 @@ public class dataSet<T> extends leitorDados {
     private final Map<Integer, Carros> tabCarro;
 
     public dataSet() {
-        rootAccess ac = new rootAccess();
+        //rootAccess ac = new rootAccess();
         coletaJsonDados json = new coletaJsonDados();
 
         System.out.println("Carregando sistema....");
         this.tabCliente = new HashMap<>(json.mapCli());
         this.tabFunc = new HashMap<>(json.mapFunc());
-        this.tabUsuario = new HashMap<> (ac.givePermission());//new HashMap<>();
+        this.tabUsuario = new HashMap<>(json.mapUsr()); //(ac.givePermission());//new HashMap<>();
         this.tabProduto = new HashMap<>(json.mapProd());//new HashMap<>();
 
         System.out.println("Finalizando carregamento do sistema....");
@@ -54,6 +54,7 @@ public class dataSet<T> extends leitorDados {
         this.tabCarro = new HashMap<>();
 
         System.out.println("Iniciando sistema....");
+        System.out.print("\033[2J\033[1;1H");
     }
 //camposForn getCampo = camposForn.valueOf(Campo.toUpperCase());
     /**

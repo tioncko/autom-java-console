@@ -1,11 +1,15 @@
 package Cadastro.Database.JSON.JsonTools;
 
 import Cadastro.NovosDados.Repositorio.Enums.arquivoConfig;
+import Cadastro.NovosDados.Repositorio.Enums.permissao;
+import Cadastro.Database.rootAccess;
 import Cadastro.NovosDados.Repositorio.Abstratos.Gondola;
+import Cadastro.NovosDados.Repositorio.Auxiliar.permissaoUsuario;
 import Cadastro.NovosDados.Repositorio.Auxiliar.Propriedades.*;
 import Cadastro.NovosDados.Repositorio.DTO.*;
 import Raiz.Core.impressaoLog;
 import Raiz.Utils.leitorDados;
+import Raiz.Utils.smartTools.*;
 import Raiz.Utils.smartTools.genericCollects.*;
 
 import java.util.*;
@@ -428,6 +432,32 @@ public class jsonExtraction extends jsonResponse {
             }
             return new HashMap<>();
         }
+        
+        public Map<Integer, Usuarios> mapUsr(){
+            rootAccess ac = new rootAccess();
+            Map<Integer, Usuarios> getUser = ac.givePermission();
+            int lastId = getUser.entrySet().stream().mapToInt(Map.Entry::getKey).max().getAsInt();
+            
+            Complementos comp = new Complementos();
+            Map<Integer, Funcionarios> getFunc = mapFunc();
+            
+            getFunc.forEach((K, V) -> {
+                String[] sentence = null;
+                for (String name : new String[]{ V.getNome() }) sentence = name.trim().strip().split(" ");
+
+                String user = sentence[0].substring(0,3) +
+                              sentence[sentence.length - 1].substring(0, 3);
+                
+                String perm = switch (V.getDepartamento()) {
+                    case "Administrativo", "Estoque", "Financeiro", "Fiscal" -> String.valueOf(permissao.OFFICE);
+                    case "Produção" -> String.valueOf(permissao.OPERATOR);
+                    default -> "";
+                };
+                getUser.put(lastId + K, new Usuarios(objetosAuxiliares.changeAccentString(user), Senha.Encrypt(comp.randomPassword()), V.getNome(), V.getDepartamento(), new permissaoUsuario(perm)));
+            });
+            
+            return getUser;
+        }
     }
 
     protected static class jsonToMap {
@@ -829,10 +859,36 @@ public class jsonExtraction extends jsonResponse {
             }
             return retProd;
         }
+
+        public int asciiPasswordString() {
+            Random rdm = new Random();
+            int rdmInt = rdm.nextInt(33, 126);
+            return rdmInt;
+        }
+
+        public String randomPassword(){
+            int len = 12;
+            char[] ret = new char[len];
+
+            for (int i = 0; i < ret.length; i++) ret[i] = (char) asciiPasswordString();
+            
+            StringBuilder charSb = new StringBuilder(); 
+            for (char x : ret) charSb.append(x);
+
+            return new String(charSb);
+        }
     }
 
     //#region rascunho
         /*
+
+        
+        public static void main(String[] args) {
+
+            coletaJsonDados json = new coletaJsonDados();
+            json.mapUsr().forEach((K, V) -> System.out.println(K + " <-> " + V));
+
+        }
     public static void main(String[] args) {
 
         Complementos x = new Complementos();

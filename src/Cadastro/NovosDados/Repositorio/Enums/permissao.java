@@ -5,7 +5,10 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public enum permissao {
-    ROOT(1), ADMIN(2), USER(3);
+     ROOT(1)
+    ,ADMIN(2) 
+    ,OPERATOR(3) 
+    ,OFFICE(4);
 
     private final Integer id;
     private static final Map<Integer, permissao> ENUM_MAP;

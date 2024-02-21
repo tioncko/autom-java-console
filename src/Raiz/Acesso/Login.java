@@ -35,7 +35,7 @@ public class Login {
         System.out.println("-------- @@@  @@@  @@@ - @@@ -- @@@ -- @@@ - @@@ @@@ @@@@ @@@ -------");
         System.out.println("------- @@@@@@@@@@ @@@ - @@@ -- @@@ -- @@@ - @@@ @@@  @@  @@@ -------");
         System.out.println("------ @@@ ---- @@@ @@@@@@@ --- @@@ --- @@@@@@@  @@@ ---- @@@ -------");
-        System.out.println("--------------------------------------------------------v1.19--------");
+        System.out.println("--------------------------------------------------------v1.20--------");
         System.out.println("---------------------------------------------------------------------");
         System.out.println("---------------------------------------------------------------------\n");
 
@@ -48,7 +48,9 @@ public class Login {
                 setUsr(login);
                 mp.paginaInicial(banco);
                 x = 1;
+                System.out.print("\033[2J\033[1;1H");
             } else {
+                System.out.print("\033[2J\033[1;1H");
                 System.out.println("\nUsuário inexistente ou senha incorreta.\nTente novamente.\n");
             }
         } while (x == 0);

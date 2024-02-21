@@ -33,7 +33,7 @@ public interface INovosDados {
     }
 
     public interface ICustomer {
-        public void cadastrar(String nome, int idade, String cpf, String email, String telefone, String CEP, int numCasa);
+        public int cadastrar(String nome, int idade, String cpf, String email, String telefone, String CEP, int numCasa);
         //public void alterar(Integer id, String campo, String update);
     }
 
@@ -59,7 +59,7 @@ public interface INovosDados {
     }
 
     public interface IEmployee {
-        public void cadastrar(String nome, int idade, String genero, String cpf, String email, String telefone, String CEP, int numCasa, String area, String departamento);
+        public int cadastrar(String nome, int idade, String genero, String cpf, String email, String telefone, String CEP, int numCasa, String area, String departamento);
         //public void alterar(Integer id, String campo, String update);
     }
 

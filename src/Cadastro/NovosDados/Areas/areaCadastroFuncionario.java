@@ -49,8 +49,8 @@ public class areaCadastroFuncionario extends leitorDados implements IAreaCadastr
                 case "1":
                     //#region Cadastrar novo funcionário
                     System.out.println("\n# Cadastrar novo funcionário #\n");
-                    //an.cadastrarFuncionario("Jorge", 22, "Homem" , "04472205484", "teste@olos.com.br", "014585445489", "04472205", 38, "RH", "Contratos");
-                    an.cadastrar(
+                    //an.cadastrarFuncionario("Jorge", 22, "Homem", "04472205484", "teste@olos.com.br", "014585445489", "04472205", 38, "RH", "Contratos");
+                    int funcId = an.cadastrar(
                             readSentence("Nome: "),
                             readInt("Idade: "),
                             readText("Gênero: "),
@@ -66,7 +66,19 @@ public class areaCadastroFuncionario extends leitorDados implements IAreaCadastr
                         System.out.println(metodosFuncionarios.message);
                     else System.out.println("\nCadastro concluído!");
 
-                    opcoesAreaCadastro(Funcionarios.class.getName(), userId);
+                    String newAction = readSentence("Deseja criar um usuário para esse funcionário? (S/N): ").toUpperCase().substring(0, 1);                                        
+                    while (true) {
+                        if (newAction.equals("S")) {
+                            areaCadastroUsuario acu = new areaCadastroUsuario(banco, an.retFuncionarios(funcId));
+                            acu.acoesAreaCadastro("1", userId);
+                            break;
+                        }
+                        if (newAction.equals("N")) opcoesAreaCadastro(Funcionarios.class.getName(), userId);
+                        //if (!newAction.equals("S") || !newAction.equals("N")) {
+                        System.out.println("Opção inválida!");
+                        newAction = readSentence("Deseja criar um usuário para esse funcionário? (S/N): ").toUpperCase().substring(0, 1);
+                        //}
+                    }
                     break;
                     //#endregion
                 case "2":
@@ -210,10 +222,12 @@ public class areaCadastroFuncionario extends leitorDados implements IAreaCadastr
         if (opcao == 1) menuAreaCadastro(userId);
         if (opcao == 2) {
             session = false;
+            System.out.print("\033[2J\033[1;1H");
             mp.paginaInicial(banco);
         }
         if (opcao == 3) {
             session = false;
+            System.out.print("\033[2J\033[1;1H");
             mp.menuCadastro(userId, banco);
         }
         if (opcao == 4) {

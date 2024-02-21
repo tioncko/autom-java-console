@@ -39,7 +39,7 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 
 ✅ Desenvolver área do carro
 
-⬜ Associar o funcionário a seu usuário
+✅ Associar o funcionário a seu usuário
 
 ✅ Associar a marca ao carro
 

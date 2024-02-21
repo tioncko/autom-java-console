@@ -6,7 +6,11 @@ import Cadastro.Database.Metodos.Interfaces.INovosDados;
 import Cadastro.Database.dataSet;
 import Cadastro.NovosDados.Repositorio.Auxiliar.Marcas;
 import Cadastro.NovosDados.Repositorio.Auxiliar.Propriedades.*;
+import Cadastro.NovosDados.Repositorio.DTO.Clientes;
+import Cadastro.NovosDados.Repositorio.DTO.Funcionarios;
 import Raiz.Utils.smartTools;
+
+import java.util.List;
 
 public class Cadastro implements INovosDados {
 
@@ -33,15 +37,16 @@ public class Cadastro implements INovosDados {
      */
     public class AcoesClientes implements ICustomer, IGeneral {
         @Override
-        public void cadastrar(String nome, int idade, String cpf, String email, String telefone, String CEP, int numCasa) {
+        public int cadastrar(String nome, int idade, String cpf, String email, String telefone, String CEP, int numCasa) {
             novoCli.setNome(nome);
             novoCli.setDocumento(cpf);
             novoCli.setIdade(idade);
             novoCli.setEmail(email);
             novoCli.setTelefone(telefone);
             novoCli.setInfoCEP(jsonCEP.responseCEP(CEP, numCasa));
-
-            novoCli.novoCliente(novoCli.nextId(), novoCli);
+            int nextId = novoCli.nextId();
+            novoCli.novoCliente(nextId, novoCli);
+            return nextId;
         }
 
         @Override
@@ -75,6 +80,8 @@ public class Cadastro implements INovosDados {
         }
 
         public boolean validarId(Integer id) { return novoCli.userValid(id); }
+
+        public Clientes retClientes(Integer id) { return novoCli.customerReturn(id); }
     }
 
     /**
@@ -94,7 +101,7 @@ public class Cadastro implements INovosDados {
         @Override
         public void alterar(Integer id, String campo, String... update){
             novoUsr.alterUsuario(id, campo, update[0]);
-            System.out.println(metodosUsuarios.cod == 1 ? "\nUsuário alterado" : "\nNão foi possível alterar este usuário");
+            if(metodosUsuarios.cod == 1) System.out.println("\nUsuário alterado");
         }
 
         @Override
@@ -130,15 +137,16 @@ public class Cadastro implements INovosDados {
         @Override
         public void associarPermissao(Integer id, String access) {
             novoUsr.darPermissao(id, access);
-            //System.out.print(metodosUsuarios.cod == 1 ? "\nUsuário inserido" : "\nUsuario existente");
-            System.out.println("\nUsuário inserido");
+            if (metodosUsuarios.cod == 1)
+                System.out.println("\nUsuário inserido");
+            //System.out.println("\nUsuário inserido");
         }
 
         @Override
         public void alterarPermissao(Integer idAdm, Integer id, String access) {
             novoUsr.altPermissao(idAdm, id, access);
-            //System.out.println(metodosUsuarios.cod == 1 ? "\nUsuário alterado" : "\nNão foi possível alterar este usuário");
-            System.out.println("\nUsuário alterado");
+            if (metodosUsuarios.cod == 1)
+                System.out.println("\nUsuário inserido");
         }
 
         @Override
@@ -148,6 +156,9 @@ public class Cadastro implements INovosDados {
 
         public boolean validarId(Integer id) { return novoUsr.userValid(id); }
 
+        public boolean retornoUsuario(String user) { return novoUsr.retUser(user); }
+
+        public List<String> sugestaoUsuario(String user) { return novoUsr.splitUsuario(user); }
     }
 
     /**
@@ -306,7 +317,7 @@ public class Cadastro implements INovosDados {
     public class AcoesFuncionarios implements IEmployee, IGeneral {
 
         @Override
-        public void cadastrar(String nome, int idade, String genero, String cpf, String email, String telefone, String CEP, int numCasa, String area, String departamento) {
+        public int cadastrar(String nome, int idade, String genero, String cpf, String email, String telefone, String CEP, int numCasa, String area, String departamento) {
             novoFnc.setNome(nome);
             novoFnc.setIdade(idade);
             novoFnc.setGenero(genero);
@@ -316,8 +327,9 @@ public class Cadastro implements INovosDados {
             novoFnc.setInfoCEP(jsonCEP.responseCEP(CEP, numCasa));
             novoFnc.setArea(area);
             novoFnc.setDepartamento(departamento);
-
-            novoFnc.novoFuncionario(novoFnc.nextId(), novoFnc);
+            int newId = novoFnc.nextId();
+            novoFnc.novoFuncionario(newId, novoFnc);
+            return newId;
         }
 
         @Override
@@ -340,6 +352,8 @@ public class Cadastro implements INovosDados {
 
         @Override
         public boolean validarId(Integer id) { return novoFnc.userValid(id); }
+
+        public Funcionarios retFuncionarios(Integer id) { return novoFnc.employeeReturn(id); }
     }
 
     /**

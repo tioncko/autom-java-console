@@ -91,7 +91,7 @@ public class Usuarios {
                 "login='" + login + '\'' +
                 //", password='" + password + '\'' +
                 ", nome='" + nome + '\'' +
-                ", depto='" + depto + '\'' +
+                ", departamento='" + depto + '\'' +
                 ", permissao='" + access + '\'' +
                 '}';
     }

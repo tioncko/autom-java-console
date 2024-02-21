@@ -50,7 +50,7 @@ public class areaCadastroCliente extends leitorDados implements IAreaCadastro {
                     //#region Cadastrar novo cliente
                     System.out.println("\n# Cadastrar novo cliente #\n");
                     //ac.cadastrarCliente("Jorge", 22, "04472205484", "teste@olos.com.br", "014585445489", "04472205", 38);
-                    ac.cadastrar(
+                    int cusId = ac.cadastrar(
                             readSentence("Nome: "),
                             readInt("Idade: "),
                             readMask("CPF: "),
@@ -63,10 +63,18 @@ public class areaCadastroCliente extends leitorDados implements IAreaCadastro {
                     System.out.println(metodosCliente.message);
                     else System.out.println("\nCadastro concluído!");
 
-                    areaCadastroCarro acad = new areaCadastroCarro(banco);
-                    acad.acoesAreaCadastro(id, userId);
+                    String newAction = readSentence("Deseja associar um carro a esse cliente? (S/N): ").toUpperCase().substring(0, 1);
+                    while (true) {
+                        if (newAction.equals("S")) {
+                            areaCadastroCarro acad = new areaCadastroCarro(banco, ac.retClientes(cusId));
+                            acad.acoesAreaCadastro("1", userId);
+                            break;
+                        }
+                        if (newAction.equals("N")) opcoesAreaCadastro(Clientes.class.getName(), userId);
 
-                    opcoesAreaCadastro(Clientes.class.getName(), userId);
+                        System.out.println("Opção inválida!");
+                        newAction = readSentence("Deseja associar um carro a esse cliente? (S/N): ").toUpperCase().substring(0, 1);
+                    }
                     break;
                     //#endregion
                 case "2":

@@ -1,16 +1,14 @@
 package Cadastro.NovosDados.Areas;
 
-import Cadastro.Database.Metodos.Deserializers.jsonMarcas;
 import Cadastro.Database.dataSet;
 import Cadastro.Database.Metodos.metodosCarros;
 import Cadastro.NovosDados.Repositorio.DTO.Carros;
+import Cadastro.NovosDados.Repositorio.DTO.Clientes;
 import Raiz.Acesso.menuPrincipal;
 import Cadastro.Database.Metodos.Interfaces.IAreaCadastro;
 import Raiz.Inicio.Cadastro;
 import Raiz.Utils.leitorDados;
 import Raiz.Utils.smartTools;
-
-import java.util.List;
 
 public class areaCadastroCarro extends leitorDados implements IAreaCadastro {
 
@@ -24,6 +22,15 @@ public class areaCadastroCarro extends leitorDados implements IAreaCadastro {
         this.cad = new Cadastro(DS);
         this.as = cad.new AcoesCarros();
         this.banco = DS;
+    }
+
+    Clientes customer = null;
+    public areaCadastroCarro(dataSet<?> DS, Clientes cus) {
+        this.mp = new menuPrincipal(DS);
+        this.cad = new Cadastro(DS);
+        this.as = cad.new AcoesCarros();
+        this.banco = DS;
+        this.customer = cus;
     }
 
     @Override

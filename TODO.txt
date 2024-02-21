@@ -50,25 +50,38 @@ Tela Loja
 [OK] Padronizar as opções de Menu em todas as áreas
 [OK] Ajustar interfaces para que os métodos não fiquem repetitivos
 [OK] Desenvolver área do carro
-- Associar o funcionário a seu usuário
+[OK] Associar o funcionário a seu usuário
 [OK] Associar a marca ao carro
-- Associar o carro ao cliente
+- Associar o carro ao cliente [LER MEMORANDO ABAIXO]
 [OK] Criar API/JSON de lista de clientes para consumo
 [OK] Criar API/JSON de lista de funcionários para consumo
 [OK] Criar API/JSON de lista de carros para consumo
-- Incrementar área do carro dentro da area do cliente
+- Incrementar área do carro dentro da area do cliente [LER MEMORANDO ABAIXO]
 
 ==============================
 
-[MEMORANDO] - Criar API/JSON de lista de carros para consumo [CONCLUÍDO]
+[MEMORANDO]
+Criar direcionamentos para cadastros de usuarios e carros em vez de incrementar os dois juntos
+Por exemplo:
+    Ao finalizar o cadastro do funcionario [OK] e do cliente, perguntar se quer cadastrar o usuario do funcionário [OK] ou o carro do cliente
+        - se sim, abre a tela, se não, oferece a opção de menu [OK - FUNCIONÁRIO]
+        - independente dos cenários, dentro das telas de cadastro do carro e do usuário [OK] é necessário ter um recurso para localizar o alvo (funcionário ou cliente)
+          similar ao que a tela de cadastro de carros tem ao tentar localizar a marca do carro.
+    [PARTE DO USUÁRIO OK]
 
--> Procedimento para caso o apiCode seja maior do que zero [OK] <-
+    Sobre a tela de cadastro de usuarios
+        - gerar dinamicamente o login com base no funcionario informado e dar a sugestão (ou as sugestões) do usuário gerado [OK]
+        - se aceitar algum dos gerados, salva, se não, pedir para digitar [OK]
+        - disso, se o login digitado já existir, informar para digitar outro [OK]
 
-*GERAR BASE DE CONSULTA*
-consome a api de modelos [OK]
-consulta a api pelo código do modelo escolhido (Classe Marcas, atributo apiCode) [OK]
-retorna um modelo aleatório [OK - FOI MELHOR TRABALHADO]
-insere na tabela [OK]
+    AJUSTE NECESSÁRIO
+    verificar parte de alteração do cadastro do usuário para contar com os ajustes feitos acima [OK]
+    verificar também a questão das permissões na parte de alteraçao de usuário [OK]
 
-*INSERIR DADOS*
-oferecer pesquisa por modelo ou inserir nome direto [OK]
+    SOBRE A TELA CLIENTE
+    Consumir cliente na tela de cadastro do carro (já enviada via construtor)
+
+    SOBRE A TELA DE USUÁRIO
+    Atualizar o nome do cliente com base no codigo do usuário (para retornar o getNome())
+
+

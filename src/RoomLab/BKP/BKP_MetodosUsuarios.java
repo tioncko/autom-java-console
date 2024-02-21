@@ -67,7 +67,7 @@ public class BKP_MetodosUsuarios extends Usuarios {
                         case NOME:
                             tabUsuario.put(id, new Usuarios(user.getLogin(), user.getPassword(), update, user.getDepto()));
                             break;
-                        case DEPTO:
+                        case DEPARTAMENTO:
                             tabUsuario.put(id, new Usuarios(user.getLogin(), user.getPassword(), user.getNome(), update));
                             break;
                         default:

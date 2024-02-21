@@ -47,19 +47,19 @@ public class metodosUsuarios extends Usuarios {
                     if (setUser.getKey().equals(id)) {
                         switch (getCampo) {
                             case LOGIN:
-                                if (!validUsuario(user.getLogin())) {
-                                    DS.insert(id, new Usuarios(update.toLowerCase(), user.getPassword(), user.getNome(), user.getDepto()), Usuarios.class);
+                                if (validUsuario(user.getLogin())) {
+                                    DS.insert(id, new Usuarios(update.toLowerCase(), user.getPassword(), user.getNome(), user.getDepto(), user.getAccess()), Usuarios.class);
                                     cod = 1;
                                 } else cod = 2;
                                 break;
                             case SENHA:
-                                DS.insert(id, new Usuarios(user.getLogin(), smartTools.Senha.Encrypt(update), user.getNome(), user.getDepto()), Usuarios.class);
+                                DS.insert(id, new Usuarios(user.getLogin(), smartTools.Senha.Encrypt(update), user.getNome(), user.getDepto(), user.getAccess()), Usuarios.class);
                                 break;
                             case NOME:
-                                DS.insert(id, new Usuarios(user.getLogin(), user.getPassword(), update, user.getDepto()), Usuarios.class);
+                                DS.insert(id, new Usuarios(user.getLogin(), user.getPassword(), update, user.getDepto(), user.getAccess()), Usuarios.class);
                                 break;
-                            case DEPTO:
-                                DS.insert(id, new Usuarios(user.getLogin(), user.getPassword(), user.getNome(), update), Usuarios.class);
+                            case DEPARTAMENTO:
+                                DS.insert(id, new Usuarios(user.getLogin(), user.getPassword(), user.getNome(), update, user.getAccess()), Usuarios.class);
                                 break;
                             default:
                                 break;
@@ -177,10 +177,10 @@ public class metodosUsuarios extends Usuarios {
         if (!DS.select(Usuarios.class).isEmpty()) {
             Set<Map.Entry<Integer, Usuarios>> getUser = DS.select(Usuarios.class).entrySet();
             for (Map.Entry<Integer, Usuarios> setUser : getUser) {
-
+                
                 Integer key = setUser.getKey();
                 Usuarios user = setUser.getValue();
-                System.out.println("id{" + key + "}, " + user);
+                if (key > 2) System.out.println("id{" + key + "}, " + user);
             }
             return true;
         } else {
@@ -348,6 +348,50 @@ public class metodosUsuarios extends Usuarios {
         } else message = "\nA tabela de usuários está vazia.";
 
         return valid;
+    }
+
+    /**
+    * Valida se o nome do usuário já existe na base
+    **/
+    public boolean retUser(String user) {
+        boolean valid = false;
+        if (!DS.select(Usuarios.class).isEmpty()) {
+            if (DS.select(Usuarios.class).entrySet().stream().noneMatch(x -> x.getValue().getLogin().equalsIgnoreCase(user))) {
+                valid = true;
+            }
+        }
+        return valid;
+    }
+
+    /**
+     *  Gera nomes de usuários genéricos para recomendação
+     */
+    public List<String> splitUsuario (String nome) {
+        String[] sugest = null;
+        List<String> returnName = new ArrayList<>();
+        for (String str : new String[] { smartTools.objetosAuxiliares.changeAccentString(nome) }) sugest = str.trim().strip().split(" ");
+
+        for (int i = 1; i < sugest.length; i++) {
+            if (sugest[i].length() >= 3) {
+                returnName.add((sugest[0].substring(0, 3) + sugest[i].substring(0, 3)).toLowerCase());
+            }
+        }
+
+        List<String> validName = new ArrayList<>();
+        for (String str : returnName) /* */ if (retUser(str)) /* */ validName.add(str);
+
+        if (validName.isEmpty()) {
+            Random rdm = new Random();
+            for (int i = 1; i < sugest.length; i++) {
+                if (sugest[i].length() >= 3) {
+                    int stt = rdm.nextInt(sugest[i].length() - 3), end = stt + 3;
+                    returnName.add((sugest[i - 1].substring(stt, end) + sugest[sugest.length - 1].substring(stt, end)).toLowerCase());
+                }
+            }
+            for (String str : returnName) /* */ if (retUser(str)) /* */ validName.add(str);
+        }
+
+        return validName;
     }
 
     //#region rascunho

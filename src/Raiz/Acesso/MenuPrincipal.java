@@ -17,7 +17,7 @@ public class menuPrincipal extends leitorDados {
     }
 
     public void paginaInicial(dataSet<?> banco) {
-
+        System.out.print("\033[2J\033[1;1H");
         String logged = Login.getUsr();
         char[] charLogin = logged.toCharArray();
         String tab = "============================================";
@@ -32,16 +32,16 @@ public class menuPrincipal extends leitorDados {
             i++;
         };
 
-        if(smartTools.DiaAtual.Daily().equals("Bom dia")){
+        if(smartTools.getDate.Daily().equals("Bom dia")){
             System.out.println
             ("\n=====================================================================\n" +
-             "============= " + smartTools.DiaAtual.Daily() + ", \u001B[31m" + currentLogin + "\u001B[0m " + supTab + "==" +
+             "============= " + smartTools.getDate.Daily() + ", \u001B[31m" + currentLogin + "\u001B[0m " + supTab + "==" +
              "\n=====================================================================");
         }
-        if(smartTools.DiaAtual.Daily().equals("Boa tarde") || smartTools.DiaAtual.Daily().equals("Boa noite")){
+        if(smartTools.getDate.Daily().equals("Boa tarde") || smartTools.getDate.Daily().equals("Boa noite")){
             System.out.println
             ("\n=====================================================================\n" +
-             "============= " + smartTools.DiaAtual.Daily() + ", \u001B[31m" + currentLogin + "\u001B[0m " + supTab +
+             "============= " + smartTools.getDate.Daily() + ", \u001B[31m" + currentLogin + "\u001B[0m " + supTab +
              "\n=====================================================================");
         }
 
@@ -57,12 +57,15 @@ public class menuPrincipal extends leitorDados {
         System.out.println("-----------------------------------------");
         switch (id) {
             case "1":
-                if(!(access.equals(String.valueOf(permissao.USER)))) {
+                if(!(access.equals(String.valueOf(permissao.OPERATOR)))) {
+                    System.out.print("\033[2J\033[1;1H");
                     menuCadastro(userId, banco);
                 }
                 break;
             case "2":
+                if(!(access.equals(String.valueOf(permissao.OFFICE)))) {
                 //menuloja();
+                }
                 break;
             default:
                 break;
@@ -86,33 +89,41 @@ public class menuPrincipal extends leitorDados {
         switch (id) {
             case "1":
                 areaCadastroCliente acad = new areaCadastroCliente(banco);
+                System.out.print("\033[2J\033[1;1H");
                 acad.menuAreaCadastro(userId);
                 break;
             case "2":
                 areaCadastroFornecedor acaf = new areaCadastroFornecedor(banco);
+                System.out.print("\033[2J\033[1;1H");
                 acaf.menuAreaCadastro(userId);
                 break;
             case "3":
                 areaCadastroUsuario acau = new areaCadastroUsuario(banco);
+                System.out.print("\033[2J\033[1;1H");
                 acau.menuAreaCadastro(userId);
                 break;
             case "4":
                 areaCadastroProduto acap = new areaCadastroProduto(banco);
+                System.out.print("\033[2J\033[1;1H");
                 acap.menuAreaCadastro(userId);
                 break;
             case "5":
                 areaCadastroServico acas = new areaCadastroServico(banco);
+                System.out.print("\033[2J\033[1;1H");
                 acas.menuAreaCadastro(userId);
                 break;
             case "6":
                 areaCadastroFuncionario acan = new areaCadastroFuncionario(banco);
+                System.out.print("\033[2J\033[1;1H");
                 acan.menuAreaCadastro(userId);
                 break;
             case "7":
                 areaCadastroCarro acar = new areaCadastroCarro(banco);
+                System.out.print("\033[2J\033[1;1H");
                 acar.menuAreaCadastro(userId);
                 break;
             case "*":
+                System.out.print("\033[2J\033[1;1H");
                 paginaInicial(banco);
                 break;
         }

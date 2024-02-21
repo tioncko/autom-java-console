@@ -1,7 +1,10 @@
 package Cadastro.NovosDados.Areas;
 
 import Cadastro.Database.Metodos.metodosUsuarios;
+
+import java.util.List;
 import Cadastro.Database.dataSet;
+import Cadastro.NovosDados.Repositorio.DTO.Funcionarios;
 import Cadastro.NovosDados.Repositorio.DTO.Usuarios;
 import Raiz.Acesso.menuPrincipal;
 import Cadastro.Database.Metodos.Interfaces.IAreaCadastro;
@@ -21,6 +24,15 @@ public class areaCadastroUsuario extends leitorDados implements IAreaCadastro {
         this.cad = new Cadastro(DS);
         this.ac = cad.new AcoesUsuarios();
         this.banco = DS;
+    }
+
+    Funcionarios employee = null;
+    public areaCadastroUsuario(dataSet<?> DS, Funcionarios emp) {
+        this.mp = new menuPrincipal(DS);
+        this.cad = new Cadastro(DS);
+        this.ac = cad.new AcoesUsuarios();
+        this.banco = DS;
+        this.employee = emp;
     }
 
     @Override
@@ -53,17 +65,68 @@ public class areaCadastroUsuario extends leitorDados implements IAreaCadastro {
                     System.out.println("\n# Cadastrar novo usuário #\n");
                     //ac.cadastrarUsuario("Keyla", "1234", "Keyla Nascimento", "Jurídico");
                     Integer novoId = ac.returnNextId();
-                    ac.cadastrar(
-                            readText("Login: "),
-                            readText("Senha: "),
-                            readSentence("Nome: "),
-                            readSentence("Depto.: ")
-                    );
-                    ac.associarPermissao(novoId, readText("Permissão [ADMIN(2), USER(3)]: "));
+                    if (employee != null) {
+                        String empName = employee.getNome();
+
+                        System.out.print("* Sugestões de login: ");
+                            List<String> validName = ac.sugestaoUsuario(empName);//splitUsuario(empName);
+                            System.out.print(validName);
+                        System.out.println(" *\n");
+
+                        System.out.println("Funcionário: " + empName);
+
+                        boolean auth = false;
+                        String user = null;
+                        while (!auth) {
+                            user = readText("Login: ");
+                            if (!ac.retornoUsuario(user)) {
+                                System.out.print("\n* Usuário inválido, digite novamente");
+                            } else auth = true;
+                        }
+                        ac.cadastrar(
+                                user,//readText("Login: "),
+                                readText("Senha: "),
+                                empName.toUpperCase(),
+                                employee.getDepartamento()
+                        );
+                    }
+                    else {
+                        Cadastro.AcoesFuncionarios acf = new Cadastro(banco).new AcoesFuncionarios();
+                        acf.listar();
+                        System.out.println();
+                        int empId = readInt("Informar id do funcionário: ");
+
+                        Funcionarios func = acf.retFuncionarios(empId);
+                        String empName = func.getNome();
+
+                        System.out.print("* Sugestões de login: ");
+                            List<String> validName = ac.sugestaoUsuario(empName);
+                            System.out.print(validName);
+                        System.out.println(" *\n");
+
+                        System.out.println("Funcionário: " + empName);
+                        boolean auth = false;
+                        String user = null;
+                        while (!auth) {
+                            user = readText("Login: ");
+                            if (!ac.retornoUsuario(user)) {
+                                System.out.println("\n* Usuário inválido, digite novamente");
+                            } else auth = true;
+                        }
+                        ac.cadastrar(
+                                user,
+                                readText("Senha: "),
+                                empName.toUpperCase(),
+                                func.getDepartamento()
+                        );
+                    }
+                    ac.associarPermissao(novoId, readText("Permissão [ADMIN(2), OPERATOR(3), OFFICE(4)]: "));
                     if (!(metodosUsuarios.message == null))
                         System.out.println(metodosUsuarios.message);
-                    else System.out.println("\nCadastro concluído!");
-
+                    else {
+                        System.out.println("\nCadastro concluído!");
+                        employee = null;
+                    }
                     opcoesAreaCadastro(Usuarios.class.getName(), userId);
                     break;
                     //#endregion
@@ -76,11 +139,30 @@ public class areaCadastroUsuario extends leitorDados implements IAreaCadastro {
                         int alterId = readInt("Id: ");
                         if (ac.validarId(alterId)) {
                             String field = readText("Campo: ");
-                            ac.alterar(
-                                    alterId,
-                                    field,
-                                    readSentence("Alteração (" + field.toUpperCase() + "): ")
-                            );
+
+                            if(field.equalsIgnoreCase("login")) {
+                                boolean auth = false;
+                                String user = null;
+                                while (!auth) {
+                                    user = readText("Alteração (" + field.toUpperCase() + "): ");
+                                    if (!ac.retornoUsuario(user)) {
+                                        System.out.print("* Usuário inválido, digite novamente\n");
+                                    } else auth = true;
+                                }
+                                ac.alterar(
+                                        alterId,
+                                        field,
+                                        user
+                                );
+                            }
+                            else {
+                                ac.alterar(
+                                        alterId,
+                                        field,
+                                        readSentence("Alteração (" + field.toUpperCase() + "): ")
+                                );
+                            }
+
                             if (!(metodosUsuarios.message == null))
                                 System.out.println(metodosUsuarios.message);
                             else System.out.println("\nAlteração concluída!");
@@ -265,4 +347,34 @@ public class areaCadastroUsuario extends leitorDados implements IAreaCadastro {
             System.exit(0);
         }
     }
+/*
+    private List<String> splitUsuario (String nome) {
+        String[] sugest = null;
+        List<String> returnName = new ArrayList<>();
+        for (String str : new String[] { objetosAuxiliares.changeAccentString(nome) }) sugest = str.trim().strip().split(" ");
+
+        for (int i = 1; i < sugest.length; i++) {
+            if (sugest[i].length() >= 3) {
+                returnName.add((sugest[0].substring(0, 3) + sugest[i].substring(0, 3)).toLowerCase());
+            }
+        }
+
+        List<String> validName = new ArrayList<>();
+        for (String str : returnName) /* / if (ac.retornoUsuario(str)) /* / validName.add(str);
+
+        if (validName.isEmpty()) {
+            Random rdm = new Random();
+            for (int i = 1; i < sugest.length; i++) {
+                if (sugest[i].length() >= 3) {
+                    int stt = rdm.nextInt(sugest[i].length() - 3),
+                            end = stt + 3;
+                    returnName.add((sugest[0].substring(0, 3) + sugest[i].substring(stt, end)).toLowerCase());
+                }
+            }
+            for (String str : returnName) /* / if (ac.retornoUsuario(str)) /* / validName.add(str);
+        }
+
+        return validName;
+    }
+    */
 }

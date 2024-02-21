@@ -4,5 +4,5 @@ public enum camposUsuario {
      LOGIN
     ,SENHA
     ,NOME
-    ,DEPTO;
+    ,DEPARTAMENTO;
 }

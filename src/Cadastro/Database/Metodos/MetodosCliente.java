@@ -181,6 +181,18 @@ public class metodosCliente extends Clientes {
         return valid;
     }
 
+    public Clientes customerReturn(Integer id) {
+        Clientes cli = null;
+        if(!DS.select(Clientes.class).isEmpty()) {
+            Supplier<Stream<Map.Entry<Integer, Clientes>>> retCli = () -> DS.select(Clientes.class).entrySet().stream();
+
+            if(retCli.get().anyMatch(x -> x.getKey().equals(id))) {
+                cli = retCli.get().filter(x -> x.getKey().equals(id)).findFirst().orElseThrow().getValue();
+            }
+        }
+        return cli;
+    }
+
     //#region rascunho
     /*
 

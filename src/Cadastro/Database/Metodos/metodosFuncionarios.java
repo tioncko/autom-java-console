@@ -7,6 +7,8 @@ import Cadastro.NovosDados.Repositorio.Enums.Fields.camposFunc;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class metodosFuncionarios extends Funcionarios {
 
@@ -153,11 +155,25 @@ public class metodosFuncionarios extends Funcionarios {
         boolean valid = false;
         if (!DS.select(Funcionarios.class).isEmpty()) {
             if (DS.select(Funcionarios.class).entrySet().stream().anyMatch(x -> x.getKey().equals(id))) {
-
                 valid = true;
             } else message = "\nRegistro inexistente na tabela.";
         } else message = "\nA tabela de funcionários está vazia.";
 
         return valid;
+    }
+
+    /**
+     * Retorna os dados de um cliente em específico
+     */
+    public Funcionarios employeeReturn(Integer id) {
+        Funcionarios func = null;
+        if(!DS.select(Funcionarios.class).isEmpty()) {
+            Supplier<Stream<Map.Entry<Integer, Funcionarios>>> retFunc = () -> DS.select(Funcionarios.class).entrySet().stream();
+            
+            if (retFunc.get().anyMatch(x -> x.getKey().equals(id))) {
+                func = retFunc.get().filter(x -> x.getKey().equals(id)).findFirst().orElseThrow().getValue();
+            }
+        }
+        return func;
     }
 }

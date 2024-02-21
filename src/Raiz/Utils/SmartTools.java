@@ -1,8 +1,10 @@
 package Raiz.Utils;
 
 import java.nio.charset.StandardCharsets;
+import java.text.Normalizer;
 import java.time.*;
 import java.util.*;
+import java.util.regex.Pattern;
 
 import Cadastro.NovosDados.Repositorio.Auxiliar.Criptografia;
 import Cadastro.NovosDados.Repositorio.Enums.agora;
@@ -155,7 +157,7 @@ public abstract class smartTools {
     */
     //#endregion
 
-    public static class DiaAtual {
+    public static class getDate {
 
         /**
          *Retorna a período do dia
@@ -216,7 +218,19 @@ public abstract class smartTools {
                     "\n(3) Ir para o menu de cadastro geral" +
                     "\n(4) Sair da aplicação?: \u001B[0m\033[0m");
         }
+        
+        public static String changeAccentString(String value) {
+            return value.toLowerCase()
+                .replaceAll("[áàãâä]", "a")
+                .replaceAll("[éèêë]", "e")
+                .replaceAll("[íìîï]", "i")
+                .replaceAll("[óòõôö]", "o")
+                .replaceAll("[úùûü]", "u")
+                .replaceAll("[ç]", "c")
+                .replaceAll("[ñ]", "n");
+        }
 
+        
     }
 
     public static class genericCollects {
