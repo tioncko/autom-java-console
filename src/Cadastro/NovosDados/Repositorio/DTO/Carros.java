@@ -8,31 +8,31 @@ import java.util.List;
 public class Carros {
 
     private int id;
-    private String nome;
+    private String modelo;
     private String placa;
     private String origem;
     private Clientes clientes;
     private Marcas marca;
 
     public Carros(String nome) {
-        this.nome = nome;
+        this.modelo = nome;
     }
 
     public Carros(String nome, String placa, String origem) {
-        this.nome = nome;
+        this.modelo = nome;
         this.placa = placa;
         this.origem = origem;
     }
 
     public Carros(String nome, String placa, String origem, Marcas marca) {
-        this.nome = nome;
+        this.modelo = nome;
         this.placa = placa;
         this.origem = origem;
         this.marca = marca;
     }
 
     public Carros(String nome, String placa, String origem, Clientes clientes, Marcas marca) {
-        this.nome = nome;
+        this.modelo = nome;
         this.placa = placa;
         this.origem = origem;
         this.clientes = clientes;
@@ -50,10 +50,10 @@ public class Carros {
     }
 
     public String getNome() {
-        return nome;
+        return modelo;
     }
     public void setNome(String nome) {
-        this.nome = nome;
+        this.modelo = nome;
     }
 
     public String getPlaca() {
@@ -87,10 +87,10 @@ public class Carros {
     @Override
     public String toString() {
         return "Carros{" +
-                "nome='" + nome + '\'' +
+                "modelo='" + modelo + '\'' +
                 ", placa='" + placa + '\'' +
                 ", origem='" + origem + '\'' +
-                ", clientes='" + clientes + '\'' +
+                ", cliente='" + clientes.getNome() + '\'' +
                 ", marca='" + marca + '\'' +
                 '}';
     }

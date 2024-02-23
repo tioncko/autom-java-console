@@ -1,8 +1,9 @@
 package Cadastro.NovosDados.Repositorio.Enums.Fields;
 
 public enum camposCarro {
-     NOME
+    MODELO
     ,PLACA
     ,ORIGEM
+    ,CLIENTE
     ,MARCA
 }

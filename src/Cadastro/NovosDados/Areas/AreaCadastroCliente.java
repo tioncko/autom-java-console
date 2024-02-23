@@ -51,8 +51,9 @@ public class areaCadastroCliente extends leitorDados implements IAreaCadastro {
                     System.out.println("\n# Cadastrar novo cliente #\n");
                     //ac.cadastrarCliente("Jorge", 22, "04472205484", "teste@olos.com.br", "014585445489", "04472205", 38);
                     int cusId = ac.cadastrar(
-                            readSentence("Nome: "),
+                            readSentence("Nome: ").toUpperCase(),
                             readInt("Idade: "),
+                            //genero
                             readMask("CPF: "),
                             readText("E-mail: "),
                             readSentence("Telefone: "),

@@ -362,10 +362,11 @@ public class Cadastro implements INovosDados {
     public class AcoesCarros implements ICars, IGeneral {
 
         @Override
-        public void cadastrar(String nome, String placa, String origem, String marca) {
+        public void cadastrar(String nome, String placa, String origem, String cliente, String marca) {
             novoCar.setNome(nome);
             novoCar.setPlaca(placa);
             novoCar.setOrigem(origem);
+            novoCar.setCliente(new Clientes(cliente));
             novoCar.setMarca(new Marcas(marca));
 
             novoCar.novoCarro(novoCar.nextId(), novoCar);

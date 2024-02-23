@@ -3,7 +3,7 @@ package Cadastro.Database.Metodos;
 import Cadastro.Database.dataSet;
 import Cadastro.NovosDados.Repositorio.Auxiliar.Marcas;
 import Cadastro.NovosDados.Repositorio.DTO.Carros;
-import Cadastro.NovosDados.Repositorio.DTO.Produtos;
+import Cadastro.NovosDados.Repositorio.DTO.Clientes;
 import Cadastro.NovosDados.Repositorio.Enums.Fields.camposCarro;
 
 import java.util.Map;
@@ -25,7 +25,7 @@ public class metodosCarros extends Carros {
      * Inserir novo carro
      */
     public void novoCarro(Integer id, Carros car) {
-        DS.insert(car.setId(id), new Carros(car.getNome(), car.getPlaca(), car.getOrigem(), car.getMarca()), Carros.class);
+        DS.insert(car.setId(id), new Carros(car.getNome(), car.getPlaca(), car.getOrigem(), car.getCliente(), car.getMarca()), Carros.class);
     }
 
     /**
@@ -39,11 +39,11 @@ public class metodosCarros extends Carros {
                 Stream<Map.Entry<Integer, Carros>> getCar = DS.select(Carros.class).entrySet().stream();
                 getCar.filter(x -> x.getKey().equals(id)).forEach(car -> {
                     switch (getCampo) {
-                        case NOME -> DS.insert(id, new Carros(update, car.getValue().getPlaca(), car.getValue().getOrigem(), car.getValue().getMarca()), Carros.class);
-                        case PLACA -> DS.insert(id, new Carros(car.getValue().getNome(), update, car.getValue().getOrigem(), car.getValue().getMarca()), Carros.class);
-                        case ORIGEM -> DS.insert(id, new Carros(car.getValue().getNome(), car.getValue().getPlaca(), update, car.getValue().getMarca()), Carros.class);
-                        //case CLIENTE -> DS.insert(id, new Carros(car.getValue().getNome(), car.getValue().getPlaca(), car.getValue().getOrigem(), car.getValue().getMarca()), Carros.class);
-                        case MARCA -> DS.insert(id, new Carros(car.getValue().getNome(), car.getValue().getPlaca(), car.getValue().getOrigem(), new Marcas(update)), Carros.class);
+                        case MODELO -> DS.insert(id, new Carros(update, car.getValue().getPlaca(), car.getValue().getOrigem(), car.getValue().getCliente(), car.getValue().getMarca()), Carros.class);
+                        case PLACA -> DS.insert(id, new Carros(car.getValue().getNome(), update, car.getValue().getOrigem(), car.getValue().getCliente(),car.getValue().getMarca()), Carros.class);
+                        case ORIGEM -> DS.insert(id, new Carros(car.getValue().getNome(), car.getValue().getPlaca(), update, car.getValue().getCliente(),car.getValue().getMarca()), Carros.class);
+                        case CLIENTE -> DS.insert(id, new Carros(car.getValue().getNome(), car.getValue().getPlaca(), car.getValue().getOrigem(), new Clientes(update), car.getValue().getMarca()), Carros.class);
+                        case MARCA -> DS.insert(id, new Carros(car.getValue().getNome(), car.getValue().getPlaca(), car.getValue().getOrigem(), car.getValue().getCliente(),new Marcas(update)), Carros.class);
                         default -> {}
                     }
                 });

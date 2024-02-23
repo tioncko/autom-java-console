@@ -26,30 +26,17 @@
 
 O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas nas seguintes tarefas (novas tarefas serão informadas aqui):
 
-✔️ **Parte 1 concluída, mais detalhes no arquivo de ajustes**
-**_[To Do](ToDo.txt)_**
+✔️ **Parte 1 concluída**
 
-🔄 *Parte 2 abaixo*:
+✔️ **Parte 2 concluída**
 
-✅ Desenvolver área do funcionário
+**_mais detalhes no arquivo de ajustes [ToDo](ToDo.txt)_**
 
-✅ Padronizar as opções de Menu em todas as áreas
+🔄 *Parte 3 abaixo*:
 
-✅ Ajustar interfaces para que os métodos não fiquem repetitivos
+✅ Desenvolver tela de cadastro
 
-✅ Desenvolver área do carro
-
-✅ Associar o funcionário a seu usuário
-
-✅ Associar a marca ao carro
-
-⬜ Associar o carro ao cliente
-
-✅ Criar API/JSON de lista de clientes para consumo
-
-✅ Criar API/JSON de lista de funcionários para consumo
-
-⬜ Incrementar área do carro dentro da area do cliente
+⬜ Desenvolver da tela de loja
 
 ## 📝 Áreas pendentes
 

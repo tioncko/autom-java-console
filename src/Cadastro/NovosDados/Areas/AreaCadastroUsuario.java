@@ -155,6 +155,23 @@ public class areaCadastroUsuario extends leitorDados implements IAreaCadastro {
                                         user
                                 );
                             }
+
+                            if(field.equalsIgnoreCase("nome")) {
+                                Cadastro.AcoesFuncionarios acf = new Cadastro(banco).new AcoesFuncionarios();
+                                System.out.println("\n*****************************************\n# Lista de funcionários #\n");
+                                acf.listar();
+                                System.out.print("*****************************************\n\nAlteração (" + field.toUpperCase() + ") ");
+                                int empId = readInt("[Informar id do funcionário]: ");
+
+                                Funcionarios func = acf.retFuncionarios(empId);
+                                String empName = func.getNome();
+
+                                ac.alterar(
+                                        alterId,
+                                        field,
+                                        empName
+                                );
+                            }
                             else {
                                 ac.alterar(
                                         alterId,

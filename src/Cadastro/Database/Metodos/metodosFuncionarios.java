@@ -163,7 +163,7 @@ public class metodosFuncionarios extends Funcionarios {
     }
 
     /**
-     * Retorna os dados de um cliente em específico
+     * Retorna os dados de um funcionário em específico
      */
     public Funcionarios employeeReturn(Integer id) {
         Funcionarios func = null;

@@ -5,6 +5,8 @@ import Cadastro.NovosDados.Repositorio.DTO.*;
 import Raiz.Core.impressaoLog;
 import Raiz.Utils.leitorDados;
 
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;

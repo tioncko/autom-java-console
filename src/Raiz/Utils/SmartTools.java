@@ -212,8 +212,31 @@ public abstract class smartTools {
          * Retorna a opção selecionada no medu interno de cada área
          */
         public Integer optionMenu(String obj) {
+
+            char value;
+            char[] rev = new char[obj.length()];
+            for (int i = 0; i < obj.length(); i++) {
+                value = obj.charAt(i);
+                rev[obj.length() - i - 1] = value;
+            }
+
+            StringBuilder sbRev = new StringBuilder();
+            for (char c : rev) sbRev.append(c);
+
+            int pos = sbRev.indexOf(".");
+            String revs = sbRev.substring(0, pos);
+
+            char[] ret = new char[revs.length()];
+            for (int i = 0; i < revs.length(); i++) {
+                value = revs.charAt(i);
+                ret[revs.length() - i - 1] = value;
+            }
+
+            sbRev.setLength(0);
+            for (char c : ret) sbRev.append(c);
+
             return readInt("\nO que deseja?" +
-                    "\n\033[3m\u001B[32m(1) Permanecer na tela de cadastro de " + obj +
+                    "\n\033[3m\u001B[32m(1) Permanecer na tela de cadastro para " + sbRev +
                     "\n(2) Retornar ao menu principal" +
                     "\n(3) Ir para o menu de cadastro geral" +
                     "\n(4) Sair da aplicação?: \u001B[0m\033[0m");
@@ -229,8 +252,6 @@ public abstract class smartTools {
                 .replaceAll("[ç]", "c")
                 .replaceAll("[ñ]", "n");
         }
-
-        
     }
 
     public static class genericCollects {

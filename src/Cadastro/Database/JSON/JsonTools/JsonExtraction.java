@@ -12,6 +12,7 @@ import Raiz.Utils.leitorDados;
 import Raiz.Utils.smartTools.*;
 import Raiz.Utils.smartTools.genericCollects.*;
 
+import java.time.LocalTime;
 import java.util.*;
 import java.util.function.*;
 import java.util.logging.Logger;
@@ -150,7 +151,7 @@ public class jsonExtraction extends jsonResponse {
 
             Fornecedores forn;
             coletaJsonDados p = new coletaJsonDados();
-            Set<Map.Entry<Integer, Fornecedores>> getForn = p.mapForn().entrySet();;
+            Set<Map.Entry<Integer, Fornecedores>> getForn = p.mapForn().entrySet();
 
             forn = getForn.stream()
                     .filter(setid -> setid.getKey().equals(id))
@@ -291,8 +292,8 @@ public class jsonExtraction extends jsonResponse {
         /**
          * Método que retorna uma lista de Produtos
          */
-        //public Map<Integer, Produtos> mapProd () {
-        public Map<Integer, Produtos> base () { // Insere os nomes dos fornecedores na tabela de produtos (trocar o nome base por mapProd)
+        public Map<Integer, Produtos> mapProd () {
+        //public Map<Integer, Produtos> base () { // Insere os nomes dos fornecedores na tabela de produtos (trocar o nome base por mapProd)
             Complementos jsonCp = new Complementos();
             Map<Integer, Produtos> retProd = jsonCp.mapJsonProd();
             Set<Map.Entry<Integer, String>> sup = jsonCp.getNomeForn().entrySet(); ////
@@ -314,8 +315,8 @@ public class jsonExtraction extends jsonResponse {
             return retProd;
         }
 
-        //public Map<Integer, Produtos> base(){
-        public Map<Integer, Produtos> mapProd () {
+        public Map<Integer, Produtos> base(){
+        //public Map<Integer, Produtos> mapProd () {
             Map<Integer, Produtos> retProd = new HashMap<>();
 
             try {
@@ -680,17 +681,20 @@ public class jsonExtraction extends jsonResponse {
 
     protected static class Complementos {
 
+        Supplier<Stream<Map.Entry<Integer, Produtos>>> mapProd = () -> mapJsonProd().entrySet().stream();
+        coletaJsonDados cjm = new coletaJsonDados();
+        jsonToMap jsonMap = new jsonToMap();
         /**
          * Método auxiliar (método MapForn) que retorna a lista de atividades que cada fornecedor exerce (modo randômico pois para aqueles fornecedores que
          * fazem parte do Suppliers.json).
          */
         public Map<Integer, genericSet<Grupos>> getListAllAtividades() {
-            jsonToMap json = new jsonToMap();
+
             String fileParam = arquivoConfig.Loja.getPropriedade();
 
-            Set<Map.Entry<Integer, Grupos>> getGp;
             Function<Produtos, Grupos> propG = Gondola::getGrupo;
-            getGp = json.getMapObjects(Produtos.class, propG, (a, b) -> new Grupos(b), fileParam).entrySet();
+            Set<Map.Entry<Integer, Grupos>> getGp;
+                getGp = jsonMap.getMapObjects(Produtos.class, propG, (a, b) -> new Grupos(b), fileParam).entrySet();
 
             Random limit = new Random();
             Random grupo = new Random();
@@ -723,13 +727,12 @@ public class jsonExtraction extends jsonResponse {
          */
         public Map<Integer, String> getNomeForn() {
 
-            jsonToMap jsonMap = new jsonToMap();
+            //jsonToMap jsonMap = new jsonToMap();
             String fileParam = arquivoConfig.Loja.getPropriedade();
             Function<Produtos, Grupos> propG = Gondola::getGrupo;
 
-            coletaJsonDados cjm = new coletaJsonDados();
-            Set<Map.Entry<Integer, Produtos>> mapProd =
-                    mapJsonProd().entrySet();
+            //coletaJsonDados cjm = new coletaJsonDados();
+            //Set<Map.Entry<Integer, Produtos>> mapProd = mapJsonProd().entrySet();
             Set<Map.Entry<Integer, List<String>>> getListForn = getListForn().entrySet();
 
             Map<Integer, String> listFornId = new HashMap<>();
@@ -738,7 +741,7 @@ public class jsonExtraction extends jsonResponse {
             for (int j = 1; j <= size; j++) {
                 String gpo = String.valueOf(cjm.nomeGrupo(j, Produtos.class));
 
-                List<Integer> listProd = mapProd.stream().filter(e -> e.getValue().getGrupo().toString().contains(gpo)).map(Map.Entry::getKey).toList();
+                List<Integer> listProd = mapProd.get().filter(e -> e.getValue().getGrupo().toString().contains(gpo)).map(Map.Entry::getKey).toList();
                 List<String> listForn = getListForn.stream().filter(e -> e.getValue().contains(gpo)).map(Map.Entry::getValue).map(y -> y.get(0)).toList();
 
                 try {
@@ -759,22 +762,21 @@ public class jsonExtraction extends jsonResponse {
          */
         public Map<Integer, List<String>> getListForn() {
 
-            jsonToMap jsonMap = new jsonToMap();
+            //jsonToMap jsonMap = new jsonToMap();
             String fileParam = arquivoConfig.Loja.getPropriedade();
             Function<Produtos, Grupos> propG = Gondola::getGrupo;
 
-            Set<Map.Entry<Integer, Produtos>> mapProd =
-                    mapJsonProd().entrySet();
+           // Set<Map.Entry<Integer, Produtos>> mapProd = mapJsonProd().entrySet();
 
             Map<Integer, List<String>> listForn = new HashMap<>();
             List<String> forns;
             int cont = 0;
             for (int j = 1; j <= jsonMap.getMapObjects(Produtos.class, propG, (a, b) -> new Grupos(b), fileParam).size(); j++) {
                 int code = j;
-                coletaJsonDados cjm = new coletaJsonDados();
-                Supplier<Stream<Map.Entry<Integer, Produtos>>> supProd = mapProd::stream;
-
-                int listLen = (int) supProd.get().filter(p -> p.getValue().getGrupo().toString().contains(String.valueOf(cjm.nomeGrupo(code, Produtos.class)))).count();
+                //coletaJsonDados cjm = new coletaJsonDados();
+                //Supplier<Stream<Map.Entry<Integer, Produtos>>> supProd = mapProd::stream;
+                //mapProd = supProd
+                int listLen = (int) mapProd.get().filter(p -> p.getValue().getGrupo().toString().contains(String.valueOf(cjm.nomeGrupo(code, Produtos.class)))).count();
 
                 Random rdm = new Random();
                 Map<String, List<String>> listStr = getListFornNomes();
@@ -803,19 +805,36 @@ public class jsonExtraction extends jsonResponse {
          */
         public Map<String, List<String>> getListFornNomes() {
 
-            jsonToMap jsonMap = new jsonToMap();
+            //jsonToMap jsonMap = new jsonToMap();
             String fileParam = arquivoConfig.Loja.getPropriedade();
             Function<Produtos, Grupos> propG = Gondola::getGrupo;
 
             List<Integer> listInt;
             Map<String, List<Integer>> mapInt = new HashMap<>();
-            coletaJsonDados cjm = new coletaJsonDados();
+            //coletaJsonDados cjm = new coletaJsonDados();
 
             for (int i = 1; i <= jsonMap.getMapObjects(Produtos.class, propG, (a, b) -> new Grupos(b), fileParam).size(); i++) {
                 listInt = getFornIds(String.valueOf(cjm.nomeGrupo(i, Produtos.class)));
                 mapInt.put(String.valueOf(cjm.nomeGrupo(i, Produtos.class)), listInt);
             }
             //mapInt.forEach((key, value) -> System.out.println(key + " <-> " + value));
+
+            Map<String, List<String>> retStr = new HashMap<>();
+            Set<Map.Entry<String, List<Integer>>> getInt = mapInt.entrySet();
+
+            //#region rascunho
+            /*
+            for(Map.Entry<String, List<Integer>> setInt : getInt) {
+                List<String> value = new ArrayList<>();
+
+                for (Integer i : setInt.getValue()) {
+                    value.add(cjm.nomeForn(i).getNomeFantasia());
+                }
+                retStr.put(setInt.getKey(), value);
+            }
+            return retStr;
+            */
+            //#endregion
 
             return mapInt.entrySet().stream()
                     .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().stream()
@@ -827,8 +846,8 @@ public class jsonExtraction extends jsonResponse {
          * Gera a lista de ids dos fornecedores que pertencem a um certo grupo
          **/
         public List<Integer> getFornIds(String param) {
-            coletaJsonDados cjd = new coletaJsonDados();
-            Set<Map.Entry<Integer, Fornecedores>> setForn = cjd.mapForn().entrySet();
+            //coletaJsonDados cjm = new coletaJsonDados();
+            Set<Map.Entry<Integer, Fornecedores>> setForn = cjm.mapForn().entrySet();
 
             List<Integer> getIds = new ArrayList<>();
             setForn.forEach(x -> {
@@ -845,10 +864,10 @@ public class jsonExtraction extends jsonResponse {
         public Map<Integer, Produtos> mapJsonProd() {
             Map<Integer, Produtos> retProd = new HashMap<>();
 
-            jsonToMap json = new jsonToMap();
+            //jsonToMap jsonMap = new jsonToMap();
             String fileParam = arquivoConfig.Loja.getPropriedade();
             String varContains = "Servicos Automotivos";
-            Stream<Map.Entry<Integer, Produtos>> getListProd = json.getMapRecord(Produtos.class, fileParam).entrySet().stream()
+            Stream<Map.Entry<Integer, Produtos>> getListProd = jsonMap.getMapRecord(Produtos.class, fileParam).entrySet().stream()
                     .filter(c -> (!c.getValue().toString().contains(varContains)));
 
             List<Produtos> prod = new ArrayList<>();
@@ -860,12 +879,17 @@ public class jsonExtraction extends jsonResponse {
             return retProd;
         }
 
+        /**
+         * Bloco de criação de senha genérica para os usuários [PARTE 1]
+         */
         public int asciiPasswordString() {
             Random rdm = new Random();
-            int rdmInt = rdm.nextInt(33, 126);
-            return rdmInt;
+            return rdm.nextInt(33, 126);
         }
 
+        /**
+         * Bloco de criação de senha genérica para os usuários [PARTE 2]
+         */
         public String randomPassword(){
             int len = 12;
             char[] ret = new char[len];

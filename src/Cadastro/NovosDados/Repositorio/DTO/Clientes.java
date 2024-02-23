@@ -26,6 +26,10 @@ public class Clientes extends outrosDados {
         this.setInfoCEP(infoCEP);
     }
 
+    public Clientes(String nome) {
+        this.nome = nome;
+    }
+
     public Clientes() {
 
     }

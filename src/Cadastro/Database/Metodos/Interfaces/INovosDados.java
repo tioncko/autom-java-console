@@ -64,7 +64,7 @@ public interface INovosDados {
     }
 
     public interface ICars {
-        public void cadastrar(String nome, String placa, String origem, String marca);
+        public void cadastrar(String nome, String placa, String origem, String cliente, String marca);
         //public void alterar(Integer id, String campo, String update);
     }
 }

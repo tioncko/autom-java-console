@@ -181,6 +181,9 @@ public class metodosCliente extends Clientes {
         return valid;
     }
 
+    /**
+     * Retorna os dados de um cliente em específico
+     */
     public Clientes customerReturn(Integer id) {
         Clientes cli = null;
         if(!DS.select(Clientes.class).isEmpty()) {

@@ -60,19 +60,47 @@ public class areaCadastroCarro extends leitorDados implements IAreaCadastro {
                     //#region Cadastrar novo carro
                     System.out.println("\n# Cadastrar novo carro #\n");
                     String marca = readBrand("Marca: ");
-                    String nome;
+                    String modelo;
 
                     if (!marca.isEmpty()) {
-                        nome = readModels(marca);
-                        if (nome.equalsIgnoreCase("manual")) nome = readSentence("Nome: ");
+                        modelo = readModels(marca);
+                        if (modelo.equalsIgnoreCase("manual")) modelo = readSentence("Nome: ");
 
-                        as.cadastrar(
-                                nome,
-                                readText("Placa: "),
-                                readSentence("Origem: "),
-                                marca
-                        );
+                        if(customer != null) {
+                        String cusName = customer.getNome();
+                        System.out.println("Cliente: \u001B[33m" + cusName + "\u001B[0m");
+
+                            as.cadastrar(
+                                    modelo,
+                                    readText("Placa: "),
+                                    readSentence("Origem: "),
+                                    cusName.toUpperCase(),
+                                    marca
+                            );
+                        } else {
+                            Cadastro cad = new Cadastro(banco);
+                            Cadastro.AcoesClientes acc = cad.new AcoesClientes();
+                            System.out.println("# Lista de clientes #\n");
+                            acc.listar();
+                            System.out.println();
+                            int cusId = readInt("Informar id do cliente: ");
+
+                            Clientes cli = acc.retClientes(cusId);
+                            String cusName = cli.getNome();
+
+                            System.out.println("Cliente: \u001B[33m" + cusName + "\u001B[0m");
+
+                            as.cadastrar(
+                                    modelo,
+                                    readText("Placa: "),
+                                    readSentence("Origem: "),
+                                    cusName.toUpperCase(),
+                                    marca
+                            );
+                        }
+
                         System.out.println("\nCadastro concluído!");
+                        customer = null;
                     } else System.out.println("\nNão foi possível efetuar o cadastro!");
 
                     opcoesAreaCadastro(Carros.class.getName(), userId);
@@ -88,15 +116,15 @@ public class areaCadastroCarro extends leitorDados implements IAreaCadastro {
                         if (as.validarId(alterId)) {
                             String field = readText("Campo: ");
 
-                            if (!field.equalsIgnoreCase("marca") && !field.equalsIgnoreCase("nome")) {
+                            if (!field.equalsIgnoreCase("marca") && !field.equalsIgnoreCase("modelo") && !field.equalsIgnoreCase("cliente")) {
                                 as.alterar(
                                         alterId,
                                         field,
-                                        readSentence("Alteração (" + field.toUpperCase() + "): "));
-
+                                        readSentence("Alteração (" + field.toUpperCase() + "): ")
+                                );
                                 if (!(metodosCarros.message == null))
                                     System.out.println(metodosCarros.message);
-                                else System.out.println("Alteração concluída!");
+                                else System.out.println("\nAlteração concluída!");
                                 as.localizar(alterId);
                             }
 
@@ -110,7 +138,7 @@ public class areaCadastroCarro extends leitorDados implements IAreaCadastro {
                                     );
                                     if (!(metodosCarros.message == null))
                                         System.out.println(metodosCarros.message);
-                                    else System.out.println("Alteração concluída!");
+                                    else System.out.println("\nAlteração concluída!");
                                     as.localizar(alterId);
                                 }
                                 else {
@@ -119,7 +147,7 @@ public class areaCadastroCarro extends leitorDados implements IAreaCadastro {
                                 }
                             }
 
-                            if (field.equalsIgnoreCase("nome")) {
+                            if (field.equalsIgnoreCase("modelo")) {
                                 System.out.println("Alteração (" + field.toUpperCase() + ")\n-----------------------------------------");
                                 String altMarca = readBrand("Marca: ");
                                 String altNome;
@@ -132,15 +160,43 @@ public class areaCadastroCarro extends leitorDados implements IAreaCadastro {
                                             field,
                                             altNome
                                     );
+
+                                    as.alterar(
+                                            alterId,
+                                            "marca",
+                                            altMarca
+                                    );
                                     if (!(metodosCarros.message == null))
                                         System.out.println(metodosCarros.message);
-                                    else System.out.println("Alteração concluída!");
+                                    else System.out.println("\nAlteração concluída!");
                                     as.localizar(alterId);
                                 }
                                 else {
                                     System.out.println("\nNão houve alteração!");
                                     as.localizar(alterId);
                                 }
+                            }
+
+                            if(field.equalsIgnoreCase("cliente")) {
+                                Cadastro cad = new Cadastro(banco);
+                                Cadastro.AcoesClientes acc = cad.new AcoesClientes();
+                                System.out.println("*****************************************\n\n# Lista de clientes #\n");
+                                acc.listar();
+                                System.out.print("\n*****************************************\n\nAlteração (" + field.toUpperCase() + ") ");
+                                int cusId = readInt("[Informar id do cliente]: ");
+
+                                Clientes cli = acc.retClientes(cusId);
+                                String cusName = cli.getNome();
+
+                                as.alterar(
+                                        alterId,
+                                        field,
+                                        cusName
+                                );
+                                if (!(metodosCarros.message == null))
+                                    System.out.println(metodosCarros.message);
+                                else System.out.println("\nAlteração concluída!");
+                                as.localizar(alterId);
                             }
                         }
                         if (!(metodosCarros.message == null))
